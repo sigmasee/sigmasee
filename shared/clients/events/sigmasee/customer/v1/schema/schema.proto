@@ -1,0 +1,57 @@
+syntax = "proto3";
+package customer;
+
+import "google/protobuf/timestamp.proto";
+
+option go_package = "shared/clients/events/sigmasee/customer/v1";
+
+enum Type {
+  CustomerUpserted = 0;
+  CustomerDeleted = 1;
+}
+
+message Event {
+  Metadata metadata = 1;
+  Data data = 2;
+}
+
+message Metadata {
+  string id = 1;
+  string domainSource = 2;
+  string appSource = 3;
+  Type type = 4;
+  google.protobuf.Timestamp time = 5;
+  string correlationId = 6;
+}
+
+message Data { Customer afterState = 1; }
+
+message Customer {
+  string id = 1;
+  google.protobuf.Timestamp deletedAt = 2;
+  repeated Identity identities = 3;
+  string designation = 4;
+  string title = 5;
+  string name = 6;
+  string givenName = 7;
+  string middleName = 8;
+  string familyName = 9;
+  string photoUrl = 10;
+  string photoUrl24 = 11;
+  string photoUrl32 = 12;
+  string photoUrl48 = 13;
+  string photoUrl72 = 14;
+  string photoUrl192 = 15;
+  string photoUrl512 = 16;
+  string timezone = 17;
+  string locale = 18;
+  repeated Location defaultLocations = 19;
+}
+
+message Identity {
+  string id = 1;
+  string email = 2;
+  bool emailVerified = 3;
+}
+
+message Location { string id = 1; }

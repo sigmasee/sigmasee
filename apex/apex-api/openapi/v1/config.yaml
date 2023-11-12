@@ -1,0 +1,9 @@
+package: openapiv1
+generate:
+  chi-server: true
+  models: true
+  embedded-spec: true
+output-options:
+  skip-fmt: false
+  skip-prune: false
+output: apex_gen.go

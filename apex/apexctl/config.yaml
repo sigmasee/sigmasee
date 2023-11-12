@@ -1,0 +1,12 @@
+app:
+  domainSource: "urn::sigmasee::apex"
+  appSource: "apexctl"
+
+postgres:
+  connectionString: "postgres://root@cockroachdb.localhost:26257/apex"
+  maxOpenConnections: 1
+
+kafka:
+  bootstrapServers: kafka.localhost:19092
+  enableTls: false
+  enableSasl: false

@@ -1,0 +1,61 @@
+name: "apex-shared"
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - "main"
+    tags:
+      - "v*"
+    paths:
+      - ".github/actions/**"
+      - ".github/workflows/lint.yml"
+      - ".github/workflows/apex-shared.yml"
+      - "go.mod"
+      - "go.sum"
+      - "shared/**"
+      - "apex/shared/**"
+  pull_request:
+    branches:
+      - "main"
+    paths:
+      - ".github/actions/**"
+      - ".github/workflows/lint.yml"
+      - ".github/workflows/apex-shared.yml"
+      - "go.mod"
+      - "go.sum"
+      - "shared/**"
+      - "apex/shared/**"
+
+jobs:
+  build:
+    name: "Build"
+    runs-on: self-hosted
+    if: github.event.pull_request.draft == false
+    env:
+      DOCKER_BUILDKIT: 1
+      COMPOSE_DOCKER_CLI_BUILD: 1
+    permissions: write-all
+
+    steps:
+      - name: Checkout code with full history
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Build and Test - domain shared
+        uses: "./.github/actions/build-test"
+        with:
+          dockerFilePath: ./apex/shared/Dockerfile
+          dockerBuildContextPath: .
+
+      - name: Build, Test and Push Image - database migration
+        uses: "./.github/actions/build-test-push"
+        with:
+          dockerFilePath: ./apex/shared/migrations/Dockerfile
+          dockerBuildContextPath: .
+          dockerRegistry: ghcr.io
+          dockerRegistryUsername: ${{ github.actor }}
+          dockerRegistryPassword: ${{ secrets.GITHUB_TOKEN }}
+          dockerNamespace: sigmaseee
+          dockerRepository: apex-database-migrations
