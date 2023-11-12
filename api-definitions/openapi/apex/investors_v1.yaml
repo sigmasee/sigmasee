@@ -1,0 +1,535 @@
+openapi: 3.0.1
+info:
+  title: Investors
+  description: Investors
+  version: '1.0'
+paths:
+  /investors/{id}:
+    get:
+      tags:
+        - Investors
+      summary: Get a single investor
+      description: >-
+        Returns the specified investor with personal information such as name
+        and contact details.
+      operationId: GetInvestor
+      parameters:
+        - name: id
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/InvestorDetail'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvestorDetail'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/InvestorDetail'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /investors/{id}/addresses:
+    get:
+      tags:
+        - Investors
+      summary: Get addresses linked an investor
+      description: Returns a list of addresses linked to the specified investor.
+      operationId: GetInvestorAddresses
+      parameters:
+        - name: id
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/AddressesResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AddressesResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/AddressesResponse'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  /investors/{id}/email-addresses:
+    get:
+      tags:
+        - Investors
+      summary: Get email addresses for an investor
+      description: Returns a list of email addresses linked to the specified investor.
+      operationId: GetInvestorEmailAddresses
+      parameters:
+        - name: id
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/EmailAddressesResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmailAddressesResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/EmailAddressesResponse'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  /investors/{id}/phone-numbers:
+    get:
+      tags:
+        - Investors
+      summary: Get phone numbers for an investor
+      description: Returns a list of phone numbers linked to the specified investor.
+      operationId: GetInvestorPhoneNumbers
+      parameters:
+        - name: id
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/PhoneNumbersResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PhoneNumbersResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/PhoneNumbersResponse'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  /investors:
+    get:
+      tags:
+        - Investors
+      summary: Get paged investors
+      description: Returns a paged list of investors accessible to the user.
+      operationId: GetPagedInvestors
+      parameters:
+        - name: limit
+          in: query
+          description: >-
+            The maximum number of objects that may be returned. Defaults to the
+            maximum of 1000. A result list with fewer items than the specified
+            limit is not a guarantee that the end of the data has been reached.
+            To determine if another page exists, check for a \"before\" or
+            \"after\" value on the response. \"Before\" indicates a previous
+            page exists and \"after\" indicates a subsequent page exists.
+          schema:
+            type: integer
+            format: int32
+        - name: after
+          in: query
+          description: >-
+            If provided, the page returned will begin with the item after this
+            one. To page forwards, you can set this value to the \"after\"
+            property of a previous response. This parameter is mutually
+            exclusive with the before parameter.
+          schema:
+            type: string
+        - name: before
+          in: query
+          description: >-
+            If provided, the page returned will end with the item before this
+            one. To page backwards, you can set this value to the \"before\"
+            property of a previous response. This parameter is mutually
+            exclusive with the after parameter.
+          schema:
+            type: string
+        - name: search
+          in: query
+          description: >-
+            If provided, the results will be filtered to investors where the
+            first or last names contain the search term
+          schema:
+            type: string
+        - name: InvestorCode
+          in: query
+          description: >-
+            If provided, the results will be filtered to investors where the
+            invester code contain the search term
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/InvestorsPagedResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvestorsPagedResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/InvestorsPagedResponse'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  /investments/{id}/investors:
+    get:
+      tags:
+        - Investors
+      summary: Get investors linked an investment
+      description: >-
+        Returns a list of investors accessible to the user which are linked to
+        the specified investment,  with personal information such as name and
+        contact details.
+      operationId: GetInvestmentInvestors
+      parameters:
+        - name: id
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/InvestmentInvestorsResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvestmentInvestorsResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/InvestmentInvestorsResponse'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  /investments/{id}/prescribed-investor-rate:
+    get:
+      tags:
+        - PrescribedInvestorRates
+      summary: Get prescribed investor rate for an investment on a given date
+      description: >-
+        Returns the highest prescribed investor rate belonging to any investors
+        directly linked to the specified investment, as at the specified date.
+      operationId: GetInvestmentPrescribedInvestorRate
+      parameters:
+        - name: id
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: date
+          in: query
+          description: The date for which the prescribed investor rate will be retrieved.
+          schema:
+            type: string
+            format: date-time
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/PrescribedInvestorRateResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PrescribedInvestorRateResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/PrescribedInvestorRateResponse'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /investors/{id}/prescribed-investor-rate:
+    get:
+      tags:
+        - PrescribedInvestorRates
+      summary: Get the prescribed investor rate for an investor on a given date
+      description: >-
+        Returns the prescribed investor rate for the specified investor as at
+        the specified date.
+      operationId: GetInvestorPrescribedInvestorRate
+      parameters:
+        - name: id
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: date
+          in: query
+          description: The date for which the prescribed investor rate will be retrieved.
+          schema:
+            type: string
+            format: date-time
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/PrescribedInvestorRateResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PrescribedInvestorRateResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/PrescribedInvestorRateResponse'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+components:
+  schemas:
+    AddressesResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/InvestorAddress'
+          nullable: true
+      additionalProperties: false
+    EmailAddressesResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/InvestorEmailAddress'
+          nullable: true
+      additionalProperties: false
+    InvestmentInvestorsResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/InvestorDetail'
+          nullable: true
+      additionalProperties: false
+    Investor:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        type:
+          type: string
+          nullable: true
+        title:
+          type: string
+          nullable: true
+        firstName:
+          type: string
+          nullable: true
+        lastName:
+          type: string
+          nullable: true
+        investorCode:
+          type: string
+          nullable: true
+        status:
+          type: string
+          nullable: true
+        masterClient:
+          type: string
+          nullable: true
+      additionalProperties: false
+    InvestorAddress:
+      type: object
+      properties:
+        addressLine1:
+          type: string
+          nullable: true
+        addressLine2:
+          type: string
+          nullable: true
+        addressLine3:
+          type: string
+          nullable: true
+        addressLine4:
+          type: string
+          nullable: true
+        city:
+          type: string
+          nullable: true
+        state:
+          type: string
+          nullable: true
+        region:
+          type: string
+          nullable: true
+        country:
+          type: string
+          nullable: true
+        postalCode:
+          type: string
+          nullable: true
+        isPrimary:
+          type: boolean
+      additionalProperties: false
+    InvestorDetail:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        type:
+          type: string
+          nullable: true
+        amlEntityType:
+          type: string
+          nullable: true
+        greeting:
+          type: string
+          nullable: true
+        name:
+          type: string
+          nullable: true
+        title:
+          type: string
+          nullable: true
+        firstName:
+          type: string
+          nullable: true
+        middleName:
+          type: string
+          nullable: true
+        lastName:
+          type: string
+          nullable: true
+        gender:
+          type: string
+          nullable: true
+        dateOfBirth:
+          type: string
+          format: date-time
+          nullable: true
+        investorCode:
+          type: string
+          nullable: true
+        irdNumber:
+          type: string
+          nullable: true
+        status:
+          type: string
+          nullable: true
+        metadata:
+          nullable: true
+        masterClient:
+          type: string
+          nullable: true
+      additionalProperties: false
+    InvestorEmailAddress:
+      type: object
+      properties:
+        emailAddress:
+          type: string
+          nullable: true
+        userId:
+          type: string
+          format: uuid
+          nullable: true
+        isPrimary:
+          type: boolean
+      additionalProperties: false
+    InvestorPhoneNumber:
+      type: object
+      properties:
+        country:
+          type: string
+          nullable: true
+        phoneNumber:
+          type: string
+          nullable: true
+        isPrimary:
+          type: boolean
+      additionalProperties: false
+    InvestorsPagedResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Investor'
+          nullable: true
+        paging:
+          $ref: '#/components/schemas/Paging'
+      additionalProperties: false
+    Paging:
+      type: object
+      properties:
+        after:
+          type: string
+          nullable: true
+        before:
+          type: string
+          nullable: true
+        total:
+          type: integer
+          format: int32
+      additionalProperties: false
+    PhoneNumbersResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/InvestorPhoneNumber'
+          nullable: true
+      additionalProperties: false
+    PrescribedInvestorRateResponse:
+      type: object
+      properties:
+        rate:
+          type: number
+          format: double
+      additionalProperties: false

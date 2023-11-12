@@ -1,0 +1,2924 @@
+openapi: 3.0.1
+info:
+  title: Investments
+  description: Investments
+  version: '1.0'
+paths:
+  /funds/{code}/risk:
+    get:
+      tags:
+        - Funds
+      summary: Get the risk for a fund for the current date
+      description: Returns the risk for a fund
+      operationId: GetFundRisk
+      parameters:
+        - name: code
+          in: path
+          description: Fund for which to retrieve the risk for
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/FundRiskResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FundRiskResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/FundRiskResponse'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  /funds/{code}/unit-price-series:
+    get:
+      tags:
+        - Funds
+      summary: Get all unit prices for a fund for a given date range
+      description: >-
+        Returns all unit prices for the specified fund (with effective dates)
+        which are applicable on some date within the specified date range.
+      operationId: GetFundUnitPriceSeries
+      parameters:
+        - name: code
+          in: path
+          description: Fund for which to retrieve unit prices
+          required: true
+          schema:
+            type: string
+        - name: startDate
+          in: query
+          description: >-
+            Start date for unit price series. If not provided, the date range
+            queried will start from the earliest price for the fund.
+          schema:
+            type: string
+            format: date-time
+        - name: endDate
+          in: query
+          description: >-
+            End date for unit price series. If not provided, the date range
+            queried will end at the latest price for the fund.
+          schema:
+            type: string
+            format: date-time
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/UnitPriceSeriesResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnitPriceSeriesResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/UnitPriceSeriesResponse'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  /funds/{code}/volatility:
+    get:
+      tags:
+        - Funds
+      summary: Get the volatility for a fund for the current date
+      description: Returns the volatility for a fund
+      operationId: GetFundVolatility
+      parameters:
+        - name: code
+          in: path
+          description: Fund for which to retrieve the volatility for
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/FundVolatilityResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FundVolatilityResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/FundVolatilityResponse'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  /latest-price-date:
+    get:
+      tags:
+        - Funds
+      summary: Get latest valid price date
+      description: >-
+        Returns the latest price date that is valid for the calling user based
+        on funds held by their accessible investments. Returns a 404 if the user
+        does not have any accessible investments, or if their accessible
+        investments have never had holdings.
+      operationId: GetLatestPriceDate
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/LatestPriceDateResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LatestPriceDateResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/LatestPriceDateResponse'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /gains:
+    get:
+      tags:
+        - Gains
+      summary: Get gains for all accessible investments over a specified period
+      description: >-
+        Returns total investment gains for all investments accessible to the
+        user within the specified date range.
+      operationId: GetGains
+      parameters:
+        - name: fromDate
+          in: query
+          description: Start date for the gains calculation
+          schema:
+            type: string
+            format: date-time
+        - name: toDate
+          in: query
+          description: End date for the gains calculation
+          schema:
+            type: string
+            format: date-time
+        - name: fund
+          in: query
+          description: Fund code for the gains calculation
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/GainsResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GainsResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/GainsResponse'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  /investments/{id}/gains:
+    get:
+      tags:
+        - Gains
+      summary: Get investment gains for an investment over a specified period
+      description: >-
+        Returns total investment gains for the specified investment within the
+        specified date range.
+      operationId: GetInvestmentGains
+      parameters:
+        - name: fromDate
+          in: query
+          description: Start date for the gains calculation
+          schema:
+            type: string
+            format: date-time
+        - name: toDate
+          in: query
+          description: End date for the gains calculation
+          schema:
+            type: string
+            format: date-time
+        - name: id
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: fund
+          in: query
+          description: Fund code for the gains calculation
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/GainsResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GainsResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/GainsResponse'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  /investors/{id}/gains:
+    get:
+      tags:
+        - Gains
+      summary: >-
+        Get gains for all investments linked to an investor over a specified
+        period
+      description: >-
+        Returns total investment gains for all investments linked to the
+        specified investor within the specified date range.
+      operationId: GetInvestorGains
+      parameters:
+        - name: fromDate
+          in: query
+          description: Start date for the gains calculation
+          schema:
+            type: string
+            format: date-time
+        - name: toDate
+          in: query
+          description: End date for the gains calculation
+          schema:
+            type: string
+            format: date-time
+        - name: id
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: fund
+          in: query
+          description: Fund code for the gains calculation
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/GainsResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GainsResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/GainsResponse'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  /inception-date:
+    get:
+      tags:
+        - Investments
+      summary: Get earliest inception date across all accessible investments
+      description: >-
+        Returns the inception date for the calling user based on the earliest
+        holding record available across all accessible investments. Returns a
+        404 if the user does not have any accessible investments, or if their
+        accessible investments have never had holdings.
+      operationId: GetInceptionDate
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/InceptionDateResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InceptionDateResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/InceptionDateResponse'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /investments/{id}/target-fund-allocation:
+    get:
+      tags:
+        - Investments
+      summary: Get investment target fund allocation
+      description: >-
+        Returns a list of funds and percentages designated as the target split
+        of holdings for the specified investment. /investments/{id}/funds can be
+        used to calculate the actual split of holdings for comparison.
+      operationId: GetInvestmentTargetFundAllocation
+      parameters:
+        - name: id
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/TargetFundAllocationResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TargetFundAllocationResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/TargetFundAllocationResponse'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  /investments/{id}/price-dates:
+    get:
+      tags:
+        - Investments
+      summary: Get  min and max price dates for all funds
+      description: >-
+        Returns a list of funds for the specified investment with min and max
+        price dates.
+      operationId: GetInvestmentsFundsPriceDates
+      parameters:
+        - name: id
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/FundPriceDatesResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FundPriceDatesResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/FundPriceDatesResponse'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /investments:
+    get:
+      tags:
+        - Investments
+      summary: Get paged investments
+      description: >-
+        Returns a paged list of investments accessible to the user. If a
+        subsequent page exists, the \"after\" property will be populated. If a
+        previous page exists, the \"before\" property will be populated.
+      operationId: GetPagedInvestments
+      parameters:
+        - name: limit
+          in: query
+          description: >-
+            The maximum number of objects that may be returned. Defaults to the
+            maximum of 1000. A result list with fewer items than the specified
+            limit is not a guarantee that the end of the data has been reached.
+            To determine if another page exists, check for a \"before\" or
+            \"after\" value on the response. \"Before\" indicates a previous
+            page exists and \"after\" indicates a subsequent page exists.
+          schema:
+            type: integer
+            format: int32
+        - name: after
+          in: query
+          description: >-
+            If provided, the page returned will begin with the item after this
+            one. To page forwards, you can set this value to the \"after\"
+            property of a previous response. This parameter is mutually
+            exclusive with the before parameter.
+          schema:
+            type: string
+        - name: before
+          in: query
+          description: >-
+            If provided, the page returned will end with the item before this
+            one. To page backwards, you can set this value to the \"before\"
+            property of a previous response. This parameter is mutually
+            exclusive with the after parameter.
+          schema:
+            type: string
+        - name: investmentCode
+          in: query
+          description: If provided, the investments will be filtered by investment code.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/InvestmentsPagedResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvestmentsPagedResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/InvestmentsPagedResponse'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  /investments/{id}:
+    get:
+      tags:
+        - Investments
+      summary: Get a single investment
+      description: >-
+        Returns the specified investment, with total value as at the specified
+        date if a date has been specified.
+      operationId: GetInvestment
+      parameters:
+        - name: id
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/Investment'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Investment'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/Investment'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /investments/{id}/bank-accounts:
+    get:
+      tags:
+        - Investments
+      summary: Get the bank accounts for a single investment
+      description: Returns the banka accounts for the specified investment.
+      operationId: GetInvestmentBankAccounts
+      parameters:
+        - name: id
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/InvestmentBankAccountsResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvestmentBankAccountsResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/InvestmentBankAccountsResponse'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /investments/{id}/funds:
+    get:
+      tags:
+        - Investments
+      summary: Get units and price per fund for an investment on a given date
+      description: >-
+        Returns a list of the funds held by the specified investment, with units
+        held and applicable unit price as at the specified date.
+      operationId: GetInvestmentFunds
+      parameters:
+        - name: id
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: date
+          in: query
+          description: Date for which to retrieve holdings and prices
+          schema:
+            type: string
+            format: date-time
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/InvestmentHoldingsResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvestmentHoldingsResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/InvestmentHoldingsResponse'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  /investors/{id}/inception-date:
+    get:
+      tags:
+        - Investments
+      summary: Get earliest inception date across all investments linked to an investor
+      description: >-
+        Returns the inception date for the specified investor based on the
+        earliest holding record available for their accessible investments. The
+        endpoint returns a 404 if the investor does not have any accessible
+        investments, or if their accessible investments have never had any
+        holdings.
+      operationId: GetInvestorInceptionDate
+      parameters:
+        - name: id
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/InceptionDateResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InceptionDateResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/InceptionDateResponse'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /investors/{id}/investments:
+    get:
+      tags:
+        - Investments
+      summary: Get paged investments linked an investor
+      description: >-
+        Returns a paged list of investments accessible to the specified
+        investor. If a subsequent page exists, the \"after\" property will be
+        populated. If a previous page exists, the \"before\" property will be
+        populated.
+      operationId: GetPagedInvestorInvestments
+      parameters:
+        - name: id
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: limit
+          in: query
+          description: >-
+            The maximum number of objects that may be returned. Defaults to the
+            maximum of 1000. A result list with fewer items than the specified
+            limit is not a guarantee that the end of the data has been reached.
+            To determine if another page exists, check for a \"before\" or
+            \"after\" value on the response. \"Before\" indicates a previous
+            page exists and \"after\" indicates a subsequent page exists.
+          schema:
+            type: integer
+            format: int32
+        - name: after
+          in: query
+          description: >-
+            If provided, the page returned will begin with the item after this
+            one. To page forwards, you can set this value to the \"after\"
+            property of a previous response. This parameter is mutually
+            exclusive with the before parameter.
+          schema:
+            type: string
+        - name: before
+          in: query
+          description: >-
+            If provided, the page returned will end with the item before this
+            one. To page backwards, you can set this value to the \"before\"
+            property of a previous response. This parameter is mutually
+            exclusive with the after parameter.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/InvestmentsPagedResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvestmentsPagedResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/InvestmentsPagedResponse'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  /investments/{id}/fmca-investment-mix:
+    get:
+      tags:
+        - InvestmentsFmca
+      summary: Get the FMCA investment mix for an investment
+      description: >-
+        Returns a list of asset classes underlying the funds held by the
+        specified investment, with market value and percentage share of the
+        overall holdings for each sector.
+      operationId: GetFmcaInvestmentMix
+      parameters:
+        - name: id
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: date
+          in: query
+          description: Date on which to retrieve the holdings
+          schema:
+            type: string
+            format: date-time
+        - name: fund
+          in: query
+          description: >-
+            If provided, restricts the asset list to assets held by the
+            specified fund
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/FmcaInvestmentMixResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FmcaInvestmentMixResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/FmcaInvestmentMixResponse'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  /fmca-top-assets:
+    get:
+      tags:
+        - InvestmentsFmca
+      summary: Get the top assets held by market value for all accessible investments
+      description: >-
+        Returns a list of the assets which constitute the greatest share of the
+        holdings of all investments accessible to the user.
+      operationId: GetFmcaTopAssets
+      parameters:
+        - name: date
+          in: query
+          description: Date on which to retrieve the holdings
+          schema:
+            type: string
+            format: date-time
+        - name: fund
+          in: query
+          description: >-
+            If provided, restricts the asset list to assets held by the
+            specified fund
+          schema:
+            type: string
+        - name: limit
+          in: query
+          description: The maximum number of assets to return. Defaults to 10.
+          schema:
+            type: integer
+            format: int32
+        - name: includeNegativeAssets
+          in: query
+          description: >-
+            When true, assets with a negative value are included in the
+            response. Defaults to false.
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/FmcaTopAssetsResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FmcaTopAssetsResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/FmcaTopAssetsResponse'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  /investors/{id}/fmca-top-assets:
+    get:
+      tags:
+        - InvestmentsFmca
+      summary: Get the top assets held by market value for an investor
+      description: >-
+        Returns a list of the assets which constitute the greatest share of the
+        holdings of the specified investor.
+      operationId: GetInvestorFmcaTopAssets
+      parameters:
+        - name: id
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: date
+          in: query
+          description: Date on which to retrieve the holdings
+          schema:
+            type: string
+            format: date-time
+        - name: fund
+          in: query
+          description: >-
+            If provided, restricts the asset list to assets held by the
+            specified fund
+          schema:
+            type: string
+        - name: limit
+          in: query
+          description: The maximum number of assets to return. Defaults to 10.
+          schema:
+            type: integer
+            format: int32
+        - name: includeNegativeAssets
+          in: query
+          description: >-
+            When true, assets with a negative value are included in the
+            response. Defaults to false.
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/FmcaTopAssetsResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FmcaTopAssetsResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/FmcaTopAssetsResponse'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  /investments/{id}/fmca-top-assets:
+    get:
+      tags:
+        - InvestmentsFmca
+      summary: Get the top assets held by market value for an investment
+      description: >-
+        Returns a list of the assets which constitute the greatest share of the
+        holdings of the specified investment.
+      operationId: GetInvestmentFmcaTopAssets
+      parameters:
+        - name: id
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: date
+          in: query
+          description: Date on which to retrieve the holdings
+          schema:
+            type: string
+            format: date-time
+        - name: fund
+          in: query
+          description: >-
+            If provided, restricts the asset list to assets held by the
+            specified fund
+          schema:
+            type: string
+        - name: limit
+          in: query
+          description: The maximum number of assets to return. Defaults to 10.
+          schema:
+            type: integer
+            format: int32
+        - name: includeNegativeAssets
+          in: query
+          description: >-
+            When true, assets with a negative value are included in the
+            response. Defaults to false.
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/FmcaTopAssetsResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FmcaTopAssetsResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/FmcaTopAssetsResponse'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  /total-value:
+    get:
+      tags:
+        - MarketValue
+      summary: Get total value for all investments accessible to the user
+      description: >-
+        Returns the total value for all investments accessible to the user as at
+        the date provided
+      operationId: GetTotalValue
+      parameters:
+        - name: date
+          in: query
+          description: The date for which the total value will be calculated.
+          schema:
+            type: string
+            format: date-time
+        - name: fund
+          in: query
+          description: >-
+            If provided, restricts the total value calculation to the specified
+            fund
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/TotalValueSeriesItem'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TotalValueSeriesItem'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/TotalValueSeriesItem'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  /investments/total-values:
+    get:
+      tags:
+        - MarketValue
+      summary: Get paged list of total value for all accessible investments
+      description: >-
+        Returns a paged list of the total value of each investment accessible to
+        the calling user, as at the date provided
+      operationId: GetPagedInvestmentTotalValues
+      parameters:
+        - name: date
+          in: query
+          description: The date for which the total value will be calculated.
+          schema:
+            type: string
+            format: date-time
+        - name: limit
+          in: query
+          description: >-
+            The maximum number of objects that may be returned. Defaults to the
+            maximum of 1000. A result list with fewer items than the specified
+            limit is not a guarantee that the end of the data has been reached.
+            To determine if another page exists, check for a \"before\" or
+            \"after\" value on the response. \"Before\" indicates a previous
+            page exists and \"after\" indicates a subsequent page exists.
+          schema:
+            type: integer
+            format: int32
+        - name: after
+          in: query
+          description: >-
+            If provided, the page returned will begin with the item after this
+            one. To page forwards, you can set this value to the \"after\"
+            property of a previous response. This parameter is mutually
+            exclusive with the before parameter.
+          schema:
+            type: string
+        - name: before
+          in: query
+          description: >-
+            If provided, the page returned will end with the item before this
+            one. To page backwards, you can set this value to the \"before\"
+            property of a previous response. This parameter is mutually
+            exclusive with the after parameter.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/InvestmentsTotalValuePagedResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvestmentsTotalValuePagedResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/InvestmentsTotalValuePagedResponse'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  /investments/{id}/total-value:
+    get:
+      tags:
+        - MarketValue
+      summary: Get total value and active investment count for an investor
+      description: >-
+        Returns the total value and number of investments linked to the
+        specified investor as at the date provided. The investment count
+        includes ACTIVE investments only. Investments with a null or zero
+        balance on the specified date are not counted.
+      operationId: GetInvestmentTotalValue
+      parameters:
+        - name: id
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: date
+          in: query
+          description: The date for which the total value will be calculated.
+          schema:
+            type: string
+            format: date-time
+        - name: fund
+          in: query
+          description: >-
+            If provided, restricts the total value calculation to the specified
+            fund
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/InvestmentTotalValueResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvestmentTotalValueResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/InvestmentTotalValueResponse'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  /investments/{id}/total-value-series:
+    get:
+      tags:
+        - MarketValue
+      summary: Get total value of an investment across multiple dates
+      description: >-
+        Returns the total value of the specified investment as at each of the
+        dates provided.
+      operationId: GetInvestmentTotalValueSeries
+      parameters:
+        - name: id
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: dates
+          in: query
+          description: >-
+            A comma-separated list of dates for which the total value will be
+            calculated.
+          schema:
+            type: string
+        - name: fund
+          in: query
+          description: >-
+            If provided, restricts the total value calculation to the specified
+            fund
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/TotalValueSeriesResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TotalValueSeriesResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/TotalValueSeriesResponse'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  /investors/{id}/total-value:
+    get:
+      tags:
+        - MarketValue
+      summary: Get total value and active investment count for an investor
+      description: >-
+        Returns the total value and number of investments linked to the
+        specified investor as at the date provided. The investment count
+        includes ACTIVE investments only. Investments with a null or zero
+        balance on the specified date are not counted.
+      operationId: GetInvestorTotalValue
+      parameters:
+        - name: id
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: date
+          in: query
+          description: The date for which the total value will be calculated.
+          schema:
+            type: string
+            format: date-time
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/InvestorTotalValueResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvestorTotalValueResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/InvestorTotalValueResponse'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  /investors/total-values:
+    get:
+      tags:
+        - MarketValue
+      summary: >-
+        Get paged total value and active investment count for all accessible
+        investors
+      description: >-
+        Returns a paged list of investors with total value and number of
+        investments linked as at the date provided. The investment count
+        includes ACTIVE investments only. Investments with a null or zero
+        balance on the specified date are not counted.
+      operationId: GetPagedInvestorTotalValues
+      parameters:
+        - name: date
+          in: query
+          description: The date for which the total value will be calculated.
+          schema:
+            type: string
+            format: date-time
+        - name: limit
+          in: query
+          description: >-
+            The maximum number of objects that may be returned. Defaults to the
+            maximum of 1000. A result list with fewer items than the specified
+            limit is not a guarantee that the end of the data has been reached.
+            To determine if another page exists, check for a \"before\" or
+            \"after\" value on the response. \"Before\" indicates a previous
+            page exists and \"after\" indicates a subsequent page exists.
+          schema:
+            type: integer
+            format: int32
+        - name: after
+          in: query
+          description: >-
+            If provided, the page returned will begin with the item after this
+            one. To page forwards, you can set this value to the \"after\"
+            property of a previous response. This parameter is mutually
+            exclusive with the before parameter.
+          schema:
+            type: string
+        - name: before
+          in: query
+          description: >-
+            If provided, the page returned will end with the item before this
+            one. To page backwards, you can set this value to the \"before\"
+            property of a previous response. This parameter is mutually
+            exclusive with the after parameter.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/InvestorsTotalValuePagedResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvestorsTotalValuePagedResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/InvestorsTotalValuePagedResponse'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  /total-value-series:
+    get:
+      tags:
+        - MarketValue
+      summary: Get total value of all accessible investments across multiple dates
+      description: >-
+        Returns the total value of all investments accessible to the user as at
+        each of the dates provided.
+      operationId: GetTotalValueSeries
+      parameters:
+        - name: dates
+          in: query
+          description: >-
+            A comma-separated list of dates for which the total value will be
+            calculated.
+          schema:
+            type: string
+        - name: fund
+          in: query
+          description: >-
+            If provided, restricts the total value calculation to the specified
+            fund
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/TotalValueSeriesResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TotalValueSeriesResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/TotalValueSeriesResponse'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  /investments/{id}/net-return:
+    get:
+      tags:
+        - NetReturn
+      summary: Get net return for an investment
+      description: >-
+        Returns the net return for the specified investment across the specified
+        date range.
+      operationId: GetInvestmentNetReturn
+      parameters:
+        - name: fromDate
+          in: query
+          description: Start date for the net return calculation
+          schema:
+            type: string
+            format: date-time
+        - name: toDate
+          in: query
+          description: End date for the net return calculation
+          schema:
+            type: string
+            format: date-time
+        - name: id
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: fund
+          in: query
+          description: >-
+            If provided, restricts the net return calculation to the specified
+            fund
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/NetReturnResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NetReturnResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/NetReturnResponse'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /investments/{id}/net-return-series:
+    get:
+      tags:
+        - NetReturn
+      summary: >-
+        Get net return calculations for an investment across successively longer
+        periods
+      description: >-
+        Returns the net return for the specified investment for each of the
+        specified date ranges.
+      operationId: GetInvestmentNetReturnSeries
+      parameters:
+        - name: id
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: dates
+          in: query
+          description: >-
+            A comma-separated list of dates to be used as the start and end
+            dates for the net return calculation. The earliest date will be the
+            start date for every period, and each other date will be the end
+            date for a single period.
+          schema:
+            type: string
+        - name: fund
+          in: query
+          description: >-
+            If provided, restricts the net return calculation to the specified
+            fund
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/NetReturnSeriesResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NetReturnSeriesResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/NetReturnSeriesResponse'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  /investors/{id}/net-return:
+    get:
+      tags:
+        - NetReturn
+      summary: Get net return for an investor
+      description: >-
+        Returns the aggregate net return across all investments linked to the
+        specified investor across the specified date range.
+      operationId: GetInvestorNetReturn
+      parameters:
+        - name: fromDate
+          in: query
+          description: Start date for the net return calculation
+          schema:
+            type: string
+            format: date-time
+        - name: toDate
+          in: query
+          description: End date for the net return calculation
+          schema:
+            type: string
+            format: date-time
+        - name: id
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: fund
+          in: query
+          description: Fund code for the net return calculation
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/NetReturnResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NetReturnResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/NetReturnResponse'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /net-return-series:
+    get:
+      tags:
+        - NetReturn
+      summary: >-
+        Get aggregate net return calculations for all accessible investments
+        across successively longer periods
+      description: >-
+        Returns the aggregate net return across all investments accessible to
+        the user for each of the specified date ranges.
+      operationId: GetNetReturnSeries
+      parameters:
+        - name: dates
+          in: query
+          description: >-
+            A comma-separated list of dates to be used as the start and end
+            dates for the net return calculation. The earliest date will be the
+            start date for every period, and each other date will be the end
+            date for a single period.
+          schema:
+            type: string
+        - name: fund
+          in: query
+          description: >-
+            If provided, restricts the net return calculation to the specified
+            fund
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/NetReturnSeriesResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NetReturnSeriesResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/NetReturnSeriesResponse'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  /investments/{id}/transactions/balance-breakdown:
+    get:
+      tags:
+        - Transactions
+      summary: >-
+        Get transaction balance breakdown for an investment over a specified
+        period
+      description: >-
+        Returns grouped totals of transactions for the specified investment
+        within the specified date range.
+      operationId: GetInvestmentTransactionBalanceBreakdown
+      parameters:
+        - name: fromDate
+          in: query
+          description: Start date for the balance breakdown
+          schema:
+            type: string
+            format: date-time
+        - name: toDate
+          in: query
+          description: End date for the balance breakdown
+          schema:
+            type: string
+            format: date-time
+        - name: id
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: fund
+          in: query
+          description: >-
+            If provided, restricts the net return calculation to the specified
+            fund
+          schema:
+            type: string
+        - name: groupingType
+          in: query
+          description: >-
+            If provided, changes the grouping of the transactions and
+            description. KiwiSaverDefault, RetailDefault, MixDefault.
+          schema:
+            type: string
+        - name: groupByFund
+          in: query
+          description: If provided, the balance breakdowns are grouped by fund cod
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/BalanceBreakdownResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BalanceBreakdownResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/BalanceBreakdownResponse'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  /investments/{id}/transactions/highlights:
+    get:
+      tags:
+        - Transactions
+      summary: Get transaction highlights for an investment over a specified period
+      description: >-
+        Returns grouped totals of contributions, withdrawals, tax, fees, and
+        distributions relating to the specified investment within the specified
+        date range.
+      operationId: GetInvestmentTransactionHighlights
+      parameters:
+        - name: fromDate
+          in: query
+          description: Start date for the highlights calculation
+          schema:
+            type: string
+            format: date-time
+        - name: toDate
+          in: query
+          description: End date for the highlights calculation
+          schema:
+            type: string
+            format: date-time
+        - name: id
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: fund
+          in: query
+          description: Fund code for the highlights calculation
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/TransactionHighlightsResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionHighlightsResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/TransactionHighlightsResponse'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  /investments/{id}/transactions/csv:
+    get:
+      tags:
+        - Transactions
+      summary: Get transactions for an investment in csv format
+      description: >-
+        Returns a CSV file of posted transactions relating to the specified
+        investment which fall within the specified date range.
+      operationId: GetInvestmentTransactionsCsv
+      parameters:
+        - name: fromDate
+          in: query
+          description: The earliest acceptable effective date for returned transactions
+          schema:
+            type: string
+            format: date-time
+        - name: toDate
+          in: query
+          description: The latest acceptable effective date for returned transactions
+          schema:
+            type: string
+            format: date-time
+        - name: id
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/System.IO.Stream'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/System.IO.Stream'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/System.IO.Stream'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  /investors/{id}/transactions/balance-breakdown:
+    get:
+      tags:
+        - Transactions
+      summary: >-
+        Get transaction balance breakdown for an investor over a specified
+        period
+      description: >-
+        Returns grouped totals of transactions for the specified investor within
+        the specified date range.
+      operationId: GetInvestorTransactionBalanceBreakdown
+      parameters:
+        - name: fromDate
+          in: query
+          description: Start date for the balance breakdown
+          schema:
+            type: string
+            format: date-time
+        - name: toDate
+          in: query
+          description: End date for the balance breakdown
+          schema:
+            type: string
+            format: date-time
+        - name: id
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: fund
+          in: query
+          description: >-
+            If provided, restricts the net return calculation to the specified
+            fund
+          schema:
+            type: string
+        - name: groupingType
+          in: query
+          description: >-
+            If provided, changes the grouping of the transactions and
+            description. KiwiSaverDefault, RetailDefault, MixDefault.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/BalanceBreakdownResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BalanceBreakdownResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/BalanceBreakdownResponse'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  /investors/{id}/transactions/highlights:
+    get:
+      tags:
+        - Transactions
+      summary: >-
+        Get transaction highlights for all investments linked to an investor
+        over a specified period
+      description: >-
+        Returns grouped totals of contributions, withdrawals, tax, fees, and
+        distributions relating to all investments linked to the specified
+        investor within the specified date range.
+      operationId: GetInvestorTransactionHighlights
+      parameters:
+        - name: fromDate
+          in: query
+          description: Start date for the highlights calculation
+          schema:
+            type: string
+            format: date-time
+        - name: toDate
+          in: query
+          description: End date for the highlights calculation
+          schema:
+            type: string
+            format: date-time
+        - name: id
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: fund
+          in: query
+          description: Fund code for the highlights calculation
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/TransactionHighlightsResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionHighlightsResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/TransactionHighlightsResponse'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  /investments/{id}/transactions:
+    get:
+      tags:
+        - Transactions
+      summary: Get paged transactions for an investment
+      description: >-
+        Returns a paged list of posted transactions relating to the specified
+        investment which fall within the specified date range.
+      operationId: GetPagedInvestmentTransactions
+      parameters:
+        - name: fromDate
+          in: query
+          description: The earliest acceptable effective date for returned transactions
+          schema:
+            type: string
+            format: date-time
+        - name: toDate
+          in: query
+          description: The latest acceptable effective date for returned transactions
+          schema:
+            type: string
+            format: date-time
+        - name: id
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/TransactionsPagedResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionsPagedResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/TransactionsPagedResponse'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  /investors/{id}/transactions:
+    get:
+      tags:
+        - Transactions
+      summary: Get paged transactions for an investor
+      description: >-
+        Returns a paged list of posted transactions relating to all investments
+        linked to the specified investor which fall within the specified date
+        range.
+      operationId: GetPagedInvestorTransactions
+      parameters:
+        - name: fromDate
+          in: query
+          description: The earliest acceptable effective date for returned transactions
+          schema:
+            type: string
+            format: date-time
+        - name: toDate
+          in: query
+          description: The latest acceptable effective date for returned transactions
+          schema:
+            type: string
+            format: date-time
+        - name: id
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: type
+          in: query
+          description: >-
+            If provided, filters the results to the specific transaction type,
+            i.e. \"APP\", \"WDW\", \"FEE\"
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/TransactionsPagedResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionsPagedResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/TransactionsPagedResponse'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  /transactions/highlights:
+    get:
+      tags:
+        - Transactions
+      summary: >-
+        Get transaction highlights for all accessible investments over a
+        specified period
+      description: >-
+        Returns grouped totals of contributions, withdrawals, tax, fees, and
+        distributions relating to all investments accessible to the user within
+        the specified date range.
+      operationId: GetTransactionHighlights
+      parameters:
+        - name: fromDate
+          in: query
+          description: Start date for the highlights calculation
+          schema:
+            type: string
+            format: date-time
+        - name: toDate
+          in: query
+          description: End date for the highlights calculation
+          schema:
+            type: string
+            format: date-time
+        - name: fund
+          in: query
+          description: Fund code for the highlights calculation
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/TransactionHighlightsResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionHighlightsResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/TransactionHighlightsResponse'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  /standing-instructions:
+    get:
+      tags:
+        - Transactions
+      summary: Get standing instructions for all accessible investments
+      description: >-
+        Returns all standing instructions relating to all investments accessible
+        to the user.
+      operationId: GetStandingInstructions
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/StandingInstructionsResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandingInstructionsResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/StandingInstructionsResponse'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  /investments/{id}/standing-instructions:
+    get:
+      tags:
+        - Transactions
+      summary: Get standing instructions for an investment
+      description: Returns all standing instructions relating to the specified investment.
+      operationId: GetInvestmentStandingInstructions
+      parameters:
+        - name: id
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/StandingInstructionsResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandingInstructionsResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/StandingInstructionsResponse'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  /investors/{id}/standing-instructions:
+    get:
+      tags:
+        - Transactions
+      summary: Get standing instructions for all investments linked to an investor
+      description: >-
+        Returns all standing instructions relating to all investments linked to
+        the specified investor.
+      operationId: GetInvestorStandingInstructions
+      parameters:
+        - name: id
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/StandingInstructionsResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandingInstructionsResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/StandingInstructionsResponse'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  /investments/{id}/pending-transactions:
+    get:
+      tags:
+        - Transactions
+      summary: Get paged pending transactions for an investment
+      description: >-
+        Returns a list of pending transactions relating to the specified
+        investment which fall within the specified date range.
+      operationId: GetInvestmentPendingTransactions
+      parameters:
+        - name: fromDate
+          in: query
+          description: The earliest acceptable effective date for returned transactions
+          schema:
+            type: string
+            format: date-time
+        - name: toDate
+          in: query
+          description: The latest acceptable effective date for returned transactions
+          schema:
+            type: string
+            format: date-time
+        - name: id
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/PendingTransactionsResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PendingTransactionsResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/PendingTransactionsResponse'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  /investors/{id}/pending-transactions:
+    get:
+      tags:
+        - Transactions
+      summary: Get pending transactions for an investor
+      description: >-
+        Returns a list of pending transactions relating to all investments
+        linked to the specified investor which fall within the specified date
+        range.
+      operationId: GetInvestorPendingTransactions
+      parameters:
+        - name: fromDate
+          in: query
+          description: >-
+            The earliest acceptable effective date for returned pending
+            transactions
+          schema:
+            type: string
+            format: date-time
+        - name: toDate
+          in: query
+          description: >-
+            The latest acceptable effective date for returned pending
+            transactions
+          schema:
+            type: string
+            format: date-time
+        - name: id
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/PendingTransactionsResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PendingTransactionsResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/PendingTransactionsResponse'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  /pending-transactions:
+    get:
+      tags:
+        - Transactions
+      summary: >-
+        Get pending transactions for all accessible investments over a specified
+        period
+      description: >-
+        Returns a list of pending transactions relating to all accessible
+        investments which fall within the specified date range.
+      operationId: GetPendingTransactions
+      parameters:
+        - name: fromDate
+          in: query
+          description: >-
+            The earliest acceptable effective date for returned pending
+            transactions
+          schema:
+            type: string
+            format: date-time
+        - name: toDate
+          in: query
+          description: >-
+            The latest acceptable effective date for returned pending
+            transactions
+          schema:
+            type: string
+            format: date-time
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/PendingTransactionsResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PendingTransactionsResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/PendingTransactionsResponse'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  /transactions:
+    get:
+      tags:
+        - Transactions
+      summary: >-
+        Get paged transactions relating to all investments accessible to the
+        user within the specified date range
+      description: >-
+        Returns a paged list of posted transactions relating to all investments
+        linked to a user which fall within the specified date range.
+      operationId: GetPagedTransactions
+      parameters:
+        - name: fromDate
+          in: query
+          description: The earliest acceptable effective date for returned transactions
+          schema:
+            type: string
+            format: date-time
+        - name: toDate
+          in: query
+          description: The latest acceptable effective date for returned transactions
+          schema:
+            type: string
+            format: date-time
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/TransactionsPagedResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionsPagedResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/TransactionsPagedResponse'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  /transactions/balance-breakdown:
+    get:
+      tags:
+        - Transactions
+      summary: >-
+        Get transaction balance breakdown for all investments accessible to the
+        user over a specified period
+      description: >-
+        Returns grouped totals of transactions for all investments accessible to
+        the user within the specified date range.
+      operationId: GetTransactionBalanceBreakdown
+      parameters:
+        - name: fromDate
+          in: query
+          description: Start date for the balance breakdown
+          schema:
+            type: string
+            format: date-time
+        - name: toDate
+          in: query
+          description: End date for the balance breakdown
+          schema:
+            type: string
+            format: date-time
+        - name: fund
+          in: query
+          description: >-
+            If provided, restricts the net return calculation to the specified
+            fund
+          schema:
+            type: string
+        - name: groupingType
+          in: query
+          description: >-
+            If provided, changes the grouping of the transactions and
+            description. KiwiSaverDefault, RetailDefault, MixDefault.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/BalanceBreakdownResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BalanceBreakdownResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/BalanceBreakdownResponse'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+components:
+  schemas:
+    BalanceBreakdownResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/BalanceBreakdownResponseItem'
+          nullable: true
+      additionalProperties: false
+    BalanceBreakdownResponseItem:
+      type: object
+      properties:
+        amount:
+          type: number
+          format: double
+        description:
+          type: string
+          nullable: true
+        fundCode:
+          type: string
+          nullable: true
+      additionalProperties: false
+    FmcaInvestmentMixResponse:
+      type: object
+      properties:
+        fmcaDate:
+          type: string
+          format: date-time
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/FmcaInvestmentMixResponseItem'
+          nullable: true
+      additionalProperties: false
+    FmcaInvestmentMixResponseItem:
+      type: object
+      properties:
+        fundCode:
+          type: string
+          nullable: true
+        fmcaAssetClass:
+          type: string
+          nullable: true
+        percentage:
+          type: number
+          format: double
+        sectorValueBase:
+          type: number
+          format: double
+      additionalProperties: false
+    FmcaTopAssetsResponse:
+      type: object
+      properties:
+        fmcaDate:
+          type: string
+          format: date-time
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/FmcaTopAssetsResponseItem'
+          nullable: true
+      additionalProperties: false
+    FmcaTopAssetsResponseItem:
+      type: object
+      properties:
+        funds:
+          type: array
+          items:
+            type: string
+          nullable: true
+        assetName:
+          type: string
+          nullable: true
+        fmcaAssetClass:
+          type: string
+          nullable: true
+        fmcaAssetType:
+          type: string
+          nullable: true
+        percentage:
+          type: number
+          format: double
+        investorAssetValueBase:
+          type: number
+          format: double
+      additionalProperties: false
+    FundPriceDatesResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/FundPriceDatesResponseItem'
+          nullable: true
+      additionalProperties: false
+    FundPriceDatesResponseItem:
+      type: object
+      properties:
+        fundCode:
+          type: string
+          nullable: true
+        minimumDate:
+          type: string
+          format: date-time
+        maximumDate:
+          type: string
+          format: date-time
+      additionalProperties: false
+    FundRiskResponse:
+      type: object
+      properties:
+        fundCode:
+          type: string
+          nullable: true
+        frequency:
+          type: string
+          nullable: true
+        risk:
+          type: number
+          format: double
+        fromDate:
+          type: string
+          format: date-time
+        toDate:
+          type: string
+          format: date-time
+      additionalProperties: false
+    FundVolatilityResponse:
+      type: object
+      properties:
+        fundCode:
+          type: string
+          nullable: true
+        frequency:
+          type: string
+          nullable: true
+        volatility:
+          type: number
+          format: double
+        fromDate:
+          type: string
+          format: date-time
+        toDate:
+          type: string
+          format: date-time
+      additionalProperties: false
+    GainsResponse:
+      type: object
+      properties:
+        value:
+          type: number
+          format: double
+          nullable: true
+      additionalProperties: false
+    InceptionDateResponse:
+      type: object
+      properties:
+        date:
+          type: string
+          format: date-time
+      additionalProperties: false
+    Investment:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        code:
+          type: string
+          nullable: true
+        name:
+          type: string
+          nullable: true
+        type:
+          type: string
+          nullable: true
+        distributionMethod:
+          type: string
+          nullable: true
+        status:
+          type: string
+          nullable: true
+        inceptionDate:
+          type: string
+          format: date-time
+        closeDate:
+          type: string
+          format: date-time
+          nullable: true
+        feeRate:
+          type: number
+          format: double
+          nullable: true
+        primaryInvestorId:
+          type: string
+          format: uuid
+        metadata:
+          nullable: true
+        masterClient:
+          type: string
+          nullable: true
+      additionalProperties: false
+    InvestmentBankAccount:
+      type: object
+      properties:
+        bankCode:
+          type: number
+          format: double
+          nullable: true
+        branchCode:
+          type: number
+          format: double
+          nullable: true
+        accountNumber:
+          type: number
+          format: double
+          nullable: true
+        suffix:
+          type: number
+          format: double
+          nullable: true
+        bankAccountName:
+          type: string
+          nullable: true
+        isPrimary:
+          type: boolean
+        whenCreatedUtc:
+          type: string
+          format: date-time
+          nullable: true
+      additionalProperties: false
+    InvestmentBankAccountsResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/InvestmentBankAccount'
+          nullable: true
+      additionalProperties: false
+    InvestmentHolding:
+      type: object
+      properties:
+        code:
+          type: string
+          nullable: true
+        name:
+          type: string
+          nullable: true
+        units:
+          type: number
+          format: double
+        price:
+          type: number
+          format: double
+          nullable: true
+      additionalProperties: false
+    InvestmentHoldingsResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/InvestmentHolding'
+          nullable: true
+      additionalProperties: false
+    InvestmentTotalValueResponse:
+      type: object
+      properties:
+        investmentId:
+          type: string
+          format: uuid
+        totalValue:
+          type: number
+          format: double
+          nullable: true
+      additionalProperties: false
+    InvestmentsPagedResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Investment'
+          nullable: true
+        paging:
+          $ref: '#/components/schemas/Paging'
+      additionalProperties: false
+    InvestmentsTotalValuePagedResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/InvestmentTotalValueResponse'
+          nullable: true
+        paging:
+          $ref: '#/components/schemas/Paging'
+      additionalProperties: false
+    InvestorTotalValueResponse:
+      type: object
+      properties:
+        investorId:
+          type: string
+          format: uuid
+        totalValue:
+          type: number
+          format: double
+          nullable: true
+        investmentCount:
+          type: number
+          format: double
+          nullable: true
+      additionalProperties: false
+    InvestorsTotalValuePagedResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/InvestorTotalValueResponse'
+          nullable: true
+        paging:
+          $ref: '#/components/schemas/Paging'
+      additionalProperties: false
+    LatestPriceDateResponse:
+      type: object
+      properties:
+        date:
+          type: string
+          format: date-time
+      additionalProperties: false
+    NetReturnResponse:
+      type: object
+      properties:
+        netReturn:
+          type: number
+          format: double
+      additionalProperties: false
+    NetReturnSeriesItem:
+      type: object
+      properties:
+        startDate:
+          type: string
+          nullable: true
+        endDate:
+          type: string
+          nullable: true
+        netReturn:
+          type: number
+          format: double
+          nullable: true
+      additionalProperties: false
+    NetReturnSeriesResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/NetReturnSeriesItem'
+          nullable: true
+      additionalProperties: false
+    Paging:
+      type: object
+      properties:
+        after:
+          type: string
+          nullable: true
+        before:
+          type: string
+          nullable: true
+        total:
+          type: integer
+          format: int32
+          nullable: true
+      additionalProperties: false
+    PendingTransactionResponseItem:
+      type: object
+      properties:
+        investmentId:
+          type: string
+          format: uuid
+        effectiveDate:
+          type: string
+          format: date-time
+        fundCode:
+          type: string
+          nullable: true
+        fundName:
+          type: string
+          nullable: true
+        amount:
+          type: number
+          format: double
+          nullable: true
+        amountType:
+          type: string
+          nullable: true
+      additionalProperties: false
+    PendingTransactionsResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/PendingTransactionResponseItem'
+          nullable: true
+      additionalProperties: false
+    StandingInstructionResponseItem:
+      type: object
+      properties:
+        standingInstructionId:
+          type: number
+          format: double
+        investmentId:
+          type: string
+          format: uuid
+        bankAccountId:
+          type: number
+          format: double
+        fundCode:
+          type: string
+          nullable: true
+        lastRunDate:
+          type: string
+          format: date-time
+        nextRunDate:
+          type: string
+          format: date-time
+        amount:
+          type: number
+          format: double
+        amountType:
+          type: string
+          nullable: true
+        calendarName:
+          type: string
+          nullable: true
+        calendarFrequency:
+          type: number
+          format: double
+        standingInstructionType:
+          type: string
+          nullable: true
+      additionalProperties: false
+    StandingInstructionsResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/StandingInstructionResponseItem'
+          nullable: true
+      additionalProperties: false
+    System.IO.Stream:
+      type: object
+      properties:
+        canRead:
+          type: boolean
+          readOnly: true
+        canWrite:
+          type: boolean
+          readOnly: true
+        canSeek:
+          type: boolean
+          readOnly: true
+        canTimeout:
+          type: boolean
+          readOnly: true
+        length:
+          type: integer
+          format: int64
+          readOnly: true
+        position:
+          type: integer
+          format: int64
+        readTimeout:
+          type: integer
+          format: int32
+        writeTimeout:
+          type: integer
+          format: int32
+      additionalProperties: false
+    TargetFundAllocationResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/TargetFundAllocationResponseItem'
+          nullable: true
+      additionalProperties: false
+    TargetFundAllocationResponseItem:
+      type: object
+      properties:
+        fundCode:
+          type: string
+          nullable: true
+        fundName:
+          type: string
+          nullable: true
+        percentage:
+          type: number
+          format: double
+      additionalProperties: false
+    TotalValueSeriesItem:
+      type: object
+      properties:
+        date:
+          type: string
+          nullable: true
+        totalValue:
+          type: number
+          format: double
+          nullable: true
+      additionalProperties: false
+    TotalValueSeriesResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/TotalValueSeriesItem'
+          nullable: true
+      additionalProperties: false
+    TransactionHighlightsResponse:
+      type: object
+      properties:
+        contributions:
+          type: number
+          format: double
+          nullable: true
+        withdrawals:
+          type: number
+          format: double
+          nullable: true
+        cashDistributions:
+          type: number
+          format: double
+        reinvestedDistributions:
+          type: number
+          format: double
+          nullable: true
+        fees:
+          type: number
+          format: double
+          nullable: true
+        tax:
+          type: number
+          format: double
+          nullable: true
+      additionalProperties: false
+    TransactionResponseItem:
+      type: object
+      properties:
+        investmentId:
+          type: string
+          format: uuid
+        transactionId:
+          type: number
+          format: double
+        effectiveDate:
+          type: string
+          format: date-time
+        fundCode:
+          type: string
+          nullable: true
+        fundName:
+          type: string
+          nullable: true
+        transactionType:
+          type: string
+          nullable: true
+        transactionSubtype:
+          type: string
+          nullable: true
+        description:
+          type: string
+          nullable: true
+        formulatedTransactionDescription:
+          type: string
+          nullable: true
+        units:
+          type: number
+          format: double
+          nullable: true
+        price:
+          type: number
+          format: double
+          nullable: true
+        cash:
+          type: number
+          format: double
+          nullable: true
+        fee:
+          type: number
+          format: double
+          nullable: true
+        accruedIncome:
+          type: number
+          format: double
+          nullable: true
+        cashClearing:
+          type: number
+          format: double
+          nullable: true
+        paymentClearing:
+          type: number
+          format: double
+          nullable: true
+        amount:
+          type: number
+          format: double
+          nullable: true
+        tax:
+          type: number
+          format: double
+          nullable: true
+        taxRebate:
+          type: number
+          format: double
+          nullable: true
+        transactionContext:
+          type: string
+          nullable: true
+        transactionMethod:
+          type: string
+          nullable: true
+        transactionReason:
+          type: string
+          nullable: true
+        transactionSource:
+          type: string
+          nullable: true
+      additionalProperties: false
+    TransactionsPagedResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/TransactionResponseItem'
+          nullable: true
+      additionalProperties: false
+    UnitPriceSeriesItem:
+      type: object
+      properties:
+        date:
+          type: string
+          nullable: true
+        unitPrice:
+          type: number
+          format: double
+          nullable: true
+      additionalProperties: false
+    UnitPriceSeriesResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/UnitPriceSeriesItem'
+          nullable: true
+      additionalProperties: false

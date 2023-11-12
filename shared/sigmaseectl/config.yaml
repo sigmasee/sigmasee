@@ -1,0 +1,7 @@
+app:
+  domainSource: "urn::sigmasee"
+  appSource: "sigmaseectl"
+
+postgres:
+  connectionString: "postgres://root@cockroachdb.localhost:26257"
+  maxOpenConnections: 5

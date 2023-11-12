@@ -1,0 +1,9 @@
+package: apexregistrydocumentsv1
+generate:
+  client: true
+  models: true
+  embedded-spec: true
+output-options:
+  skip-fmt: false
+  skip-prune: false
+output: apex_registry_documents_gen.go

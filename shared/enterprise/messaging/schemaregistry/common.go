@@ -1,0 +1,3 @@
+package schemaregistry
+
+var ReservedHeaders = []byte{0x00, 0x00, 0x00, 0x00, 0x00}
