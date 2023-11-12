@@ -1,0 +1,280 @@
+openapi: 3.0.1
+info:
+  title: Registry Documents
+  description: Registry Documents
+  version: '1.0'
+paths:
+  /investments/documents:
+    get:
+      tags:
+        - InvestmentDocuments
+      operationId: GetInvestmentsDocuments
+      parameters:
+        - name: fromDate
+          in: query
+          schema:
+            type: string
+            format: date-time
+        - name: toDate
+          in: query
+          schema:
+            type: string
+            format: date-time
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/DocumentsResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DocumentsResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/DocumentsResponse'
+  /investments/{id}/documents:
+    get:
+      tags:
+        - InvestmentDocuments
+      operationId: GetInvestmentDocuments
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: fromDate
+          in: query
+          schema:
+            type: string
+            format: date-time
+        - name: toDate
+          in: query
+          schema:
+            type: string
+            format: date-time
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/DocumentsResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DocumentsResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/DocumentsResponse'
+  /investments/{id}/documents/{documentId}/{fileName}:
+    get:
+      tags:
+        - InvestmentDocuments
+      operationId: GetInvestmentDocument
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: documentId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: fileName
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/System.IO.Stream'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/System.IO.Stream'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/System.IO.Stream'
+  /investors/documents:
+    get:
+      tags:
+        - InvestorDocuments
+      operationId: GetInvestorsDocuments
+      parameters:
+        - name: includeInvestmentDocuments
+          in: query
+          schema:
+            type: boolean
+        - name: fromDate
+          in: query
+          schema:
+            type: string
+            format: date-time
+        - name: toDate
+          in: query
+          schema:
+            type: string
+            format: date-time
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/DocumentsResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DocumentsResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/DocumentsResponse'
+  /investors/{id}/documents:
+    get:
+      tags:
+        - InvestorDocuments
+      operationId: GetInvestorDocuments
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: includeInvestmentDocuments
+          in: query
+          schema:
+            type: boolean
+        - name: fromDate
+          in: query
+          schema:
+            type: string
+            format: date-time
+        - name: toDate
+          in: query
+          schema:
+            type: string
+            format: date-time
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/DocumentsResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DocumentsResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/DocumentsResponse'
+  /investors/{id}/documents/{documentId}/{fileName}:
+    get:
+      tags:
+        - InvestorDocuments
+      operationId: GetInvestorDocument
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: documentId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: fileName
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/System.IO.Stream'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/System.IO.Stream'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/System.IO.Stream'
+components:
+  schemas:
+    Document:
+      type: object
+      properties:
+        investmentId:
+          type: string
+          format: uuid
+          nullable: true
+        investorId:
+          type: string
+          format: uuid
+          nullable: true
+        documentId:
+          type: string
+          format: uuid
+        fileName:
+          type: string
+          nullable: true
+        documentDate:
+          type: string
+          format: date-time
+        location:
+          type: string
+          nullable: true
+        metadata:
+          nullable: true
+      additionalProperties: false
+    DocumentsResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Document'
+          nullable: true
+      additionalProperties: false
+    System.IO.Stream:
+      type: object
+      properties:
+        canRead:
+          type: boolean
+          readOnly: true
+        canWrite:
+          type: boolean
+          readOnly: true
+        canSeek:
+          type: boolean
+          readOnly: true
+        canTimeout:
+          type: boolean
+          readOnly: true
+        length:
+          type: integer
+          format: int64
+          readOnly: true
+        position:
+          type: integer
+          format: int64
+        readTimeout:
+          type: integer
+          format: int32
+        writeTimeout:
+          type: integer
+          format: int32
+      additionalProperties: false

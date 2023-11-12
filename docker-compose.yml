@@ -1,0 +1,110 @@
+version: "3.9"
+
+networks:
+  sigmasee_network:
+
+volumes:
+  sigmasee_cockroachdb_data:
+  sigmasee_zookeeper_data:
+  sigmasee_zookeeper_log:
+  sigmasee_kafka_data:
+
+services:
+  cockroachdb:
+    image: cockroachdb/cockroach:latest-v22.2
+    ports:
+      - "26257:26257"
+      - "8080:8080"
+    command: start-single-node --insecure
+    volumes:
+      - sigmasee_cockroachdb_data:/cockroach/cockroach-data"
+    profiles:
+      - core
+      - all
+      - gateway
+    networks:
+      sigmasee_network:
+        aliases:
+          - cockroachdb.localhost
+
+  zookeeper:
+    image: confluentinc/cp-zookeeper:latest
+    restart: unless-stopped
+    ports:
+      - "2181:2181"
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    volumes:
+      - sigmasee_zookeeper_data:/var/lib/zookeeper/data
+      - sigmasee_zookeeper_log:/var/lib/zookeeper/log
+    profiles:
+      - core
+      - all
+    networks:
+      - sigmasee_network
+
+  kafka:
+    image: confluentinc/cp-kafka:latest
+    restart: unless-stopped
+    depends_on:
+      - zookeeper
+    ports:
+      - "19092:19092"
+    volumes:
+      - sigmasee_kafka_data:/var/lib/kafka/data
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: "zookeeper:2181"
+      KAFKA_ADVERTISED_LISTENERS: "LISTENER_DOCKER_INTERNAL://kafka:9092,LISTENER_DOCKER_EXTERNAL://${DOCKER_HOST_IP:-kafka.localhost}:19092"
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: "LISTENER_DOCKER_INTERNAL:PLAINTEXT,LISTENER_DOCKER_EXTERNAL:PLAINTEXT"
+      KAFKA_INTER_BROKER_LISTENER_NAME: "LISTENER_DOCKER_INTERNAL"
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+      KAFKA_LOG4J_ROOT_LOGLEVEL: "WARN"
+      KAFKA_TOOLS_LOG4J_LOGLEVEL: "ERROR"
+      KAFKA_CONFLUENT_SCHEMA_REGISTRY_URL: "http://schema-registry.localhost:9100"
+    profiles:
+      - core
+      - all
+    networks:
+      sigmasee_network:
+        aliases:
+          - kafka.localhost
+
+  schema-registry:
+    image: confluentinc/cp-schema-registry:latest
+    restart: unless-stopped
+    depends_on:
+      - kafka
+    ports:
+      - "9100:9100"
+    environment:
+      SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: "kafka.localhost:19092"
+      SCHEMA_REGISTRY_HOST_NAME: "schema-registry"
+      SCHEMA_REGISTRY_LISTENERS: "http://schema-registry:9100"
+    profiles:
+      - core
+      - all
+    networks:
+      sigmasee_network:
+        aliases:
+          - schema-registry.localhost
+
+  kowl:
+    image: docker.redpanda.com/redpandadata/console:latest
+    restart: unless-stopped
+    depends_on:
+      - schema-registry
+      - kafka
+    environment:
+      KAFKA_BROKERS: "kafka.localhost:19092"
+      KAFKA_SCHEMAREGISTRY_URLS: http://schema-registry.localhost:9100
+      KAFKA_SCHEMAREGISTRY_ENABLED: "TRUE"
+    ports:
+      - 8888:8080
+    profiles:
+      - core
+      - all
+    networks:
+      - sigmasee_network

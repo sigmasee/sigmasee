@@ -1,0 +1,92 @@
+name: "Deploy Infrastructure"
+description: "Deploy Infrastructure"
+
+inputs:
+  workingDirectory:
+    description: "Working Directory"
+    required: true
+  migrateDatabase:
+    description: "indicates whether the database migration is required"
+    required: false
+    default: "false"
+  migrateDatabaseDockerFile:
+    description: "the path to the database migration dockerfile"
+    required: false
+    default: ""
+  migrateDatabaseDockerBuildContextPath:
+    description: "the build context for the database migration dockerfile"
+    required: false
+    default: ""
+  createChangeFeed:
+    description: "if provided the change feed will be created"
+    required: false
+    default: "false"
+  domainctlDockerFile:
+    description: "the path to the domainctl dockerfile"
+    required: false
+    default: ""
+  domainctlDockerBuildContextPath:
+    description: "the build context for the domainctl dockerfile"
+    required: false
+    default: ""
+  domainctlExecutableName:
+    description: "the domainctl executable file name"
+    required: false
+    default: ""
+
+runs:
+  using: "composite"
+  steps:
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v2
+
+    - name: Set required environment variable
+      shell: bash
+      run: |
+        echo "database_migration_container_tag=$(uuidgen)" >> $GITHUB_ENV
+        echo "domainctl_container_tag=$(uuidgen)" >> $GITHUB_ENV
+
+    - name: Terraform Init
+      shell: bash
+      id: init
+      working-directory: ${{ inputs.workingDirectory }}
+      run: |
+        terraform init
+
+    - name: Terraform Apply
+      shell: bash
+      working-directory: ${{ inputs.workingDirectory }}
+      run: |
+        TF_VAR_random_seed=$(uuidgen) terraform apply -auto-approve -input=false
+
+    - name: Migrate Database
+      if: ${{ inputs.migrateDatabase == 'true' }}
+      shell: bash
+      working-directory: ${{ inputs.workingDirectory }}
+      run: |
+        docker build \
+           --pull \
+           --target final \
+          --tag ${{ env.database_migration_container_tag }} \
+          --file ${{ inputs.migrateDatabaseDockerFile }} \
+          ${{ inputs.migrateDatabaseDockerBuildContextPath }}
+        docker run --rm \
+          --env sigmasee_POSTGRES_CONNECTIONSTRING="$(terraform-bin output database_migration_user_connection_string)" \
+          ${{ env.database_migration_container_tag }}
+
+    - name: Create Changefeed
+      if: ${{ inputs.createChangeFeed == 'true' }}
+      shell: bash
+      working-directory: ${{ inputs.workingDirectory }}
+      run: |
+        docker build \
+           --pull \
+           --target final \
+          --tag ${{ env.domainctl_container_tag }} \
+          --file ${{ inputs.domainctlDockerFile }} \
+          ${{ inputs.domainctlDockerBuildContextPath }}
+        docker run --rm \
+          ${{ env.domainctl_container_tag }} \
+          ${{ inputs.domainctlExecutableName }} database outbox create-changefeed \
+          --connectionString=$(echo $(terraform-bin output database_user_connection_string) | tr -d '"') \
+          --webhook_url=$(echo $(terraform-bin output api_url) | tr -d '"')
