@@ -1,0 +1,81 @@
+name: "gateway-api"
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - "main"
+    tags:
+      - "v*"
+    paths:
+      - ".github/actions/**"
+      - ".github/workflows/lint.yml"
+      - ".github/workflows/gateway-api.yml"
+      - "go.mod"
+      - "go.sum"
+      - "shared/**"
+      - "gateway/gateway-api/**"
+      - "api-definitions/graphql/sigmasee/**"
+  pull_request:
+    branches:
+      - "main"
+    paths:
+      - ".github/actions/**"
+      - ".github/workflows/lint.yml"
+      - ".github/workflows/gateway-api.yml"
+      - "go.mod"
+      - "go.sum"
+      - "shared/**"
+      - "gateway/gateway-api/**"
+      - "api-definitions/graphql/sigmasee/**"
+
+jobs:
+  build:
+    name: "Build"
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.draft == false
+    env:
+      DOCKER_BUILDKIT: 1
+      COMPOSE_DOCKER_CLI_BUILD: 1
+    permissions: write-all
+
+    steps:
+      - name: Checkout code with full history
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Build, Test and Push Image
+        if: ${{ false }}
+        uses: "./.github/actions/build-test-push"
+        with:
+          dockerFilePath: ./gateway/gateway-api/Dockerfile
+          dockerBuildContextPath: .
+          dockerRegistry: ghcr.io
+          dockerRegistryUsername: ${{ github.actor }}
+          dockerRegistryPassword: ${{ secrets.GITHUB_TOKEN }}
+          dockerNamespace: sigmasee
+          dockerRepository: gateway-api
+
+      - name: Build, Test and Push Image - AWS Lambda
+        uses: "./.github/actions/build-test-push"
+        with:
+          dockerFilePath: ./gateway/gateway-api/aws/lambda/Dockerfile
+          dockerBuildContextPath: .
+          dockerRegistry: ghcr.io
+          dockerRegistryUsername: ${{ github.actor }}
+          dockerRegistryPassword: ${{ secrets.GITHUB_TOKEN }}
+          dockerNamespace: sigmasee
+          dockerRepository: gateway-api-aws-lambda
+          uploadFinalArtifact: "true"
+
+      - name: Downloading final build output
+        if: ${{ false }}
+        uses: actions/download-artifact@v3
+        with:
+          name: final-build-output
+          path: "${{ github.workspace }}/artifact"
+
+      - name: Make binary executable
+        run: |
+          chmod +x "${{ github.workspace }}/artifact/bootstrap"

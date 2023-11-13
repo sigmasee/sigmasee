@@ -1,0 +1,79 @@
+openapi: 3.1.0
+info:
+  title: Gateway API v1
+  description: "Gateway REST API"
+  version: 1.0.0
+
+paths:
+  /gateway/api/v1/liveness:
+    get:
+      tags:
+        - gateway
+        - api
+      summary: return the health status
+      operationId: liveness
+
+      responses:
+        "200":
+          description: the health status
+
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /gateway/api/v1/readiness:
+    get:
+      tags:
+        - gateway
+        - api
+      summary: return the readiness status
+      operationId: readiness
+
+      responses:
+        "200":
+          description: the readiness status
+
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /gateway/api/v1/outbox-cdc:
+    post:
+      tags:
+        - gateway
+        - cdc
+        - api
+      summary: consume Outbox table changefeed
+      operationId: processOutboxChangeFeed
+
+      responses:
+        "200":
+          description: the CDC consumption status
+
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+components:
+  schemas:
+    Error:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          format: int32
+          description: Error code
+        message:
+          type: string
+          description: Error message

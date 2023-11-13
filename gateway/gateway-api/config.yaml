@@ -1,0 +1,6 @@
+app:
+  listeningInterface: ":9000"
+
+apiEndpoints:
+  timeout: 10s
+  customer: http://localhost:10000
