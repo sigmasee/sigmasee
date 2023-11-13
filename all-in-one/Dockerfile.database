@@ -1,0 +1,37 @@
+# syntax = docker/dockerfile:1.4.1
+ARG BUILD_IMAGE=golang:1.21
+
+FROM $BUILD_IMAGE AS build
+
+RUN apt-get update -y \
+    && apt-get upgrade -y \
+    && apt-get install curl -y \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /
+RUN curl https://release.ariga.io/atlas/atlas-linux-amd64-latest -o /atlas
+RUN chmod +x /atlas
+
+RUN mkdir -p /src/shared/enterprise \
+    mkdir -p /src/shared/sigmaseectl
+
+COPY go.mod /src/
+COPY go.sum /src/
+COPY shared/enterprise /src/shared/enterprise
+COPY shared/sigmaseectl /src/shared/sigmaseectl
+
+WORKDIR /src/shared/sigmaseectl
+
+RUN --mount=type=cache,target=/go CGO_ENABLED=0 go build -v -o ./sigmaseectl main.go
+
+WORKDIR /customer/migrations
+COPY customer/shared/migrations /customer/migrations
+
+WORKDIR /apex/migrations
+COPY apex/shared/migrations /apex/migrations
+
+COPY all-in-one/scripts/provision_databases.sh /provision_databases.sh
+
+WORKDIR /
+CMD ["/provision_databases.sh"]
