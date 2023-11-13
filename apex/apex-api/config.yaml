@@ -1,5 +1,5 @@
 app:
-  listeningInterface: ":10500"
+  listeningInterface: ":20000"
   domainSource: "urn::sigmasee::apex"
   appSource: "apex-api"
   baseDomain: "http://localhost:15000"

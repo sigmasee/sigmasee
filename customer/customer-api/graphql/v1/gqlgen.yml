@@ -1,0 +1,35 @@
+# Copyright (c) 2004-present Facebook All rights reserved.
+# Use of this source code is governed by a BSD-style
+# license that can be found in the LICENSE file.
+
+schema:
+  - ../../../../api-definitions/graphql/sigmasee/customer/v1/schema.graphql
+  - ../../../../api-definitions/graphql/sigmasee/customer/v1/ent.graphql
+
+exec:
+  filename: ./generated/generated.go
+  package: generated
+
+federation:
+  filename: ./generated/federation.go
+  package: generated
+  version: 2
+
+model:
+  filename: ./models/models_gen.go
+  package: models
+
+resolver:
+  layout: follow-schema
+  dir: .
+  package: graphqlv1
+
+autobind:
+  - github.com/sigmasee/sigmasee/customer/shared/entities
+
+models:
+  ID:
+    model:
+      - github.com/99designs/gqlgen/graphql.ID
+  Node:
+    model: github.com/sigmasee/sigmasee/customer/shared/entities.Noder

@@ -1,0 +1,18 @@
+app:
+  listeningInterface: ":10001"
+  domainSource: "urn::sigmasee::customer"
+  appSource: "customer-processor"
+  baseDomain: "http://localhost:15000"
+
+postgres:
+  connectionString: "postgres://root@cockroachdb.localhost:26257/customer"
+  maxOpenConnections: 100
+
+kafka:
+  bootstrapServers: kafka.localhost:19092
+  enableTls: false
+  enableSasl: false
+
+outbox:
+  maxRetryCount: 30
+  retryDelay: 10s

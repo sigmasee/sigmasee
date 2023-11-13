@@ -34,7 +34,7 @@ on:
 jobs:
   build:
     name: "Build"
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     if: github.event.pull_request.draft == false
     env:
       DOCKER_BUILDKIT: 1

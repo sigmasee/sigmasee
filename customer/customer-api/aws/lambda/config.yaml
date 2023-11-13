@@ -1,0 +1,10 @@
+app:
+  domainSource: "urn::sigmasee::customer"
+  appSource: "customer-api"
+
+postgres:
+  maxOpenConnections: 100
+
+outbox:
+  maxRetryCount: 30
+  retryDelay: 10s
