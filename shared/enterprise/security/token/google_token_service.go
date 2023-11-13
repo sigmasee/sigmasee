@@ -9,7 +9,7 @@ import (
 )
 
 type GoogleConfig struct {
-	AppID string `yaml:"appId" env:"sigmasee_SECURITY_GOOGLE_APP_ID"`
+	AppID string `yaml:"appId" env:"SIGMASEE_SECURITY_GOOGLE_APP_ID"`
 }
 
 type GoogleTokenService interface {

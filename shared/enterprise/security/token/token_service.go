@@ -24,8 +24,9 @@ func NewTokenService(
 	slackTokenService SlackTokenService) (TokenService, error) {
 	return &tokenService{
 		tokenVerifierServices: []tokenVerifierService{
-			cognitoTokenService,
-			googleTokenService,
+			// TODO: 20231114 - morteza - uncomment when cognito and google resources are deployed
+			// cognitoTokenService,
+			// googleTokenService,
 			slackTokenService,
 		},
 	}, nil

@@ -10,8 +10,8 @@ import (
 )
 
 type SlackConfig struct {
-	RefreshRsaKeys bool   `yaml:"refreshRsaKeys" env:"sigmasee_SECURITY_SLACK_REFRESH_RSA_KEYS"`
-	ClientID       string `yaml:"clientId" env:"sigmasee_SECURITY_SLACK_CLIENT_ID"`
+	RefreshRsaKeys bool   `yaml:"refreshRsaKeys" env:"SIGMASEE_SECURITY_SLACK_REFRESH_RSA_KEYS"`
+	ClientID       string `yaml:"clientId" env:"SIGMASEE_SECURITY_SLACK_CLIENT_ID"`
 }
 
 type SlackTokenService interface {

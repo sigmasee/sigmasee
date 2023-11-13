@@ -9,10 +9,10 @@ import (
 )
 
 type CognitoConfig struct {
-	JwksUrl         string `yaml:"JwksUrl" env:"sigmasee_SECURITY_COGNITO_JWKS_URL"`
-	RefreshRsaKeys  bool   `yaml:"refreshRsaKeys" env:"sigmasee_SECURITY_COGNITO_REFRESH_RSA_KEYS"`
-	Issuer          string `yaml:"issuer" env:"sigmasee_SECURITY_COGNITO_ISSUER"`
-	InitialJwksKeys string `yaml:"initialJwksKeys" env:"sigmasee_SECURITY_COGNITO_INITIAL_JWKS_KEYS"`
+	JwksUrl         string `yaml:"JwksUrl" env:"SIGMASEE_SECURITY_COGNITO_JWKS_URL"`
+	RefreshRsaKeys  bool   `yaml:"refreshRsaKeys" env:"SIGMASEE_SECURITY_COGNITO_REFRESH_RSA_KEYS"`
+	Issuer          string `yaml:"issuer" env:"SIGMASEE_SECURITY_COGNITO_ISSUER"`
+	InitialJwksKeys string `yaml:"initialJwksKeys" env:"SIGMASEE_SECURITY_COGNITO_INITIAL_JWKS_KEYS"`
 }
 
 type CognitoTokenService interface {
@@ -31,22 +31,25 @@ func NewCognitoTokenService(
 	logger *zap.SugaredLogger,
 	jobScheduler *gocron.Scheduler,
 	config CognitoConfig) (CognitoTokenService, error) {
-	tokenHelperService, err := NewTokenHelperService(
-		ctx,
-		logger,
-		jobScheduler,
-		config.JwksUrl,
-		config.InitialJwksKeys,
-		config.RefreshRsaKeys)
-	if err != nil {
-		return nil, err
-	}
+	// TODO: 20231114 - morteza - uncomment when cognito and google resources are deployed
+	// tokenHelperService, err := NewTokenHelperService(
+	// 	ctx,
+	// 	logger,
+	// 	jobScheduler,
+	// 	config.JwksUrl,
+	// 	config.InitialJwksKeys,
+	// 	config.RefreshRsaKeys)
+	// if err != nil {
+	// 	return nil, err
+	// }
 
 	return &cognitoTokenService{
-		ctx:                ctx,
-		logger:             logger,
-		config:             config,
-		tokenHelperService: tokenHelperService,
+		ctx:    ctx,
+		logger: logger,
+		config: config,
+		// TODO: 20231114 - morteza - uncomment when cognito and google resources are deployed
+
+		//		tokenHelperService: tokenHelperService,
 	}, nil
 }
 
