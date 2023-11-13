@@ -1,0 +1,236 @@
+openapi: 3.1.0
+info:
+  title: Customer API v1
+  description: "Customer REST API"
+  version: 1.0.0
+
+paths:
+  /customer/api/v1/liveness:
+    get:
+      tags:
+        - customer
+        - api
+      summary: return the health status
+      operationId: liveness
+
+      responses:
+        "200":
+          description: the health status
+
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /customer/api/v1/readiness:
+    get:
+      tags:
+        - customer
+        - api
+      summary: return the readiness status
+      operationId: readiness
+
+      responses:
+        "200":
+          description: the readiness status
+
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /customer/api/v1:
+    post:
+      tags:
+        - customer
+        - api
+      summary: create/update customer
+      operationId: upsertCustomer
+      parameters:
+        - name: X-Correlation-Id
+          in: header
+          description: Correlation ID
+          required: true
+          schema:
+            type: string
+        - name: Authorization
+          in: header
+          description: Authorization
+          required: true
+          schema:
+            type: string
+        - name: api-key
+          in: header
+          description: API Key
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/customerUpsertRequest"
+
+      responses:
+        "201":
+          description: details of the upserted customer
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/customerUpsertResponse"
+
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /customer/api/v1/outbox-cdc:
+    post:
+      tags:
+        - customer
+        - cdc
+        - api
+      summary: consume Outbox table changefeed
+      operationId: processOutboxChangeFeed
+
+      responses:
+        "200":
+          description: the CDC consumption status
+
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /customer/api/v1/outbox-cdc/{date}/{ndjson_id}:
+    put:
+      tags:
+        - customer
+        - cdc
+        - api
+      summary: consume Outbox table changefeed with parameters
+      operationId: processOutboxChangeFeedWithParams
+      parameters:
+        - in: path
+          name: date
+          schema:
+            type: string
+          required: true
+        - in: path
+          name: ndjson_id
+          schema:
+            type: string
+          required: true
+
+      responses:
+        "200":
+          description: the CDC consumption status
+
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+components:
+  schemas:
+    Error:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          format: int32
+          description: Error code
+        message:
+          type: string
+          description: Error message
+
+    customerUpsertRequest:
+      type: object
+      required:
+        - verifiableToken
+        - email
+      properties:
+        verifiableToken:
+          type: string
+        email:
+          type: string
+          format: email
+          maxLength: 512
+          nullable: true
+        emailVerified:
+          type: boolean
+          nullable: true
+        designation:
+          type: string
+          nullable: true
+        title:
+          type: string
+          nullable: true
+        name:
+          type: string
+          nullable: true
+        givenName:
+          type: string
+          nullable: true
+        middleName:
+          type: string
+          nullable: true
+        familyName:
+          type: string
+          nullable: true
+        photoUrl:
+          type: string
+          format: url
+          nullable: true
+        photoUrl24:
+          type: string
+          format: url
+          nullable: true
+        photoUrl32:
+          type: string
+          format: url
+          nullable: true
+        photoUrl48:
+          type: string
+          format: url
+          nullable: true
+        photoUrl72:
+          type: string
+          format: url
+          nullable: true
+        photoUrl192:
+          type: string
+          format: url
+          nullable: true
+        photoUrl512:
+          type: string
+          format: url
+          nullable: true
+        timezone:
+          type: string
+          nullable: true
+        locale:
+          type: string
+          nullable: true
+
+    customerUpsertResponse:
+      type: object
+      required:
+        - id
+      properties:
+        id:
+          type: string

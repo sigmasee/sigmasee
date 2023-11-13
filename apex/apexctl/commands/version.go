@@ -15,7 +15,7 @@ func versionCommand() *cobra.Command {
 		Long:  "Return apexctl version",
 		Run: func(cmd *cobra.Command, args []string) {
 			util.PrintInfo("apexctl\n")
-			util.PrintInfo(fmt.Sprintf("Copyright (C) %d, UnityHub Ltd.\n", time.Now().Year()))
+			util.PrintInfo(fmt.Sprintf("Copyright (C) %d, Sigmasee Ltd.\n", time.Now().Year()))
 			util.PrintYAML(util.GetVersion())
 		},
 	}

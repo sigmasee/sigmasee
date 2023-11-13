@@ -1,0 +1,12 @@
+app:
+  domainSource: "urn::sigmasee::customer"
+  appSource: "customerctl"
+
+postgres:
+  connectionString: "postgres://root@cockroachdb.localhost:26257/customer"
+  maxOpenConnections: 1
+
+kafka:
+  bootstrapServers: kafka.localhost:19092
+  enableTls: false
+  enableSasl: false

@@ -1,0 +1,67 @@
+scalar Time
+scalar Cursor
+scalar UUID
+
+schema {
+  query: Query
+}
+
+"""
+An object with an ID
+"""
+interface Node {
+  """
+  The id of the object.
+  """
+  id: ID
+}
+
+type Version {
+  major: String!
+  minor: String!
+  patch: String!
+}
+
+extend type Query {
+  customerVersion: Version!
+
+  me: CustomerDetails
+}
+
+type CustomerDetails implements Node {
+  id: ID!
+  createdAt: Time!
+  intercomHash: String
+  email: CustomerEmail
+  designation: String
+  title: String
+  name: String
+  givenName: String
+  middleName: String
+  familyName: String
+  photoUrl: String
+  photoUrl24: String
+  photoUrl32: String
+  photoUrl48: String
+  photoUrl72: String
+  photoUrl192: String
+  photoUrl512: String
+  timezone: String
+  locale: String
+  settings: CustomerSetting!
+}
+
+type CustomerEmail implements Node {
+  id: ID!
+  email: String!
+  verified: Boolean!
+}
+
+type CustomerSetting implements Node {
+  id: ID!
+}
+
+enum CustomerOutboxStatus {
+  PENDING
+  FAILED
+}

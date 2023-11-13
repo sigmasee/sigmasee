@@ -1,0 +1,9 @@
+package: customerv1
+generate:
+  client: true
+  models: true
+  embedded-spec: true
+output-options:
+  skip-fmt: false
+  skip-prune: false
+output: customer_gen.go
