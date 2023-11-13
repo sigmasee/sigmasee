@@ -1,0 +1,18 @@
+app:
+  listeningInterface: ":10500"
+  domainSource: "urn::sigmasee::apex"
+  appSource: "apex-api"
+  baseDomain: "http://localhost:15000"
+
+postgres:
+  connectionString: "postgres://root@cockroachdb.localhost:26257/apex"
+  maxOpenConnections: 100
+
+cognitoIdentityProvider:
+  refreshRsaKeys: true
+
+googleIdentityProvider:
+  refreshRsaKeys: true
+
+slackIdentityProvider:
+  refreshRsaKeys: true

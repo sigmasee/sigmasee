@@ -1,0 +1,10 @@
+app:
+  domainSource: "urn::sigmasee::apex"
+  appSource: "apex-api"
+
+postgres:
+  maxOpenConnections: 100
+
+outbox:
+  maxRetryCount: 30
+  retryDelay: 10s

@@ -3,25 +3,33 @@ module github.com/sigmasee/sigmasee
 go 1.21
 
 require (
+	ariga.io/atlas v0.14.1-0.20230918065911-83ad451a4935
 	entgo.io/contrib v0.4.5
 	entgo.io/ent v0.12.4
 	github.com/99designs/gqlgen v0.17.40
 	github.com/IBM/sarama v1.42.1
+	github.com/aws/aws-lambda-go v1.41.0
 	github.com/aws/aws-sdk-go v1.47.9
+	github.com/awslabs/aws-lambda-go-api-proxy v0.16.0
 	github.com/getkin/kin-openapi v0.120.0
+	github.com/go-chi/chi/v5 v5.0.10
 	github.com/go-co-op/gocron v1.36.0
 	github.com/golang-jwt/jwt/v5 v5.1.0
 	github.com/golang-module/carbon/v2 v2.2.13
+	github.com/golang/mock v1.1.1
 	github.com/google/wire v0.5.0
 	github.com/graph-gophers/dataloader/v7 v7.1.0
+	github.com/hashicorp/go-multierror v1.1.1
 	github.com/hashicorp/golang-lru v1.0.2
 	github.com/jackc/pgx/v5 v5.5.0
 	github.com/life4/genesis v1.10.0
 	github.com/matoous/go-nanoid/v2 v2.0.0
 	github.com/oapi-codegen/runtime v1.0.0
 	github.com/pkg/errors v0.9.1
+	github.com/rs/cors v1.10.1
 	github.com/segmentio/kafka-go v0.4.44
 	github.com/spf13/cobra v1.7.0
+	github.com/vektah/gqlparser/v2 v2.5.10
 	github.com/xdg-go/scram v1.1.2
 	go.uber.org/zap v1.26.0
 	google.golang.org/api v0.150.0
@@ -30,7 +38,6 @@ require (
 )
 
 require (
-	ariga.io/atlas v0.14.1-0.20230918065911-83ad451a4935 // indirect
 	cloud.google.com/go/compute v1.23.1 // indirect
 	cloud.google.com/go/compute/metadata v0.2.3 // indirect
 	github.com/agext/levenshtein v1.2.1 // indirect
@@ -52,7 +59,6 @@ require (
 	github.com/google/uuid v1.4.0 // indirect
 	github.com/googleapis/enterprise-certificate-proxy v0.3.2 // indirect
 	github.com/hashicorp/errwrap v1.0.0 // indirect
-	github.com/hashicorp/go-multierror v1.1.1 // indirect
 	github.com/hashicorp/go-uuid v1.0.3 // indirect
 	github.com/hashicorp/hcl/v2 v2.13.0 // indirect
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
@@ -77,7 +83,6 @@ require (
 	github.com/robfig/cron/v3 v3.0.1 // indirect
 	github.com/sosodev/duration v1.1.0 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
-	github.com/vektah/gqlparser/v2 v2.5.10 // indirect
 	github.com/vmihailenco/msgpack/v5 v5.3.5 // indirect
 	github.com/vmihailenco/tagparser/v2 v2.0.0 // indirect
 	github.com/xdg-go/pbkdf2 v1.0.0 // indirect
