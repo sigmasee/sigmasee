@@ -1,0 +1,16 @@
+kafka:
+  bootstrapServers: kafka.localhost:19092
+  enableTls: false
+  enableSasl: false
+
+outbox:
+  maxRetryCount: 30
+  retryDelay: 10s
+
+postgres_customer:
+  connectionString: "postgres://root@cockroachdb.localhost:26257/customer"
+  maxOpenConnections: 10
+
+postgres_apex:
+  connectionString: "postgres://root@cockroachdb.localhost:26257/apex"
+  maxOpenConnections: 10

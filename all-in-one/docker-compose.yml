@@ -1,0 +1,38 @@
+﻿version: "3.9"
+
+services:
+  database-provision:
+    image: ${DOCKER_REGISTRY-}database-provision
+    build:
+      context: .
+      dockerfile: all-in-one/Dockerfile.database
+    restart: on-failure
+    environment:
+      SIGMASEE_POSTGRES_CONNECTIONSTRING: "postgres://root@cockroachdb.localhost:26257"
+    depends_on:
+      - cockroachdb
+    profiles:
+      - core
+      - all
+    networks:
+      - sigmasee_network
+
+  all-in-one:
+    image: ${DOCKER_REGISTRY-}all-in-one
+    build:
+      context: .
+      dockerfile: all-in-one/Dockerfile
+    restart: unless-stopped
+    environment:
+      SIGMASEE_SECURITY_COGNITO_JWKS_URL: ${SIGMASEE_SECURITY_COGNITO_JWKS_URL}
+      SIGMASEE_SECURITY_COGNITO_REFRESH_RSA_KEYS: "true"
+    ports:
+      - "9000:9000"
+      - "10000:10000"
+      - "20000:20000"
+    depends_on:
+      - database-provision
+    profiles:
+      - all
+    networks:
+      - sigmasee_network
