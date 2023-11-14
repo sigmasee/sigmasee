@@ -33,6 +33,7 @@ type TimeHelper interface {
 	RemoveAllPartsAfterSeconds(dateTime carbon.Carbon) carbon.Carbon
 	GetAllTimezoneLocations() ([]string, error)
 	GetNowMinusOneDay() time.Time
+	DoesCurrentHourEqualToSpecificLocation(timezone string, hour int) (bool, error)
 }
 
 type timeHelper struct {
@@ -126,6 +127,18 @@ func (s *timeHelper) GetAllTimezoneLocations() ([]string, error) {
 
 func (s *timeHelper) GetNowMinusOneDay() time.Time {
 	return time.Now().UTC().Add(-24 * time.Hour)
+}
+
+func (s *timeHelper) DoesCurrentHourEqualToSpecificLocation(timezone string, hour int) (bool, error) {
+	location, err := time.LoadLocation(timezone)
+	if err != nil {
+		return false, err
+	}
+
+	currentTime := time.Now().In(location)
+	desiredTime := time.Date(currentTime.Year(), currentTime.Month(), currentTime.Day(), hour, 0, 0, 0, location)
+
+	return currentTime.Equal(desiredTime), nil
 }
 
 func (s *timeHelper) readFile(zoneDir, path string) ([]string, error) {
