@@ -1,5 +1,5 @@
 {
-  "name": "mobileapp",
+  "name": "SigmaSee",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "react": "18.2.0",
-    "react-native": "0.72.6"
+    "react-native": "0.72.7"
   },
   "devDependencies": {
     "@babel/core": "^7.23.3",

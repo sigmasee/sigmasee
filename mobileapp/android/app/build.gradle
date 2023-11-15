@@ -73,9 +73,9 @@ android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
-    namespace "com.mobileapp"
+    namespace "com.sigmasee"
     defaultConfig {
-        applicationId "com.mobileapp"
+        applicationId "com.sigmasee"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
