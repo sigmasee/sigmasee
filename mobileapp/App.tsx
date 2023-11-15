@@ -5,6 +5,18 @@
  * @format
  */
 
+import React from 'react';
+import type {PropsWithChildren} from 'react';
+import {
+  SafeAreaView,
+  ScrollView,
+  StatusBar,
+  StyleSheet,
+  Text,
+  useColorScheme,
+  View,
+} from 'react-native';
+
 import {
   Colors,
   DebugInstructions,
@@ -12,18 +24,6 @@ import {
   LearnMoreLinks,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  View,
-  useColorScheme,
-} from 'react-native';
-
-import type {PropsWithChildren} from 'react';
-import React from 'react';
 
 type SectionProps = PropsWithChildren<{
   title: string;
