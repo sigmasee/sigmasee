@@ -11,6 +11,9 @@ var (
 	// ApexCustomersColumns holds the columns for the "apex_customers" table.
 	ApexCustomersColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeString},
+		{Name: "created_at", Type: field.TypeTime},
+		{Name: "modified_at", Type: field.TypeTime, Nullable: true},
+		{Name: "deleted_at", Type: field.TypeTime, Nullable: true},
 		{Name: "event_raised_at", Type: field.TypeTime},
 		{Name: "name", Type: field.TypeString, Nullable: true},
 		{Name: "given_name", Type: field.TypeString, Nullable: true},
@@ -23,9 +26,6 @@ var (
 		{Name: "photo_url_72", Type: field.TypeString, Nullable: true},
 		{Name: "photo_url_192", Type: field.TypeString, Nullable: true},
 		{Name: "photo_url_512", Type: field.TypeString, Nullable: true},
-		{Name: "created_at", Type: field.TypeTime},
-		{Name: "modified_at", Type: field.TypeTime, Nullable: true},
-		{Name: "deleted_at", Type: field.TypeTime, Nullable: true},
 	}
 	// ApexCustomersTable holds the schema information for the "apex_customers" table.
 	ApexCustomersTable = &schema.Table{
@@ -36,18 +36,18 @@ var (
 			{
 				Name:    "apexcustomer_deleted_at",
 				Unique:  false,
-				Columns: []*schema.Column{ApexCustomersColumns[15]},
+				Columns: []*schema.Column{ApexCustomersColumns[3]},
 			},
 		},
 	}
 	// ApexCustomerIdentitiesColumns holds the columns for the "apex_customer_identities" table.
 	ApexCustomerIdentitiesColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeString},
-		{Name: "email", Type: field.TypeString, Nullable: true},
-		{Name: "email_verified", Type: field.TypeBool, Nullable: true},
 		{Name: "created_at", Type: field.TypeTime},
 		{Name: "modified_at", Type: field.TypeTime, Nullable: true},
 		{Name: "deleted_at", Type: field.TypeTime, Nullable: true},
+		{Name: "email", Type: field.TypeString, Nullable: true},
+		{Name: "email_verified", Type: field.TypeBool, Nullable: true},
 		{Name: "apex_customer_identities", Type: field.TypeString},
 	}
 	// ApexCustomerIdentitiesTable holds the schema information for the "apex_customer_identities" table.
@@ -65,24 +65,24 @@ var (
 		},
 		Indexes: []*schema.Index{
 			{
+				Name:    "apexcustomeridentity_deleted_at",
+				Unique:  false,
+				Columns: []*schema.Column{ApexCustomerIdentitiesColumns[3]},
+			},
+			{
 				Name:    "apexcustomeridentity_email",
 				Unique:  false,
-				Columns: []*schema.Column{ApexCustomerIdentitiesColumns[1]},
+				Columns: []*schema.Column{ApexCustomerIdentitiesColumns[4]},
 			},
 			{
 				Name:    "apexcustomeridentity_email_verified",
 				Unique:  false,
-				Columns: []*schema.Column{ApexCustomerIdentitiesColumns[2]},
+				Columns: []*schema.Column{ApexCustomerIdentitiesColumns[5]},
 			},
 			{
 				Name:    "apexcustomeridentity_apex_customer_identities",
 				Unique:  false,
 				Columns: []*schema.Column{ApexCustomerIdentitiesColumns[6]},
-			},
-			{
-				Name:    "apexcustomeridentity_deleted_at",
-				Unique:  false,
-				Columns: []*schema.Column{ApexCustomerIdentitiesColumns[5]},
 			},
 		},
 	}

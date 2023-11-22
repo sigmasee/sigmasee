@@ -14,14 +14,17 @@ type ApexCustomerIdentity struct {
 }
 
 func (ApexCustomerIdentity) Fields() []ent.Field {
-	return append(
-		[]ent.Field{
-			field.String("id").Annotations(entgql.OrderField("id")),
-			field.String("email").Optional().Annotations(entgql.OrderField("email")),
-			field.Bool("email_verified").Optional().Annotations(entgql.OrderField("emailVerified")),
-		},
-		entities.BaseEntity{}.Fields()...,
-	)
+	return []ent.Field{
+		field.String("id").Annotations(entgql.OrderField("id")),
+		field.String("email").Optional().Annotations(entgql.OrderField("email")),
+		field.Bool("email_verified").Optional().Annotations(entgql.OrderField("emailVerified")),
+	}
+}
+
+func (ApexCustomerIdentity) Mixin() []ent.Mixin {
+	return []ent.Mixin{
+		entities.BaseEntity{},
+	}
 }
 
 func (ApexCustomerIdentity) Edges() []ent.Edge {
@@ -31,13 +34,10 @@ func (ApexCustomerIdentity) Edges() []ent.Edge {
 }
 
 func (ApexCustomerIdentity) Indexes() []ent.Index {
-	return append(
-		[]ent.Index{
-			index.Fields("email"),
-			index.Fields("email_verified"),
+	return []ent.Index{
+		index.Fields("email"),
+		index.Fields("email_verified"),
 
-			index.Edges("customer"),
-		},
-		entities.BaseEntity{}.Indexes()...,
-	)
+		index.Edges("customer"),
+	}
 }

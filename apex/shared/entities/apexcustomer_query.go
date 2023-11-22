@@ -307,12 +307,12 @@ func (acq *ApexCustomerQuery) WithIdentities(opts ...func(*ApexCustomerIdentityQ
 // Example:
 //
 //	var v []struct {
-//		EventRaisedAt time.Time `json:"event_raised_at,omitempty"`
+//		CreatedAt time.Time `json:"created_at,omitempty"`
 //		Count int `json:"count,omitempty"`
 //	}
 //
 //	client.ApexCustomer.Query().
-//		GroupBy(apexcustomer.FieldEventRaisedAt).
+//		GroupBy(apexcustomer.FieldCreatedAt).
 //		Aggregate(entities.Count()).
 //		Scan(ctx, &v)
 func (acq *ApexCustomerQuery) GroupBy(field string, fields ...string) *ApexCustomerGroupBy {
@@ -330,11 +330,11 @@ func (acq *ApexCustomerQuery) GroupBy(field string, fields ...string) *ApexCusto
 // Example:
 //
 //	var v []struct {
-//		EventRaisedAt time.Time `json:"event_raised_at,omitempty"`
+//		CreatedAt time.Time `json:"created_at,omitempty"`
 //	}
 //
 //	client.ApexCustomer.Query().
-//		Select(apexcustomer.FieldEventRaisedAt).
+//		Select(apexcustomer.FieldCreatedAt).
 //		Scan(ctx, &v)
 func (acq *ApexCustomerQuery) Select(fields ...string) *ApexCustomerSelect {
 	acq.ctx.Fields = append(acq.ctx.Fields, fields...)

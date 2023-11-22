@@ -45,6 +45,21 @@ func (ac *ApexCustomerQuery) collectField(ctx context.Context, opCtx *graphql.Op
 			ac.WithNamedIdentities(alias, func(wq *ApexCustomerIdentityQuery) {
 				*wq = *query
 			})
+		case "createdAt":
+			if _, ok := fieldSeen[apexcustomer.FieldCreatedAt]; !ok {
+				selectedFields = append(selectedFields, apexcustomer.FieldCreatedAt)
+				fieldSeen[apexcustomer.FieldCreatedAt] = struct{}{}
+			}
+		case "modifiedAt":
+			if _, ok := fieldSeen[apexcustomer.FieldModifiedAt]; !ok {
+				selectedFields = append(selectedFields, apexcustomer.FieldModifiedAt)
+				fieldSeen[apexcustomer.FieldModifiedAt] = struct{}{}
+			}
+		case "deletedAt":
+			if _, ok := fieldSeen[apexcustomer.FieldDeletedAt]; !ok {
+				selectedFields = append(selectedFields, apexcustomer.FieldDeletedAt)
+				fieldSeen[apexcustomer.FieldDeletedAt] = struct{}{}
+			}
 		case "eventRaisedAt":
 			if _, ok := fieldSeen[apexcustomer.FieldEventRaisedAt]; !ok {
 				selectedFields = append(selectedFields, apexcustomer.FieldEventRaisedAt)
@@ -104,21 +119,6 @@ func (ac *ApexCustomerQuery) collectField(ctx context.Context, opCtx *graphql.Op
 			if _, ok := fieldSeen[apexcustomer.FieldPhotoURL512]; !ok {
 				selectedFields = append(selectedFields, apexcustomer.FieldPhotoURL512)
 				fieldSeen[apexcustomer.FieldPhotoURL512] = struct{}{}
-			}
-		case "createdAt":
-			if _, ok := fieldSeen[apexcustomer.FieldCreatedAt]; !ok {
-				selectedFields = append(selectedFields, apexcustomer.FieldCreatedAt)
-				fieldSeen[apexcustomer.FieldCreatedAt] = struct{}{}
-			}
-		case "modifiedAt":
-			if _, ok := fieldSeen[apexcustomer.FieldModifiedAt]; !ok {
-				selectedFields = append(selectedFields, apexcustomer.FieldModifiedAt)
-				fieldSeen[apexcustomer.FieldModifiedAt] = struct{}{}
-			}
-		case "deletedAt":
-			if _, ok := fieldSeen[apexcustomer.FieldDeletedAt]; !ok {
-				selectedFields = append(selectedFields, apexcustomer.FieldDeletedAt)
-				fieldSeen[apexcustomer.FieldDeletedAt] = struct{}{}
 			}
 		case "id":
 		case "__typename":
@@ -214,16 +214,6 @@ func (aci *ApexCustomerIdentityQuery) collectField(ctx context.Context, opCtx *g
 				return err
 			}
 			aci.withCustomer = query
-		case "email":
-			if _, ok := fieldSeen[apexcustomeridentity.FieldEmail]; !ok {
-				selectedFields = append(selectedFields, apexcustomeridentity.FieldEmail)
-				fieldSeen[apexcustomeridentity.FieldEmail] = struct{}{}
-			}
-		case "emailVerified":
-			if _, ok := fieldSeen[apexcustomeridentity.FieldEmailVerified]; !ok {
-				selectedFields = append(selectedFields, apexcustomeridentity.FieldEmailVerified)
-				fieldSeen[apexcustomeridentity.FieldEmailVerified] = struct{}{}
-			}
 		case "createdAt":
 			if _, ok := fieldSeen[apexcustomeridentity.FieldCreatedAt]; !ok {
 				selectedFields = append(selectedFields, apexcustomeridentity.FieldCreatedAt)
@@ -238,6 +228,16 @@ func (aci *ApexCustomerIdentityQuery) collectField(ctx context.Context, opCtx *g
 			if _, ok := fieldSeen[apexcustomeridentity.FieldDeletedAt]; !ok {
 				selectedFields = append(selectedFields, apexcustomeridentity.FieldDeletedAt)
 				fieldSeen[apexcustomeridentity.FieldDeletedAt] = struct{}{}
+			}
+		case "email":
+			if _, ok := fieldSeen[apexcustomeridentity.FieldEmail]; !ok {
+				selectedFields = append(selectedFields, apexcustomeridentity.FieldEmail)
+				fieldSeen[apexcustomeridentity.FieldEmail] = struct{}{}
+			}
+		case "emailVerified":
+			if _, ok := fieldSeen[apexcustomeridentity.FieldEmailVerified]; !ok {
+				selectedFields = append(selectedFields, apexcustomeridentity.FieldEmailVerified)
+				fieldSeen[apexcustomeridentity.FieldEmailVerified] = struct{}{}
 			}
 		case "id":
 		case "__typename":

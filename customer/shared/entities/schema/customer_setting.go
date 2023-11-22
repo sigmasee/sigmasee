@@ -14,12 +14,15 @@ type CustomerSetting struct {
 }
 
 func (CustomerSetting) Fields() []ent.Field {
-	return append(
-		[]ent.Field{
-			field.String("id").Annotations(entgql.OrderField("id")),
-		},
-		entities.BaseEntity{}.Fields()...,
-	)
+	return []ent.Field{
+		field.String("id").Annotations(entgql.OrderField("id")),
+	}
+}
+
+func (CustomerSetting) Mixin() []ent.Mixin {
+	return []ent.Mixin{
+		entities.BaseEntity{},
+	}
 }
 
 func (CustomerSetting) Edges() []ent.Edge {
@@ -29,10 +32,7 @@ func (CustomerSetting) Edges() []ent.Edge {
 }
 
 func (CustomerSetting) Indexes() []ent.Index {
-	return append(
-		[]ent.Index{
-			index.Edges("customer").Unique(),
-		},
-		entities.BaseEntity{}.Indexes()...,
-	)
+	return []ent.Index{
+		index.Edges("customer").Unique(),
+	}
 }

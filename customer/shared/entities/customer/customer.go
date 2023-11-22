@@ -12,6 +12,12 @@ const (
 	Label = "customer"
 	// FieldID holds the string denoting the id field in the database.
 	FieldID = "id"
+	// FieldCreatedAt holds the string denoting the created_at field in the database.
+	FieldCreatedAt = "created_at"
+	// FieldModifiedAt holds the string denoting the modified_at field in the database.
+	FieldModifiedAt = "modified_at"
+	// FieldDeletedAt holds the string denoting the deleted_at field in the database.
+	FieldDeletedAt = "deleted_at"
 	// FieldDesignation holds the string denoting the designation field in the database.
 	FieldDesignation = "designation"
 	// FieldTitle holds the string denoting the title field in the database.
@@ -42,12 +48,6 @@ const (
 	FieldTimezone = "timezone"
 	// FieldLocale holds the string denoting the locale field in the database.
 	FieldLocale = "locale"
-	// FieldCreatedAt holds the string denoting the created_at field in the database.
-	FieldCreatedAt = "created_at"
-	// FieldModifiedAt holds the string denoting the modified_at field in the database.
-	FieldModifiedAt = "modified_at"
-	// FieldDeletedAt holds the string denoting the deleted_at field in the database.
-	FieldDeletedAt = "deleted_at"
 	// EdgeIdentities holds the string denoting the identities edge name in mutations.
 	EdgeIdentities = "identities"
 	// EdgeCustomerSettings holds the string denoting the customer_settings edge name in mutations.
@@ -73,6 +73,9 @@ const (
 // Columns holds all SQL columns for customer fields.
 var Columns = []string{
 	FieldID,
+	FieldCreatedAt,
+	FieldModifiedAt,
+	FieldDeletedAt,
 	FieldDesignation,
 	FieldTitle,
 	FieldName,
@@ -88,9 +91,6 @@ var Columns = []string{
 	FieldPhotoURL512,
 	FieldTimezone,
 	FieldLocale,
-	FieldCreatedAt,
-	FieldModifiedAt,
-	FieldDeletedAt,
 }
 
 // ValidColumn reports if the column name is valid (part of the table columns).
@@ -109,6 +109,21 @@ type OrderOption func(*sql.Selector)
 // ByID orders the results by the id field.
 func ByID(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldID, opts...).ToFunc()
+}
+
+// ByCreatedAt orders the results by the created_at field.
+func ByCreatedAt(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldCreatedAt, opts...).ToFunc()
+}
+
+// ByModifiedAt orders the results by the modified_at field.
+func ByModifiedAt(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldModifiedAt, opts...).ToFunc()
+}
+
+// ByDeletedAt orders the results by the deleted_at field.
+func ByDeletedAt(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldDeletedAt, opts...).ToFunc()
 }
 
 // ByDesignation orders the results by the designation field.
@@ -184,21 +199,6 @@ func ByTimezone(opts ...sql.OrderTermOption) OrderOption {
 // ByLocale orders the results by the locale field.
 func ByLocale(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldLocale, opts...).ToFunc()
-}
-
-// ByCreatedAt orders the results by the created_at field.
-func ByCreatedAt(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldCreatedAt, opts...).ToFunc()
-}
-
-// ByModifiedAt orders the results by the modified_at field.
-func ByModifiedAt(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldModifiedAt, opts...).ToFunc()
-}
-
-// ByDeletedAt orders the results by the deleted_at field.
-func ByDeletedAt(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldDeletedAt, opts...).ToFunc()
 }
 
 // ByIdentitiesCount orders the results by identities count.

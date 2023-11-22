@@ -67,16 +67,6 @@ func IDContainsFold(id string) predicate.ApexCustomerIdentity {
 	return predicate.ApexCustomerIdentity(sql.FieldContainsFold(FieldID, id))
 }
 
-// Email applies equality check predicate on the "email" field. It's identical to EmailEQ.
-func Email(v string) predicate.ApexCustomerIdentity {
-	return predicate.ApexCustomerIdentity(sql.FieldEQ(FieldEmail, v))
-}
-
-// EmailVerified applies equality check predicate on the "email_verified" field. It's identical to EmailVerifiedEQ.
-func EmailVerified(v bool) predicate.ApexCustomerIdentity {
-	return predicate.ApexCustomerIdentity(sql.FieldEQ(FieldEmailVerified, v))
-}
-
 // CreatedAt applies equality check predicate on the "created_at" field. It's identical to CreatedAtEQ.
 func CreatedAt(v time.Time) predicate.ApexCustomerIdentity {
 	return predicate.ApexCustomerIdentity(sql.FieldEQ(FieldCreatedAt, v))
@@ -92,99 +82,14 @@ func DeletedAt(v time.Time) predicate.ApexCustomerIdentity {
 	return predicate.ApexCustomerIdentity(sql.FieldEQ(FieldDeletedAt, v))
 }
 
-// EmailEQ applies the EQ predicate on the "email" field.
-func EmailEQ(v string) predicate.ApexCustomerIdentity {
+// Email applies equality check predicate on the "email" field. It's identical to EmailEQ.
+func Email(v string) predicate.ApexCustomerIdentity {
 	return predicate.ApexCustomerIdentity(sql.FieldEQ(FieldEmail, v))
 }
 
-// EmailNEQ applies the NEQ predicate on the "email" field.
-func EmailNEQ(v string) predicate.ApexCustomerIdentity {
-	return predicate.ApexCustomerIdentity(sql.FieldNEQ(FieldEmail, v))
-}
-
-// EmailIn applies the In predicate on the "email" field.
-func EmailIn(vs ...string) predicate.ApexCustomerIdentity {
-	return predicate.ApexCustomerIdentity(sql.FieldIn(FieldEmail, vs...))
-}
-
-// EmailNotIn applies the NotIn predicate on the "email" field.
-func EmailNotIn(vs ...string) predicate.ApexCustomerIdentity {
-	return predicate.ApexCustomerIdentity(sql.FieldNotIn(FieldEmail, vs...))
-}
-
-// EmailGT applies the GT predicate on the "email" field.
-func EmailGT(v string) predicate.ApexCustomerIdentity {
-	return predicate.ApexCustomerIdentity(sql.FieldGT(FieldEmail, v))
-}
-
-// EmailGTE applies the GTE predicate on the "email" field.
-func EmailGTE(v string) predicate.ApexCustomerIdentity {
-	return predicate.ApexCustomerIdentity(sql.FieldGTE(FieldEmail, v))
-}
-
-// EmailLT applies the LT predicate on the "email" field.
-func EmailLT(v string) predicate.ApexCustomerIdentity {
-	return predicate.ApexCustomerIdentity(sql.FieldLT(FieldEmail, v))
-}
-
-// EmailLTE applies the LTE predicate on the "email" field.
-func EmailLTE(v string) predicate.ApexCustomerIdentity {
-	return predicate.ApexCustomerIdentity(sql.FieldLTE(FieldEmail, v))
-}
-
-// EmailContains applies the Contains predicate on the "email" field.
-func EmailContains(v string) predicate.ApexCustomerIdentity {
-	return predicate.ApexCustomerIdentity(sql.FieldContains(FieldEmail, v))
-}
-
-// EmailHasPrefix applies the HasPrefix predicate on the "email" field.
-func EmailHasPrefix(v string) predicate.ApexCustomerIdentity {
-	return predicate.ApexCustomerIdentity(sql.FieldHasPrefix(FieldEmail, v))
-}
-
-// EmailHasSuffix applies the HasSuffix predicate on the "email" field.
-func EmailHasSuffix(v string) predicate.ApexCustomerIdentity {
-	return predicate.ApexCustomerIdentity(sql.FieldHasSuffix(FieldEmail, v))
-}
-
-// EmailIsNil applies the IsNil predicate on the "email" field.
-func EmailIsNil() predicate.ApexCustomerIdentity {
-	return predicate.ApexCustomerIdentity(sql.FieldIsNull(FieldEmail))
-}
-
-// EmailNotNil applies the NotNil predicate on the "email" field.
-func EmailNotNil() predicate.ApexCustomerIdentity {
-	return predicate.ApexCustomerIdentity(sql.FieldNotNull(FieldEmail))
-}
-
-// EmailEqualFold applies the EqualFold predicate on the "email" field.
-func EmailEqualFold(v string) predicate.ApexCustomerIdentity {
-	return predicate.ApexCustomerIdentity(sql.FieldEqualFold(FieldEmail, v))
-}
-
-// EmailContainsFold applies the ContainsFold predicate on the "email" field.
-func EmailContainsFold(v string) predicate.ApexCustomerIdentity {
-	return predicate.ApexCustomerIdentity(sql.FieldContainsFold(FieldEmail, v))
-}
-
-// EmailVerifiedEQ applies the EQ predicate on the "email_verified" field.
-func EmailVerifiedEQ(v bool) predicate.ApexCustomerIdentity {
+// EmailVerified applies equality check predicate on the "email_verified" field. It's identical to EmailVerifiedEQ.
+func EmailVerified(v bool) predicate.ApexCustomerIdentity {
 	return predicate.ApexCustomerIdentity(sql.FieldEQ(FieldEmailVerified, v))
-}
-
-// EmailVerifiedNEQ applies the NEQ predicate on the "email_verified" field.
-func EmailVerifiedNEQ(v bool) predicate.ApexCustomerIdentity {
-	return predicate.ApexCustomerIdentity(sql.FieldNEQ(FieldEmailVerified, v))
-}
-
-// EmailVerifiedIsNil applies the IsNil predicate on the "email_verified" field.
-func EmailVerifiedIsNil() predicate.ApexCustomerIdentity {
-	return predicate.ApexCustomerIdentity(sql.FieldIsNull(FieldEmailVerified))
-}
-
-// EmailVerifiedNotNil applies the NotNil predicate on the "email_verified" field.
-func EmailVerifiedNotNil() predicate.ApexCustomerIdentity {
-	return predicate.ApexCustomerIdentity(sql.FieldNotNull(FieldEmailVerified))
 }
 
 // CreatedAtEQ applies the EQ predicate on the "created_at" field.
@@ -325,6 +230,101 @@ func DeletedAtIsNil() predicate.ApexCustomerIdentity {
 // DeletedAtNotNil applies the NotNil predicate on the "deleted_at" field.
 func DeletedAtNotNil() predicate.ApexCustomerIdentity {
 	return predicate.ApexCustomerIdentity(sql.FieldNotNull(FieldDeletedAt))
+}
+
+// EmailEQ applies the EQ predicate on the "email" field.
+func EmailEQ(v string) predicate.ApexCustomerIdentity {
+	return predicate.ApexCustomerIdentity(sql.FieldEQ(FieldEmail, v))
+}
+
+// EmailNEQ applies the NEQ predicate on the "email" field.
+func EmailNEQ(v string) predicate.ApexCustomerIdentity {
+	return predicate.ApexCustomerIdentity(sql.FieldNEQ(FieldEmail, v))
+}
+
+// EmailIn applies the In predicate on the "email" field.
+func EmailIn(vs ...string) predicate.ApexCustomerIdentity {
+	return predicate.ApexCustomerIdentity(sql.FieldIn(FieldEmail, vs...))
+}
+
+// EmailNotIn applies the NotIn predicate on the "email" field.
+func EmailNotIn(vs ...string) predicate.ApexCustomerIdentity {
+	return predicate.ApexCustomerIdentity(sql.FieldNotIn(FieldEmail, vs...))
+}
+
+// EmailGT applies the GT predicate on the "email" field.
+func EmailGT(v string) predicate.ApexCustomerIdentity {
+	return predicate.ApexCustomerIdentity(sql.FieldGT(FieldEmail, v))
+}
+
+// EmailGTE applies the GTE predicate on the "email" field.
+func EmailGTE(v string) predicate.ApexCustomerIdentity {
+	return predicate.ApexCustomerIdentity(sql.FieldGTE(FieldEmail, v))
+}
+
+// EmailLT applies the LT predicate on the "email" field.
+func EmailLT(v string) predicate.ApexCustomerIdentity {
+	return predicate.ApexCustomerIdentity(sql.FieldLT(FieldEmail, v))
+}
+
+// EmailLTE applies the LTE predicate on the "email" field.
+func EmailLTE(v string) predicate.ApexCustomerIdentity {
+	return predicate.ApexCustomerIdentity(sql.FieldLTE(FieldEmail, v))
+}
+
+// EmailContains applies the Contains predicate on the "email" field.
+func EmailContains(v string) predicate.ApexCustomerIdentity {
+	return predicate.ApexCustomerIdentity(sql.FieldContains(FieldEmail, v))
+}
+
+// EmailHasPrefix applies the HasPrefix predicate on the "email" field.
+func EmailHasPrefix(v string) predicate.ApexCustomerIdentity {
+	return predicate.ApexCustomerIdentity(sql.FieldHasPrefix(FieldEmail, v))
+}
+
+// EmailHasSuffix applies the HasSuffix predicate on the "email" field.
+func EmailHasSuffix(v string) predicate.ApexCustomerIdentity {
+	return predicate.ApexCustomerIdentity(sql.FieldHasSuffix(FieldEmail, v))
+}
+
+// EmailIsNil applies the IsNil predicate on the "email" field.
+func EmailIsNil() predicate.ApexCustomerIdentity {
+	return predicate.ApexCustomerIdentity(sql.FieldIsNull(FieldEmail))
+}
+
+// EmailNotNil applies the NotNil predicate on the "email" field.
+func EmailNotNil() predicate.ApexCustomerIdentity {
+	return predicate.ApexCustomerIdentity(sql.FieldNotNull(FieldEmail))
+}
+
+// EmailEqualFold applies the EqualFold predicate on the "email" field.
+func EmailEqualFold(v string) predicate.ApexCustomerIdentity {
+	return predicate.ApexCustomerIdentity(sql.FieldEqualFold(FieldEmail, v))
+}
+
+// EmailContainsFold applies the ContainsFold predicate on the "email" field.
+func EmailContainsFold(v string) predicate.ApexCustomerIdentity {
+	return predicate.ApexCustomerIdentity(sql.FieldContainsFold(FieldEmail, v))
+}
+
+// EmailVerifiedEQ applies the EQ predicate on the "email_verified" field.
+func EmailVerifiedEQ(v bool) predicate.ApexCustomerIdentity {
+	return predicate.ApexCustomerIdentity(sql.FieldEQ(FieldEmailVerified, v))
+}
+
+// EmailVerifiedNEQ applies the NEQ predicate on the "email_verified" field.
+func EmailVerifiedNEQ(v bool) predicate.ApexCustomerIdentity {
+	return predicate.ApexCustomerIdentity(sql.FieldNEQ(FieldEmailVerified, v))
+}
+
+// EmailVerifiedIsNil applies the IsNil predicate on the "email_verified" field.
+func EmailVerifiedIsNil() predicate.ApexCustomerIdentity {
+	return predicate.ApexCustomerIdentity(sql.FieldIsNull(FieldEmailVerified))
+}
+
+// EmailVerifiedNotNil applies the NotNil predicate on the "email_verified" field.
+func EmailVerifiedNotNil() predicate.ApexCustomerIdentity {
+	return predicate.ApexCustomerIdentity(sql.FieldNotNull(FieldEmailVerified))
 }
 
 // HasCustomer applies the HasEdge predicate on the "customer" edge.

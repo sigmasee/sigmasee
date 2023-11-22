@@ -35,6 +35,9 @@ type ApexCustomerMutation struct {
 	op                Op
 	typ               string
 	id                *string
+	created_at        *time.Time
+	modified_at       *time.Time
+	deleted_at        *time.Time
 	event_raised_at   *time.Time
 	name              *string
 	given_name        *string
@@ -47,9 +50,6 @@ type ApexCustomerMutation struct {
 	photo_url_72      *string
 	photo_url_192     *string
 	photo_url_512     *string
-	created_at        *time.Time
-	modified_at       *time.Time
-	deleted_at        *time.Time
 	clearedFields     map[string]struct{}
 	identities        map[string]struct{}
 	removedidentities map[string]struct{}
@@ -161,6 +161,140 @@ func (m *ApexCustomerMutation) IDs(ctx context.Context) ([]string, error) {
 	default:
 		return nil, fmt.Errorf("IDs is not allowed on %s operations", m.op)
 	}
+}
+
+// SetCreatedAt sets the "created_at" field.
+func (m *ApexCustomerMutation) SetCreatedAt(t time.Time) {
+	m.created_at = &t
+}
+
+// CreatedAt returns the value of the "created_at" field in the mutation.
+func (m *ApexCustomerMutation) CreatedAt() (r time.Time, exists bool) {
+	v := m.created_at
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldCreatedAt returns the old "created_at" field's value of the ApexCustomer entity.
+// If the ApexCustomer object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *ApexCustomerMutation) OldCreatedAt(ctx context.Context) (v time.Time, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldCreatedAt is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldCreatedAt requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldCreatedAt: %w", err)
+	}
+	return oldValue.CreatedAt, nil
+}
+
+// ResetCreatedAt resets all changes to the "created_at" field.
+func (m *ApexCustomerMutation) ResetCreatedAt() {
+	m.created_at = nil
+}
+
+// SetModifiedAt sets the "modified_at" field.
+func (m *ApexCustomerMutation) SetModifiedAt(t time.Time) {
+	m.modified_at = &t
+}
+
+// ModifiedAt returns the value of the "modified_at" field in the mutation.
+func (m *ApexCustomerMutation) ModifiedAt() (r time.Time, exists bool) {
+	v := m.modified_at
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldModifiedAt returns the old "modified_at" field's value of the ApexCustomer entity.
+// If the ApexCustomer object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *ApexCustomerMutation) OldModifiedAt(ctx context.Context) (v time.Time, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldModifiedAt is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldModifiedAt requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldModifiedAt: %w", err)
+	}
+	return oldValue.ModifiedAt, nil
+}
+
+// ClearModifiedAt clears the value of the "modified_at" field.
+func (m *ApexCustomerMutation) ClearModifiedAt() {
+	m.modified_at = nil
+	m.clearedFields[apexcustomer.FieldModifiedAt] = struct{}{}
+}
+
+// ModifiedAtCleared returns if the "modified_at" field was cleared in this mutation.
+func (m *ApexCustomerMutation) ModifiedAtCleared() bool {
+	_, ok := m.clearedFields[apexcustomer.FieldModifiedAt]
+	return ok
+}
+
+// ResetModifiedAt resets all changes to the "modified_at" field.
+func (m *ApexCustomerMutation) ResetModifiedAt() {
+	m.modified_at = nil
+	delete(m.clearedFields, apexcustomer.FieldModifiedAt)
+}
+
+// SetDeletedAt sets the "deleted_at" field.
+func (m *ApexCustomerMutation) SetDeletedAt(t time.Time) {
+	m.deleted_at = &t
+}
+
+// DeletedAt returns the value of the "deleted_at" field in the mutation.
+func (m *ApexCustomerMutation) DeletedAt() (r time.Time, exists bool) {
+	v := m.deleted_at
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldDeletedAt returns the old "deleted_at" field's value of the ApexCustomer entity.
+// If the ApexCustomer object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *ApexCustomerMutation) OldDeletedAt(ctx context.Context) (v time.Time, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldDeletedAt is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldDeletedAt requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldDeletedAt: %w", err)
+	}
+	return oldValue.DeletedAt, nil
+}
+
+// ClearDeletedAt clears the value of the "deleted_at" field.
+func (m *ApexCustomerMutation) ClearDeletedAt() {
+	m.deleted_at = nil
+	m.clearedFields[apexcustomer.FieldDeletedAt] = struct{}{}
+}
+
+// DeletedAtCleared returns if the "deleted_at" field was cleared in this mutation.
+func (m *ApexCustomerMutation) DeletedAtCleared() bool {
+	_, ok := m.clearedFields[apexcustomer.FieldDeletedAt]
+	return ok
+}
+
+// ResetDeletedAt resets all changes to the "deleted_at" field.
+func (m *ApexCustomerMutation) ResetDeletedAt() {
+	m.deleted_at = nil
+	delete(m.clearedFields, apexcustomer.FieldDeletedAt)
 }
 
 // SetEventRaisedAt sets the "event_raised_at" field.
@@ -738,140 +872,6 @@ func (m *ApexCustomerMutation) ResetPhotoURL512() {
 	delete(m.clearedFields, apexcustomer.FieldPhotoURL512)
 }
 
-// SetCreatedAt sets the "created_at" field.
-func (m *ApexCustomerMutation) SetCreatedAt(t time.Time) {
-	m.created_at = &t
-}
-
-// CreatedAt returns the value of the "created_at" field in the mutation.
-func (m *ApexCustomerMutation) CreatedAt() (r time.Time, exists bool) {
-	v := m.created_at
-	if v == nil {
-		return
-	}
-	return *v, true
-}
-
-// OldCreatedAt returns the old "created_at" field's value of the ApexCustomer entity.
-// If the ApexCustomer object wasn't provided to the builder, the object is fetched from the database.
-// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *ApexCustomerMutation) OldCreatedAt(ctx context.Context) (v time.Time, err error) {
-	if !m.op.Is(OpUpdateOne) {
-		return v, errors.New("OldCreatedAt is only allowed on UpdateOne operations")
-	}
-	if m.id == nil || m.oldValue == nil {
-		return v, errors.New("OldCreatedAt requires an ID field in the mutation")
-	}
-	oldValue, err := m.oldValue(ctx)
-	if err != nil {
-		return v, fmt.Errorf("querying old value for OldCreatedAt: %w", err)
-	}
-	return oldValue.CreatedAt, nil
-}
-
-// ResetCreatedAt resets all changes to the "created_at" field.
-func (m *ApexCustomerMutation) ResetCreatedAt() {
-	m.created_at = nil
-}
-
-// SetModifiedAt sets the "modified_at" field.
-func (m *ApexCustomerMutation) SetModifiedAt(t time.Time) {
-	m.modified_at = &t
-}
-
-// ModifiedAt returns the value of the "modified_at" field in the mutation.
-func (m *ApexCustomerMutation) ModifiedAt() (r time.Time, exists bool) {
-	v := m.modified_at
-	if v == nil {
-		return
-	}
-	return *v, true
-}
-
-// OldModifiedAt returns the old "modified_at" field's value of the ApexCustomer entity.
-// If the ApexCustomer object wasn't provided to the builder, the object is fetched from the database.
-// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *ApexCustomerMutation) OldModifiedAt(ctx context.Context) (v time.Time, err error) {
-	if !m.op.Is(OpUpdateOne) {
-		return v, errors.New("OldModifiedAt is only allowed on UpdateOne operations")
-	}
-	if m.id == nil || m.oldValue == nil {
-		return v, errors.New("OldModifiedAt requires an ID field in the mutation")
-	}
-	oldValue, err := m.oldValue(ctx)
-	if err != nil {
-		return v, fmt.Errorf("querying old value for OldModifiedAt: %w", err)
-	}
-	return oldValue.ModifiedAt, nil
-}
-
-// ClearModifiedAt clears the value of the "modified_at" field.
-func (m *ApexCustomerMutation) ClearModifiedAt() {
-	m.modified_at = nil
-	m.clearedFields[apexcustomer.FieldModifiedAt] = struct{}{}
-}
-
-// ModifiedAtCleared returns if the "modified_at" field was cleared in this mutation.
-func (m *ApexCustomerMutation) ModifiedAtCleared() bool {
-	_, ok := m.clearedFields[apexcustomer.FieldModifiedAt]
-	return ok
-}
-
-// ResetModifiedAt resets all changes to the "modified_at" field.
-func (m *ApexCustomerMutation) ResetModifiedAt() {
-	m.modified_at = nil
-	delete(m.clearedFields, apexcustomer.FieldModifiedAt)
-}
-
-// SetDeletedAt sets the "deleted_at" field.
-func (m *ApexCustomerMutation) SetDeletedAt(t time.Time) {
-	m.deleted_at = &t
-}
-
-// DeletedAt returns the value of the "deleted_at" field in the mutation.
-func (m *ApexCustomerMutation) DeletedAt() (r time.Time, exists bool) {
-	v := m.deleted_at
-	if v == nil {
-		return
-	}
-	return *v, true
-}
-
-// OldDeletedAt returns the old "deleted_at" field's value of the ApexCustomer entity.
-// If the ApexCustomer object wasn't provided to the builder, the object is fetched from the database.
-// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *ApexCustomerMutation) OldDeletedAt(ctx context.Context) (v time.Time, err error) {
-	if !m.op.Is(OpUpdateOne) {
-		return v, errors.New("OldDeletedAt is only allowed on UpdateOne operations")
-	}
-	if m.id == nil || m.oldValue == nil {
-		return v, errors.New("OldDeletedAt requires an ID field in the mutation")
-	}
-	oldValue, err := m.oldValue(ctx)
-	if err != nil {
-		return v, fmt.Errorf("querying old value for OldDeletedAt: %w", err)
-	}
-	return oldValue.DeletedAt, nil
-}
-
-// ClearDeletedAt clears the value of the "deleted_at" field.
-func (m *ApexCustomerMutation) ClearDeletedAt() {
-	m.deleted_at = nil
-	m.clearedFields[apexcustomer.FieldDeletedAt] = struct{}{}
-}
-
-// DeletedAtCleared returns if the "deleted_at" field was cleared in this mutation.
-func (m *ApexCustomerMutation) DeletedAtCleared() bool {
-	_, ok := m.clearedFields[apexcustomer.FieldDeletedAt]
-	return ok
-}
-
-// ResetDeletedAt resets all changes to the "deleted_at" field.
-func (m *ApexCustomerMutation) ResetDeletedAt() {
-	m.deleted_at = nil
-	delete(m.clearedFields, apexcustomer.FieldDeletedAt)
-}
-
 // AddIdentityIDs adds the "identities" edge to the ApexCustomerIdentity entity by ids.
 func (m *ApexCustomerMutation) AddIdentityIDs(ids ...string) {
 	if m.identities == nil {
@@ -961,6 +961,15 @@ func (m *ApexCustomerMutation) Type() string {
 // AddedFields().
 func (m *ApexCustomerMutation) Fields() []string {
 	fields := make([]string, 0, 15)
+	if m.created_at != nil {
+		fields = append(fields, apexcustomer.FieldCreatedAt)
+	}
+	if m.modified_at != nil {
+		fields = append(fields, apexcustomer.FieldModifiedAt)
+	}
+	if m.deleted_at != nil {
+		fields = append(fields, apexcustomer.FieldDeletedAt)
+	}
 	if m.event_raised_at != nil {
 		fields = append(fields, apexcustomer.FieldEventRaisedAt)
 	}
@@ -997,15 +1006,6 @@ func (m *ApexCustomerMutation) Fields() []string {
 	if m.photo_url_512 != nil {
 		fields = append(fields, apexcustomer.FieldPhotoURL512)
 	}
-	if m.created_at != nil {
-		fields = append(fields, apexcustomer.FieldCreatedAt)
-	}
-	if m.modified_at != nil {
-		fields = append(fields, apexcustomer.FieldModifiedAt)
-	}
-	if m.deleted_at != nil {
-		fields = append(fields, apexcustomer.FieldDeletedAt)
-	}
 	return fields
 }
 
@@ -1014,6 +1014,12 @@ func (m *ApexCustomerMutation) Fields() []string {
 // schema.
 func (m *ApexCustomerMutation) Field(name string) (ent.Value, bool) {
 	switch name {
+	case apexcustomer.FieldCreatedAt:
+		return m.CreatedAt()
+	case apexcustomer.FieldModifiedAt:
+		return m.ModifiedAt()
+	case apexcustomer.FieldDeletedAt:
+		return m.DeletedAt()
 	case apexcustomer.FieldEventRaisedAt:
 		return m.EventRaisedAt()
 	case apexcustomer.FieldName:
@@ -1038,12 +1044,6 @@ func (m *ApexCustomerMutation) Field(name string) (ent.Value, bool) {
 		return m.PhotoURL192()
 	case apexcustomer.FieldPhotoURL512:
 		return m.PhotoURL512()
-	case apexcustomer.FieldCreatedAt:
-		return m.CreatedAt()
-	case apexcustomer.FieldModifiedAt:
-		return m.ModifiedAt()
-	case apexcustomer.FieldDeletedAt:
-		return m.DeletedAt()
 	}
 	return nil, false
 }
@@ -1053,6 +1053,12 @@ func (m *ApexCustomerMutation) Field(name string) (ent.Value, bool) {
 // database failed.
 func (m *ApexCustomerMutation) OldField(ctx context.Context, name string) (ent.Value, error) {
 	switch name {
+	case apexcustomer.FieldCreatedAt:
+		return m.OldCreatedAt(ctx)
+	case apexcustomer.FieldModifiedAt:
+		return m.OldModifiedAt(ctx)
+	case apexcustomer.FieldDeletedAt:
+		return m.OldDeletedAt(ctx)
 	case apexcustomer.FieldEventRaisedAt:
 		return m.OldEventRaisedAt(ctx)
 	case apexcustomer.FieldName:
@@ -1077,12 +1083,6 @@ func (m *ApexCustomerMutation) OldField(ctx context.Context, name string) (ent.V
 		return m.OldPhotoURL192(ctx)
 	case apexcustomer.FieldPhotoURL512:
 		return m.OldPhotoURL512(ctx)
-	case apexcustomer.FieldCreatedAt:
-		return m.OldCreatedAt(ctx)
-	case apexcustomer.FieldModifiedAt:
-		return m.OldModifiedAt(ctx)
-	case apexcustomer.FieldDeletedAt:
-		return m.OldDeletedAt(ctx)
 	}
 	return nil, fmt.Errorf("unknown ApexCustomer field %s", name)
 }
@@ -1092,6 +1092,27 @@ func (m *ApexCustomerMutation) OldField(ctx context.Context, name string) (ent.V
 // type.
 func (m *ApexCustomerMutation) SetField(name string, value ent.Value) error {
 	switch name {
+	case apexcustomer.FieldCreatedAt:
+		v, ok := value.(time.Time)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetCreatedAt(v)
+		return nil
+	case apexcustomer.FieldModifiedAt:
+		v, ok := value.(time.Time)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetModifiedAt(v)
+		return nil
+	case apexcustomer.FieldDeletedAt:
+		v, ok := value.(time.Time)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetDeletedAt(v)
+		return nil
 	case apexcustomer.FieldEventRaisedAt:
 		v, ok := value.(time.Time)
 		if !ok {
@@ -1176,27 +1197,6 @@ func (m *ApexCustomerMutation) SetField(name string, value ent.Value) error {
 		}
 		m.SetPhotoURL512(v)
 		return nil
-	case apexcustomer.FieldCreatedAt:
-		v, ok := value.(time.Time)
-		if !ok {
-			return fmt.Errorf("unexpected type %T for field %s", value, name)
-		}
-		m.SetCreatedAt(v)
-		return nil
-	case apexcustomer.FieldModifiedAt:
-		v, ok := value.(time.Time)
-		if !ok {
-			return fmt.Errorf("unexpected type %T for field %s", value, name)
-		}
-		m.SetModifiedAt(v)
-		return nil
-	case apexcustomer.FieldDeletedAt:
-		v, ok := value.(time.Time)
-		if !ok {
-			return fmt.Errorf("unexpected type %T for field %s", value, name)
-		}
-		m.SetDeletedAt(v)
-		return nil
 	}
 	return fmt.Errorf("unknown ApexCustomer field %s", name)
 }
@@ -1227,6 +1227,12 @@ func (m *ApexCustomerMutation) AddField(name string, value ent.Value) error {
 // mutation.
 func (m *ApexCustomerMutation) ClearedFields() []string {
 	var fields []string
+	if m.FieldCleared(apexcustomer.FieldModifiedAt) {
+		fields = append(fields, apexcustomer.FieldModifiedAt)
+	}
+	if m.FieldCleared(apexcustomer.FieldDeletedAt) {
+		fields = append(fields, apexcustomer.FieldDeletedAt)
+	}
 	if m.FieldCleared(apexcustomer.FieldName) {
 		fields = append(fields, apexcustomer.FieldName)
 	}
@@ -1260,12 +1266,6 @@ func (m *ApexCustomerMutation) ClearedFields() []string {
 	if m.FieldCleared(apexcustomer.FieldPhotoURL512) {
 		fields = append(fields, apexcustomer.FieldPhotoURL512)
 	}
-	if m.FieldCleared(apexcustomer.FieldModifiedAt) {
-		fields = append(fields, apexcustomer.FieldModifiedAt)
-	}
-	if m.FieldCleared(apexcustomer.FieldDeletedAt) {
-		fields = append(fields, apexcustomer.FieldDeletedAt)
-	}
 	return fields
 }
 
@@ -1280,6 +1280,12 @@ func (m *ApexCustomerMutation) FieldCleared(name string) bool {
 // error if the field is not defined in the schema.
 func (m *ApexCustomerMutation) ClearField(name string) error {
 	switch name {
+	case apexcustomer.FieldModifiedAt:
+		m.ClearModifiedAt()
+		return nil
+	case apexcustomer.FieldDeletedAt:
+		m.ClearDeletedAt()
+		return nil
 	case apexcustomer.FieldName:
 		m.ClearName()
 		return nil
@@ -1313,12 +1319,6 @@ func (m *ApexCustomerMutation) ClearField(name string) error {
 	case apexcustomer.FieldPhotoURL512:
 		m.ClearPhotoURL512()
 		return nil
-	case apexcustomer.FieldModifiedAt:
-		m.ClearModifiedAt()
-		return nil
-	case apexcustomer.FieldDeletedAt:
-		m.ClearDeletedAt()
-		return nil
 	}
 	return fmt.Errorf("unknown ApexCustomer nullable field %s", name)
 }
@@ -1327,6 +1327,15 @@ func (m *ApexCustomerMutation) ClearField(name string) error {
 // It returns an error if the field is not defined in the schema.
 func (m *ApexCustomerMutation) ResetField(name string) error {
 	switch name {
+	case apexcustomer.FieldCreatedAt:
+		m.ResetCreatedAt()
+		return nil
+	case apexcustomer.FieldModifiedAt:
+		m.ResetModifiedAt()
+		return nil
+	case apexcustomer.FieldDeletedAt:
+		m.ResetDeletedAt()
+		return nil
 	case apexcustomer.FieldEventRaisedAt:
 		m.ResetEventRaisedAt()
 		return nil
@@ -1362,15 +1371,6 @@ func (m *ApexCustomerMutation) ResetField(name string) error {
 		return nil
 	case apexcustomer.FieldPhotoURL512:
 		m.ResetPhotoURL512()
-		return nil
-	case apexcustomer.FieldCreatedAt:
-		m.ResetCreatedAt()
-		return nil
-	case apexcustomer.FieldModifiedAt:
-		m.ResetModifiedAt()
-		return nil
-	case apexcustomer.FieldDeletedAt:
-		m.ResetDeletedAt()
 		return nil
 	}
 	return fmt.Errorf("unknown ApexCustomer field %s", name)
@@ -1466,11 +1466,11 @@ type ApexCustomerIdentityMutation struct {
 	op              Op
 	typ             string
 	id              *string
-	email           *string
-	email_verified  *bool
 	created_at      *time.Time
 	modified_at     *time.Time
 	deleted_at      *time.Time
+	email           *string
+	email_verified  *bool
 	clearedFields   map[string]struct{}
 	customer        *string
 	clearedcustomer bool
@@ -1581,104 +1581,6 @@ func (m *ApexCustomerIdentityMutation) IDs(ctx context.Context) ([]string, error
 	default:
 		return nil, fmt.Errorf("IDs is not allowed on %s operations", m.op)
 	}
-}
-
-// SetEmail sets the "email" field.
-func (m *ApexCustomerIdentityMutation) SetEmail(s string) {
-	m.email = &s
-}
-
-// Email returns the value of the "email" field in the mutation.
-func (m *ApexCustomerIdentityMutation) Email() (r string, exists bool) {
-	v := m.email
-	if v == nil {
-		return
-	}
-	return *v, true
-}
-
-// OldEmail returns the old "email" field's value of the ApexCustomerIdentity entity.
-// If the ApexCustomerIdentity object wasn't provided to the builder, the object is fetched from the database.
-// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *ApexCustomerIdentityMutation) OldEmail(ctx context.Context) (v string, err error) {
-	if !m.op.Is(OpUpdateOne) {
-		return v, errors.New("OldEmail is only allowed on UpdateOne operations")
-	}
-	if m.id == nil || m.oldValue == nil {
-		return v, errors.New("OldEmail requires an ID field in the mutation")
-	}
-	oldValue, err := m.oldValue(ctx)
-	if err != nil {
-		return v, fmt.Errorf("querying old value for OldEmail: %w", err)
-	}
-	return oldValue.Email, nil
-}
-
-// ClearEmail clears the value of the "email" field.
-func (m *ApexCustomerIdentityMutation) ClearEmail() {
-	m.email = nil
-	m.clearedFields[apexcustomeridentity.FieldEmail] = struct{}{}
-}
-
-// EmailCleared returns if the "email" field was cleared in this mutation.
-func (m *ApexCustomerIdentityMutation) EmailCleared() bool {
-	_, ok := m.clearedFields[apexcustomeridentity.FieldEmail]
-	return ok
-}
-
-// ResetEmail resets all changes to the "email" field.
-func (m *ApexCustomerIdentityMutation) ResetEmail() {
-	m.email = nil
-	delete(m.clearedFields, apexcustomeridentity.FieldEmail)
-}
-
-// SetEmailVerified sets the "email_verified" field.
-func (m *ApexCustomerIdentityMutation) SetEmailVerified(b bool) {
-	m.email_verified = &b
-}
-
-// EmailVerified returns the value of the "email_verified" field in the mutation.
-func (m *ApexCustomerIdentityMutation) EmailVerified() (r bool, exists bool) {
-	v := m.email_verified
-	if v == nil {
-		return
-	}
-	return *v, true
-}
-
-// OldEmailVerified returns the old "email_verified" field's value of the ApexCustomerIdentity entity.
-// If the ApexCustomerIdentity object wasn't provided to the builder, the object is fetched from the database.
-// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *ApexCustomerIdentityMutation) OldEmailVerified(ctx context.Context) (v bool, err error) {
-	if !m.op.Is(OpUpdateOne) {
-		return v, errors.New("OldEmailVerified is only allowed on UpdateOne operations")
-	}
-	if m.id == nil || m.oldValue == nil {
-		return v, errors.New("OldEmailVerified requires an ID field in the mutation")
-	}
-	oldValue, err := m.oldValue(ctx)
-	if err != nil {
-		return v, fmt.Errorf("querying old value for OldEmailVerified: %w", err)
-	}
-	return oldValue.EmailVerified, nil
-}
-
-// ClearEmailVerified clears the value of the "email_verified" field.
-func (m *ApexCustomerIdentityMutation) ClearEmailVerified() {
-	m.email_verified = nil
-	m.clearedFields[apexcustomeridentity.FieldEmailVerified] = struct{}{}
-}
-
-// EmailVerifiedCleared returns if the "email_verified" field was cleared in this mutation.
-func (m *ApexCustomerIdentityMutation) EmailVerifiedCleared() bool {
-	_, ok := m.clearedFields[apexcustomeridentity.FieldEmailVerified]
-	return ok
-}
-
-// ResetEmailVerified resets all changes to the "email_verified" field.
-func (m *ApexCustomerIdentityMutation) ResetEmailVerified() {
-	m.email_verified = nil
-	delete(m.clearedFields, apexcustomeridentity.FieldEmailVerified)
 }
 
 // SetCreatedAt sets the "created_at" field.
@@ -1815,6 +1717,104 @@ func (m *ApexCustomerIdentityMutation) ResetDeletedAt() {
 	delete(m.clearedFields, apexcustomeridentity.FieldDeletedAt)
 }
 
+// SetEmail sets the "email" field.
+func (m *ApexCustomerIdentityMutation) SetEmail(s string) {
+	m.email = &s
+}
+
+// Email returns the value of the "email" field in the mutation.
+func (m *ApexCustomerIdentityMutation) Email() (r string, exists bool) {
+	v := m.email
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldEmail returns the old "email" field's value of the ApexCustomerIdentity entity.
+// If the ApexCustomerIdentity object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *ApexCustomerIdentityMutation) OldEmail(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldEmail is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldEmail requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldEmail: %w", err)
+	}
+	return oldValue.Email, nil
+}
+
+// ClearEmail clears the value of the "email" field.
+func (m *ApexCustomerIdentityMutation) ClearEmail() {
+	m.email = nil
+	m.clearedFields[apexcustomeridentity.FieldEmail] = struct{}{}
+}
+
+// EmailCleared returns if the "email" field was cleared in this mutation.
+func (m *ApexCustomerIdentityMutation) EmailCleared() bool {
+	_, ok := m.clearedFields[apexcustomeridentity.FieldEmail]
+	return ok
+}
+
+// ResetEmail resets all changes to the "email" field.
+func (m *ApexCustomerIdentityMutation) ResetEmail() {
+	m.email = nil
+	delete(m.clearedFields, apexcustomeridentity.FieldEmail)
+}
+
+// SetEmailVerified sets the "email_verified" field.
+func (m *ApexCustomerIdentityMutation) SetEmailVerified(b bool) {
+	m.email_verified = &b
+}
+
+// EmailVerified returns the value of the "email_verified" field in the mutation.
+func (m *ApexCustomerIdentityMutation) EmailVerified() (r bool, exists bool) {
+	v := m.email_verified
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldEmailVerified returns the old "email_verified" field's value of the ApexCustomerIdentity entity.
+// If the ApexCustomerIdentity object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *ApexCustomerIdentityMutation) OldEmailVerified(ctx context.Context) (v bool, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldEmailVerified is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldEmailVerified requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldEmailVerified: %w", err)
+	}
+	return oldValue.EmailVerified, nil
+}
+
+// ClearEmailVerified clears the value of the "email_verified" field.
+func (m *ApexCustomerIdentityMutation) ClearEmailVerified() {
+	m.email_verified = nil
+	m.clearedFields[apexcustomeridentity.FieldEmailVerified] = struct{}{}
+}
+
+// EmailVerifiedCleared returns if the "email_verified" field was cleared in this mutation.
+func (m *ApexCustomerIdentityMutation) EmailVerifiedCleared() bool {
+	_, ok := m.clearedFields[apexcustomeridentity.FieldEmailVerified]
+	return ok
+}
+
+// ResetEmailVerified resets all changes to the "email_verified" field.
+func (m *ApexCustomerIdentityMutation) ResetEmailVerified() {
+	m.email_verified = nil
+	delete(m.clearedFields, apexcustomeridentity.FieldEmailVerified)
+}
+
 // SetCustomerID sets the "customer" edge to the ApexCustomer entity by id.
 func (m *ApexCustomerIdentityMutation) SetCustomerID(id string) {
 	m.customer = &id
@@ -1889,12 +1889,6 @@ func (m *ApexCustomerIdentityMutation) Type() string {
 // AddedFields().
 func (m *ApexCustomerIdentityMutation) Fields() []string {
 	fields := make([]string, 0, 5)
-	if m.email != nil {
-		fields = append(fields, apexcustomeridentity.FieldEmail)
-	}
-	if m.email_verified != nil {
-		fields = append(fields, apexcustomeridentity.FieldEmailVerified)
-	}
 	if m.created_at != nil {
 		fields = append(fields, apexcustomeridentity.FieldCreatedAt)
 	}
@@ -1904,6 +1898,12 @@ func (m *ApexCustomerIdentityMutation) Fields() []string {
 	if m.deleted_at != nil {
 		fields = append(fields, apexcustomeridentity.FieldDeletedAt)
 	}
+	if m.email != nil {
+		fields = append(fields, apexcustomeridentity.FieldEmail)
+	}
+	if m.email_verified != nil {
+		fields = append(fields, apexcustomeridentity.FieldEmailVerified)
+	}
 	return fields
 }
 
@@ -1912,16 +1912,16 @@ func (m *ApexCustomerIdentityMutation) Fields() []string {
 // schema.
 func (m *ApexCustomerIdentityMutation) Field(name string) (ent.Value, bool) {
 	switch name {
-	case apexcustomeridentity.FieldEmail:
-		return m.Email()
-	case apexcustomeridentity.FieldEmailVerified:
-		return m.EmailVerified()
 	case apexcustomeridentity.FieldCreatedAt:
 		return m.CreatedAt()
 	case apexcustomeridentity.FieldModifiedAt:
 		return m.ModifiedAt()
 	case apexcustomeridentity.FieldDeletedAt:
 		return m.DeletedAt()
+	case apexcustomeridentity.FieldEmail:
+		return m.Email()
+	case apexcustomeridentity.FieldEmailVerified:
+		return m.EmailVerified()
 	}
 	return nil, false
 }
@@ -1931,16 +1931,16 @@ func (m *ApexCustomerIdentityMutation) Field(name string) (ent.Value, bool) {
 // database failed.
 func (m *ApexCustomerIdentityMutation) OldField(ctx context.Context, name string) (ent.Value, error) {
 	switch name {
-	case apexcustomeridentity.FieldEmail:
-		return m.OldEmail(ctx)
-	case apexcustomeridentity.FieldEmailVerified:
-		return m.OldEmailVerified(ctx)
 	case apexcustomeridentity.FieldCreatedAt:
 		return m.OldCreatedAt(ctx)
 	case apexcustomeridentity.FieldModifiedAt:
 		return m.OldModifiedAt(ctx)
 	case apexcustomeridentity.FieldDeletedAt:
 		return m.OldDeletedAt(ctx)
+	case apexcustomeridentity.FieldEmail:
+		return m.OldEmail(ctx)
+	case apexcustomeridentity.FieldEmailVerified:
+		return m.OldEmailVerified(ctx)
 	}
 	return nil, fmt.Errorf("unknown ApexCustomerIdentity field %s", name)
 }
@@ -1950,20 +1950,6 @@ func (m *ApexCustomerIdentityMutation) OldField(ctx context.Context, name string
 // type.
 func (m *ApexCustomerIdentityMutation) SetField(name string, value ent.Value) error {
 	switch name {
-	case apexcustomeridentity.FieldEmail:
-		v, ok := value.(string)
-		if !ok {
-			return fmt.Errorf("unexpected type %T for field %s", value, name)
-		}
-		m.SetEmail(v)
-		return nil
-	case apexcustomeridentity.FieldEmailVerified:
-		v, ok := value.(bool)
-		if !ok {
-			return fmt.Errorf("unexpected type %T for field %s", value, name)
-		}
-		m.SetEmailVerified(v)
-		return nil
 	case apexcustomeridentity.FieldCreatedAt:
 		v, ok := value.(time.Time)
 		if !ok {
@@ -1984,6 +1970,20 @@ func (m *ApexCustomerIdentityMutation) SetField(name string, value ent.Value) er
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetDeletedAt(v)
+		return nil
+	case apexcustomeridentity.FieldEmail:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetEmail(v)
+		return nil
+	case apexcustomeridentity.FieldEmailVerified:
+		v, ok := value.(bool)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetEmailVerified(v)
 		return nil
 	}
 	return fmt.Errorf("unknown ApexCustomerIdentity field %s", name)
@@ -2015,17 +2015,17 @@ func (m *ApexCustomerIdentityMutation) AddField(name string, value ent.Value) er
 // mutation.
 func (m *ApexCustomerIdentityMutation) ClearedFields() []string {
 	var fields []string
-	if m.FieldCleared(apexcustomeridentity.FieldEmail) {
-		fields = append(fields, apexcustomeridentity.FieldEmail)
-	}
-	if m.FieldCleared(apexcustomeridentity.FieldEmailVerified) {
-		fields = append(fields, apexcustomeridentity.FieldEmailVerified)
-	}
 	if m.FieldCleared(apexcustomeridentity.FieldModifiedAt) {
 		fields = append(fields, apexcustomeridentity.FieldModifiedAt)
 	}
 	if m.FieldCleared(apexcustomeridentity.FieldDeletedAt) {
 		fields = append(fields, apexcustomeridentity.FieldDeletedAt)
+	}
+	if m.FieldCleared(apexcustomeridentity.FieldEmail) {
+		fields = append(fields, apexcustomeridentity.FieldEmail)
+	}
+	if m.FieldCleared(apexcustomeridentity.FieldEmailVerified) {
+		fields = append(fields, apexcustomeridentity.FieldEmailVerified)
 	}
 	return fields
 }
@@ -2041,17 +2041,17 @@ func (m *ApexCustomerIdentityMutation) FieldCleared(name string) bool {
 // error if the field is not defined in the schema.
 func (m *ApexCustomerIdentityMutation) ClearField(name string) error {
 	switch name {
-	case apexcustomeridentity.FieldEmail:
-		m.ClearEmail()
-		return nil
-	case apexcustomeridentity.FieldEmailVerified:
-		m.ClearEmailVerified()
-		return nil
 	case apexcustomeridentity.FieldModifiedAt:
 		m.ClearModifiedAt()
 		return nil
 	case apexcustomeridentity.FieldDeletedAt:
 		m.ClearDeletedAt()
+		return nil
+	case apexcustomeridentity.FieldEmail:
+		m.ClearEmail()
+		return nil
+	case apexcustomeridentity.FieldEmailVerified:
+		m.ClearEmailVerified()
 		return nil
 	}
 	return fmt.Errorf("unknown ApexCustomerIdentity nullable field %s", name)
@@ -2061,12 +2061,6 @@ func (m *ApexCustomerIdentityMutation) ClearField(name string) error {
 // It returns an error if the field is not defined in the schema.
 func (m *ApexCustomerIdentityMutation) ResetField(name string) error {
 	switch name {
-	case apexcustomeridentity.FieldEmail:
-		m.ResetEmail()
-		return nil
-	case apexcustomeridentity.FieldEmailVerified:
-		m.ResetEmailVerified()
-		return nil
 	case apexcustomeridentity.FieldCreatedAt:
 		m.ResetCreatedAt()
 		return nil
@@ -2075,6 +2069,12 @@ func (m *ApexCustomerIdentityMutation) ResetField(name string) error {
 		return nil
 	case apexcustomeridentity.FieldDeletedAt:
 		m.ResetDeletedAt()
+		return nil
+	case apexcustomeridentity.FieldEmail:
+		m.ResetEmail()
+		return nil
+	case apexcustomeridentity.FieldEmailVerified:
+		m.ResetEmailVerified()
 		return nil
 	}
 	return fmt.Errorf("unknown ApexCustomerIdentity field %s", name)

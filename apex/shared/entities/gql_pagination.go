@@ -319,6 +319,48 @@ var (
 			}
 		},
 	}
+	// ApexCustomerOrderFieldCreatedAt orders ApexCustomer by created_at.
+	ApexCustomerOrderFieldCreatedAt = &ApexCustomerOrderField{
+		Value: func(ac *ApexCustomer) (ent.Value, error) {
+			return ac.CreatedAt, nil
+		},
+		column: apexcustomer.FieldCreatedAt,
+		toTerm: apexcustomer.ByCreatedAt,
+		toCursor: func(ac *ApexCustomer) Cursor {
+			return Cursor{
+				ID:    ac.ID,
+				Value: ac.CreatedAt,
+			}
+		},
+	}
+	// ApexCustomerOrderFieldModifiedAt orders ApexCustomer by modified_at.
+	ApexCustomerOrderFieldModifiedAt = &ApexCustomerOrderField{
+		Value: func(ac *ApexCustomer) (ent.Value, error) {
+			return ac.ModifiedAt, nil
+		},
+		column: apexcustomer.FieldModifiedAt,
+		toTerm: apexcustomer.ByModifiedAt,
+		toCursor: func(ac *ApexCustomer) Cursor {
+			return Cursor{
+				ID:    ac.ID,
+				Value: ac.ModifiedAt,
+			}
+		},
+	}
+	// ApexCustomerOrderFieldDeletedAt orders ApexCustomer by deleted_at.
+	ApexCustomerOrderFieldDeletedAt = &ApexCustomerOrderField{
+		Value: func(ac *ApexCustomer) (ent.Value, error) {
+			return ac.DeletedAt, nil
+		},
+		column: apexcustomer.FieldDeletedAt,
+		toTerm: apexcustomer.ByDeletedAt,
+		toCursor: func(ac *ApexCustomer) Cursor {
+			return Cursor{
+				ID:    ac.ID,
+				Value: ac.DeletedAt,
+			}
+		},
+	}
 	// ApexCustomerOrderFieldEventRaisedAt orders ApexCustomer by event_raised_at.
 	ApexCustomerOrderFieldEventRaisedAt = &ApexCustomerOrderField{
 		Value: func(ac *ApexCustomer) (ent.Value, error) {
@@ -487,48 +529,6 @@ var (
 			}
 		},
 	}
-	// ApexCustomerOrderFieldCreatedAt orders ApexCustomer by created_at.
-	ApexCustomerOrderFieldCreatedAt = &ApexCustomerOrderField{
-		Value: func(ac *ApexCustomer) (ent.Value, error) {
-			return ac.CreatedAt, nil
-		},
-		column: apexcustomer.FieldCreatedAt,
-		toTerm: apexcustomer.ByCreatedAt,
-		toCursor: func(ac *ApexCustomer) Cursor {
-			return Cursor{
-				ID:    ac.ID,
-				Value: ac.CreatedAt,
-			}
-		},
-	}
-	// ApexCustomerOrderFieldModifiedAt orders ApexCustomer by modified_at.
-	ApexCustomerOrderFieldModifiedAt = &ApexCustomerOrderField{
-		Value: func(ac *ApexCustomer) (ent.Value, error) {
-			return ac.ModifiedAt, nil
-		},
-		column: apexcustomer.FieldModifiedAt,
-		toTerm: apexcustomer.ByModifiedAt,
-		toCursor: func(ac *ApexCustomer) Cursor {
-			return Cursor{
-				ID:    ac.ID,
-				Value: ac.ModifiedAt,
-			}
-		},
-	}
-	// ApexCustomerOrderFieldDeletedAt orders ApexCustomer by deleted_at.
-	ApexCustomerOrderFieldDeletedAt = &ApexCustomerOrderField{
-		Value: func(ac *ApexCustomer) (ent.Value, error) {
-			return ac.DeletedAt, nil
-		},
-		column: apexcustomer.FieldDeletedAt,
-		toTerm: apexcustomer.ByDeletedAt,
-		toCursor: func(ac *ApexCustomer) Cursor {
-			return Cursor{
-				ID:    ac.ID,
-				Value: ac.DeletedAt,
-			}
-		},
-	}
 )
 
 // String implement fmt.Stringer interface.
@@ -537,6 +537,12 @@ func (f ApexCustomerOrderField) String() string {
 	switch f.column {
 	case ApexCustomerOrderFieldID.column:
 		str = "id"
+	case ApexCustomerOrderFieldCreatedAt.column:
+		str = "createdAt"
+	case ApexCustomerOrderFieldModifiedAt.column:
+		str = "modifiedAt"
+	case ApexCustomerOrderFieldDeletedAt.column:
+		str = "deletedAt"
 	case ApexCustomerOrderFieldEventRaisedAt.column:
 		str = "eventRaisedAt"
 	case ApexCustomerOrderFieldName.column:
@@ -561,12 +567,6 @@ func (f ApexCustomerOrderField) String() string {
 		str = "photoUrl192"
 	case ApexCustomerOrderFieldPhotoURL512.column:
 		str = "photoUrl512"
-	case ApexCustomerOrderFieldCreatedAt.column:
-		str = "createdAt"
-	case ApexCustomerOrderFieldModifiedAt.column:
-		str = "modifiedAt"
-	case ApexCustomerOrderFieldDeletedAt.column:
-		str = "deletedAt"
 	}
 	return str
 }
@@ -585,6 +585,12 @@ func (f *ApexCustomerOrderField) UnmarshalGQL(v interface{}) error {
 	switch str {
 	case "id":
 		*f = *ApexCustomerOrderFieldID
+	case "createdAt":
+		*f = *ApexCustomerOrderFieldCreatedAt
+	case "modifiedAt":
+		*f = *ApexCustomerOrderFieldModifiedAt
+	case "deletedAt":
+		*f = *ApexCustomerOrderFieldDeletedAt
 	case "eventRaisedAt":
 		*f = *ApexCustomerOrderFieldEventRaisedAt
 	case "name":
@@ -609,12 +615,6 @@ func (f *ApexCustomerOrderField) UnmarshalGQL(v interface{}) error {
 		*f = *ApexCustomerOrderFieldPhotoURL192
 	case "photoUrl512":
 		*f = *ApexCustomerOrderFieldPhotoURL512
-	case "createdAt":
-		*f = *ApexCustomerOrderFieldCreatedAt
-	case "modifiedAt":
-		*f = *ApexCustomerOrderFieldModifiedAt
-	case "deletedAt":
-		*f = *ApexCustomerOrderFieldDeletedAt
 	default:
 		return fmt.Errorf("%s is not a valid ApexCustomerOrderField", str)
 	}
@@ -882,34 +882,6 @@ var (
 			}
 		},
 	}
-	// ApexCustomerIdentityOrderFieldEmail orders ApexCustomerIdentity by email.
-	ApexCustomerIdentityOrderFieldEmail = &ApexCustomerIdentityOrderField{
-		Value: func(aci *ApexCustomerIdentity) (ent.Value, error) {
-			return aci.Email, nil
-		},
-		column: apexcustomeridentity.FieldEmail,
-		toTerm: apexcustomeridentity.ByEmail,
-		toCursor: func(aci *ApexCustomerIdentity) Cursor {
-			return Cursor{
-				ID:    aci.ID,
-				Value: aci.Email,
-			}
-		},
-	}
-	// ApexCustomerIdentityOrderFieldEmailVerified orders ApexCustomerIdentity by email_verified.
-	ApexCustomerIdentityOrderFieldEmailVerified = &ApexCustomerIdentityOrderField{
-		Value: func(aci *ApexCustomerIdentity) (ent.Value, error) {
-			return aci.EmailVerified, nil
-		},
-		column: apexcustomeridentity.FieldEmailVerified,
-		toTerm: apexcustomeridentity.ByEmailVerified,
-		toCursor: func(aci *ApexCustomerIdentity) Cursor {
-			return Cursor{
-				ID:    aci.ID,
-				Value: aci.EmailVerified,
-			}
-		},
-	}
 	// ApexCustomerIdentityOrderFieldCreatedAt orders ApexCustomerIdentity by created_at.
 	ApexCustomerIdentityOrderFieldCreatedAt = &ApexCustomerIdentityOrderField{
 		Value: func(aci *ApexCustomerIdentity) (ent.Value, error) {
@@ -952,6 +924,34 @@ var (
 			}
 		},
 	}
+	// ApexCustomerIdentityOrderFieldEmail orders ApexCustomerIdentity by email.
+	ApexCustomerIdentityOrderFieldEmail = &ApexCustomerIdentityOrderField{
+		Value: func(aci *ApexCustomerIdentity) (ent.Value, error) {
+			return aci.Email, nil
+		},
+		column: apexcustomeridentity.FieldEmail,
+		toTerm: apexcustomeridentity.ByEmail,
+		toCursor: func(aci *ApexCustomerIdentity) Cursor {
+			return Cursor{
+				ID:    aci.ID,
+				Value: aci.Email,
+			}
+		},
+	}
+	// ApexCustomerIdentityOrderFieldEmailVerified orders ApexCustomerIdentity by email_verified.
+	ApexCustomerIdentityOrderFieldEmailVerified = &ApexCustomerIdentityOrderField{
+		Value: func(aci *ApexCustomerIdentity) (ent.Value, error) {
+			return aci.EmailVerified, nil
+		},
+		column: apexcustomeridentity.FieldEmailVerified,
+		toTerm: apexcustomeridentity.ByEmailVerified,
+		toCursor: func(aci *ApexCustomerIdentity) Cursor {
+			return Cursor{
+				ID:    aci.ID,
+				Value: aci.EmailVerified,
+			}
+		},
+	}
 )
 
 // String implement fmt.Stringer interface.
@@ -960,16 +960,16 @@ func (f ApexCustomerIdentityOrderField) String() string {
 	switch f.column {
 	case ApexCustomerIdentityOrderFieldID.column:
 		str = "id"
-	case ApexCustomerIdentityOrderFieldEmail.column:
-		str = "email"
-	case ApexCustomerIdentityOrderFieldEmailVerified.column:
-		str = "emailVerified"
 	case ApexCustomerIdentityOrderFieldCreatedAt.column:
 		str = "createdAt"
 	case ApexCustomerIdentityOrderFieldModifiedAt.column:
 		str = "modifiedAt"
 	case ApexCustomerIdentityOrderFieldDeletedAt.column:
 		str = "deletedAt"
+	case ApexCustomerIdentityOrderFieldEmail.column:
+		str = "email"
+	case ApexCustomerIdentityOrderFieldEmailVerified.column:
+		str = "emailVerified"
 	}
 	return str
 }
@@ -988,16 +988,16 @@ func (f *ApexCustomerIdentityOrderField) UnmarshalGQL(v interface{}) error {
 	switch str {
 	case "id":
 		*f = *ApexCustomerIdentityOrderFieldID
-	case "email":
-		*f = *ApexCustomerIdentityOrderFieldEmail
-	case "emailVerified":
-		*f = *ApexCustomerIdentityOrderFieldEmailVerified
 	case "createdAt":
 		*f = *ApexCustomerIdentityOrderFieldCreatedAt
 	case "modifiedAt":
 		*f = *ApexCustomerIdentityOrderFieldModifiedAt
 	case "deletedAt":
 		*f = *ApexCustomerIdentityOrderFieldDeletedAt
+	case "email":
+		*f = *ApexCustomerIdentityOrderFieldEmail
+	case "emailVerified":
+		*f = *ApexCustomerIdentityOrderFieldEmailVerified
 	default:
 		return fmt.Errorf("%s is not a valid ApexCustomerIdentityOrderField", str)
 	}

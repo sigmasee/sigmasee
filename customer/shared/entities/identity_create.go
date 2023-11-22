@@ -24,34 +24,6 @@ type IdentityCreate struct {
 	conflict []sql.ConflictOption
 }
 
-// SetEmail sets the "email" field.
-func (ic *IdentityCreate) SetEmail(s string) *IdentityCreate {
-	ic.mutation.SetEmail(s)
-	return ic
-}
-
-// SetNillableEmail sets the "email" field if the given value is not nil.
-func (ic *IdentityCreate) SetNillableEmail(s *string) *IdentityCreate {
-	if s != nil {
-		ic.SetEmail(*s)
-	}
-	return ic
-}
-
-// SetEmailVerified sets the "email_verified" field.
-func (ic *IdentityCreate) SetEmailVerified(b bool) *IdentityCreate {
-	ic.mutation.SetEmailVerified(b)
-	return ic
-}
-
-// SetNillableEmailVerified sets the "email_verified" field if the given value is not nil.
-func (ic *IdentityCreate) SetNillableEmailVerified(b *bool) *IdentityCreate {
-	if b != nil {
-		ic.SetEmailVerified(*b)
-	}
-	return ic
-}
-
 // SetCreatedAt sets the "created_at" field.
 func (ic *IdentityCreate) SetCreatedAt(t time.Time) *IdentityCreate {
 	ic.mutation.SetCreatedAt(t)
@@ -82,6 +54,34 @@ func (ic *IdentityCreate) SetDeletedAt(t time.Time) *IdentityCreate {
 func (ic *IdentityCreate) SetNillableDeletedAt(t *time.Time) *IdentityCreate {
 	if t != nil {
 		ic.SetDeletedAt(*t)
+	}
+	return ic
+}
+
+// SetEmail sets the "email" field.
+func (ic *IdentityCreate) SetEmail(s string) *IdentityCreate {
+	ic.mutation.SetEmail(s)
+	return ic
+}
+
+// SetNillableEmail sets the "email" field if the given value is not nil.
+func (ic *IdentityCreate) SetNillableEmail(s *string) *IdentityCreate {
+	if s != nil {
+		ic.SetEmail(*s)
+	}
+	return ic
+}
+
+// SetEmailVerified sets the "email_verified" field.
+func (ic *IdentityCreate) SetEmailVerified(b bool) *IdentityCreate {
+	ic.mutation.SetEmailVerified(b)
+	return ic
+}
+
+// SetNillableEmailVerified sets the "email_verified" field if the given value is not nil.
+func (ic *IdentityCreate) SetNillableEmailVerified(b *bool) *IdentityCreate {
+	if b != nil {
+		ic.SetEmailVerified(*b)
 	}
 	return ic
 }
@@ -180,14 +180,6 @@ func (ic *IdentityCreate) createSpec() (*Identity, *sqlgraph.CreateSpec) {
 		_node.ID = id
 		_spec.ID.Value = id
 	}
-	if value, ok := ic.mutation.Email(); ok {
-		_spec.SetField(identity.FieldEmail, field.TypeString, value)
-		_node.Email = value
-	}
-	if value, ok := ic.mutation.EmailVerified(); ok {
-		_spec.SetField(identity.FieldEmailVerified, field.TypeBool, value)
-		_node.EmailVerified = value
-	}
 	if value, ok := ic.mutation.CreatedAt(); ok {
 		_spec.SetField(identity.FieldCreatedAt, field.TypeTime, value)
 		_node.CreatedAt = value
@@ -199,6 +191,14 @@ func (ic *IdentityCreate) createSpec() (*Identity, *sqlgraph.CreateSpec) {
 	if value, ok := ic.mutation.DeletedAt(); ok {
 		_spec.SetField(identity.FieldDeletedAt, field.TypeTime, value)
 		_node.DeletedAt = value
+	}
+	if value, ok := ic.mutation.Email(); ok {
+		_spec.SetField(identity.FieldEmail, field.TypeString, value)
+		_node.Email = value
+	}
+	if value, ok := ic.mutation.EmailVerified(); ok {
+		_spec.SetField(identity.FieldEmailVerified, field.TypeBool, value)
+		_node.EmailVerified = value
 	}
 	if nodes := ic.mutation.CustomerIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
@@ -225,7 +225,7 @@ func (ic *IdentityCreate) createSpec() (*Identity, *sqlgraph.CreateSpec) {
 // of the `INSERT` statement. For example:
 //
 //	client.Identity.Create().
-//		SetEmail(v).
+//		SetCreatedAt(v).
 //		OnConflict(
 //			// Update the row with the new values
 //			// the was proposed for insertion.
@@ -234,7 +234,7 @@ func (ic *IdentityCreate) createSpec() (*Identity, *sqlgraph.CreateSpec) {
 //		// Override some of the fields with custom
 //		// update values.
 //		Update(func(u *ent.IdentityUpsert) {
-//			SetEmail(v+v).
+//			SetCreatedAt(v+v).
 //		}).
 //		Exec(ctx)
 func (ic *IdentityCreate) OnConflict(opts ...sql.ConflictOption) *IdentityUpsertOne {
@@ -269,42 +269,6 @@ type (
 		*sql.UpdateSet
 	}
 )
-
-// SetEmail sets the "email" field.
-func (u *IdentityUpsert) SetEmail(v string) *IdentityUpsert {
-	u.Set(identity.FieldEmail, v)
-	return u
-}
-
-// UpdateEmail sets the "email" field to the value that was provided on create.
-func (u *IdentityUpsert) UpdateEmail() *IdentityUpsert {
-	u.SetExcluded(identity.FieldEmail)
-	return u
-}
-
-// ClearEmail clears the value of the "email" field.
-func (u *IdentityUpsert) ClearEmail() *IdentityUpsert {
-	u.SetNull(identity.FieldEmail)
-	return u
-}
-
-// SetEmailVerified sets the "email_verified" field.
-func (u *IdentityUpsert) SetEmailVerified(v bool) *IdentityUpsert {
-	u.Set(identity.FieldEmailVerified, v)
-	return u
-}
-
-// UpdateEmailVerified sets the "email_verified" field to the value that was provided on create.
-func (u *IdentityUpsert) UpdateEmailVerified() *IdentityUpsert {
-	u.SetExcluded(identity.FieldEmailVerified)
-	return u
-}
-
-// ClearEmailVerified clears the value of the "email_verified" field.
-func (u *IdentityUpsert) ClearEmailVerified() *IdentityUpsert {
-	u.SetNull(identity.FieldEmailVerified)
-	return u
-}
 
 // SetCreatedAt sets the "created_at" field.
 func (u *IdentityUpsert) SetCreatedAt(v time.Time) *IdentityUpsert {
@@ -354,6 +318,42 @@ func (u *IdentityUpsert) ClearDeletedAt() *IdentityUpsert {
 	return u
 }
 
+// SetEmail sets the "email" field.
+func (u *IdentityUpsert) SetEmail(v string) *IdentityUpsert {
+	u.Set(identity.FieldEmail, v)
+	return u
+}
+
+// UpdateEmail sets the "email" field to the value that was provided on create.
+func (u *IdentityUpsert) UpdateEmail() *IdentityUpsert {
+	u.SetExcluded(identity.FieldEmail)
+	return u
+}
+
+// ClearEmail clears the value of the "email" field.
+func (u *IdentityUpsert) ClearEmail() *IdentityUpsert {
+	u.SetNull(identity.FieldEmail)
+	return u
+}
+
+// SetEmailVerified sets the "email_verified" field.
+func (u *IdentityUpsert) SetEmailVerified(v bool) *IdentityUpsert {
+	u.Set(identity.FieldEmailVerified, v)
+	return u
+}
+
+// UpdateEmailVerified sets the "email_verified" field to the value that was provided on create.
+func (u *IdentityUpsert) UpdateEmailVerified() *IdentityUpsert {
+	u.SetExcluded(identity.FieldEmailVerified)
+	return u
+}
+
+// ClearEmailVerified clears the value of the "email_verified" field.
+func (u *IdentityUpsert) ClearEmailVerified() *IdentityUpsert {
+	u.SetNull(identity.FieldEmailVerified)
+	return u
+}
+
 // UpdateNewValues updates the mutable fields using the new values that were set on create except the ID field.
 // Using this option is equivalent to using:
 //
@@ -400,48 +400,6 @@ func (u *IdentityUpsertOne) Update(set func(*IdentityUpsert)) *IdentityUpsertOne
 		set(&IdentityUpsert{UpdateSet: update})
 	}))
 	return u
-}
-
-// SetEmail sets the "email" field.
-func (u *IdentityUpsertOne) SetEmail(v string) *IdentityUpsertOne {
-	return u.Update(func(s *IdentityUpsert) {
-		s.SetEmail(v)
-	})
-}
-
-// UpdateEmail sets the "email" field to the value that was provided on create.
-func (u *IdentityUpsertOne) UpdateEmail() *IdentityUpsertOne {
-	return u.Update(func(s *IdentityUpsert) {
-		s.UpdateEmail()
-	})
-}
-
-// ClearEmail clears the value of the "email" field.
-func (u *IdentityUpsertOne) ClearEmail() *IdentityUpsertOne {
-	return u.Update(func(s *IdentityUpsert) {
-		s.ClearEmail()
-	})
-}
-
-// SetEmailVerified sets the "email_verified" field.
-func (u *IdentityUpsertOne) SetEmailVerified(v bool) *IdentityUpsertOne {
-	return u.Update(func(s *IdentityUpsert) {
-		s.SetEmailVerified(v)
-	})
-}
-
-// UpdateEmailVerified sets the "email_verified" field to the value that was provided on create.
-func (u *IdentityUpsertOne) UpdateEmailVerified() *IdentityUpsertOne {
-	return u.Update(func(s *IdentityUpsert) {
-		s.UpdateEmailVerified()
-	})
-}
-
-// ClearEmailVerified clears the value of the "email_verified" field.
-func (u *IdentityUpsertOne) ClearEmailVerified() *IdentityUpsertOne {
-	return u.Update(func(s *IdentityUpsert) {
-		s.ClearEmailVerified()
-	})
 }
 
 // SetCreatedAt sets the "created_at" field.
@@ -497,6 +455,48 @@ func (u *IdentityUpsertOne) UpdateDeletedAt() *IdentityUpsertOne {
 func (u *IdentityUpsertOne) ClearDeletedAt() *IdentityUpsertOne {
 	return u.Update(func(s *IdentityUpsert) {
 		s.ClearDeletedAt()
+	})
+}
+
+// SetEmail sets the "email" field.
+func (u *IdentityUpsertOne) SetEmail(v string) *IdentityUpsertOne {
+	return u.Update(func(s *IdentityUpsert) {
+		s.SetEmail(v)
+	})
+}
+
+// UpdateEmail sets the "email" field to the value that was provided on create.
+func (u *IdentityUpsertOne) UpdateEmail() *IdentityUpsertOne {
+	return u.Update(func(s *IdentityUpsert) {
+		s.UpdateEmail()
+	})
+}
+
+// ClearEmail clears the value of the "email" field.
+func (u *IdentityUpsertOne) ClearEmail() *IdentityUpsertOne {
+	return u.Update(func(s *IdentityUpsert) {
+		s.ClearEmail()
+	})
+}
+
+// SetEmailVerified sets the "email_verified" field.
+func (u *IdentityUpsertOne) SetEmailVerified(v bool) *IdentityUpsertOne {
+	return u.Update(func(s *IdentityUpsert) {
+		s.SetEmailVerified(v)
+	})
+}
+
+// UpdateEmailVerified sets the "email_verified" field to the value that was provided on create.
+func (u *IdentityUpsertOne) UpdateEmailVerified() *IdentityUpsertOne {
+	return u.Update(func(s *IdentityUpsert) {
+		s.UpdateEmailVerified()
+	})
+}
+
+// ClearEmailVerified clears the value of the "email_verified" field.
+func (u *IdentityUpsertOne) ClearEmailVerified() *IdentityUpsertOne {
+	return u.Update(func(s *IdentityUpsert) {
+		s.ClearEmailVerified()
 	})
 }
 
@@ -635,7 +635,7 @@ func (icb *IdentityCreateBulk) ExecX(ctx context.Context) {
 //		// Override some of the fields with custom
 //		// update values.
 //		Update(func(u *ent.IdentityUpsert) {
-//			SetEmail(v+v).
+//			SetCreatedAt(v+v).
 //		}).
 //		Exec(ctx)
 func (icb *IdentityCreateBulk) OnConflict(opts ...sql.ConflictOption) *IdentityUpsertBulk {
@@ -714,48 +714,6 @@ func (u *IdentityUpsertBulk) Update(set func(*IdentityUpsert)) *IdentityUpsertBu
 	return u
 }
 
-// SetEmail sets the "email" field.
-func (u *IdentityUpsertBulk) SetEmail(v string) *IdentityUpsertBulk {
-	return u.Update(func(s *IdentityUpsert) {
-		s.SetEmail(v)
-	})
-}
-
-// UpdateEmail sets the "email" field to the value that was provided on create.
-func (u *IdentityUpsertBulk) UpdateEmail() *IdentityUpsertBulk {
-	return u.Update(func(s *IdentityUpsert) {
-		s.UpdateEmail()
-	})
-}
-
-// ClearEmail clears the value of the "email" field.
-func (u *IdentityUpsertBulk) ClearEmail() *IdentityUpsertBulk {
-	return u.Update(func(s *IdentityUpsert) {
-		s.ClearEmail()
-	})
-}
-
-// SetEmailVerified sets the "email_verified" field.
-func (u *IdentityUpsertBulk) SetEmailVerified(v bool) *IdentityUpsertBulk {
-	return u.Update(func(s *IdentityUpsert) {
-		s.SetEmailVerified(v)
-	})
-}
-
-// UpdateEmailVerified sets the "email_verified" field to the value that was provided on create.
-func (u *IdentityUpsertBulk) UpdateEmailVerified() *IdentityUpsertBulk {
-	return u.Update(func(s *IdentityUpsert) {
-		s.UpdateEmailVerified()
-	})
-}
-
-// ClearEmailVerified clears the value of the "email_verified" field.
-func (u *IdentityUpsertBulk) ClearEmailVerified() *IdentityUpsertBulk {
-	return u.Update(func(s *IdentityUpsert) {
-		s.ClearEmailVerified()
-	})
-}
-
 // SetCreatedAt sets the "created_at" field.
 func (u *IdentityUpsertBulk) SetCreatedAt(v time.Time) *IdentityUpsertBulk {
 	return u.Update(func(s *IdentityUpsert) {
@@ -809,6 +767,48 @@ func (u *IdentityUpsertBulk) UpdateDeletedAt() *IdentityUpsertBulk {
 func (u *IdentityUpsertBulk) ClearDeletedAt() *IdentityUpsertBulk {
 	return u.Update(func(s *IdentityUpsert) {
 		s.ClearDeletedAt()
+	})
+}
+
+// SetEmail sets the "email" field.
+func (u *IdentityUpsertBulk) SetEmail(v string) *IdentityUpsertBulk {
+	return u.Update(func(s *IdentityUpsert) {
+		s.SetEmail(v)
+	})
+}
+
+// UpdateEmail sets the "email" field to the value that was provided on create.
+func (u *IdentityUpsertBulk) UpdateEmail() *IdentityUpsertBulk {
+	return u.Update(func(s *IdentityUpsert) {
+		s.UpdateEmail()
+	})
+}
+
+// ClearEmail clears the value of the "email" field.
+func (u *IdentityUpsertBulk) ClearEmail() *IdentityUpsertBulk {
+	return u.Update(func(s *IdentityUpsert) {
+		s.ClearEmail()
+	})
+}
+
+// SetEmailVerified sets the "email_verified" field.
+func (u *IdentityUpsertBulk) SetEmailVerified(v bool) *IdentityUpsertBulk {
+	return u.Update(func(s *IdentityUpsert) {
+		s.SetEmailVerified(v)
+	})
+}
+
+// UpdateEmailVerified sets the "email_verified" field to the value that was provided on create.
+func (u *IdentityUpsertBulk) UpdateEmailVerified() *IdentityUpsertBulk {
+	return u.Update(func(s *IdentityUpsert) {
+		s.UpdateEmailVerified()
+	})
+}
+
+// ClearEmailVerified clears the value of the "email_verified" field.
+func (u *IdentityUpsertBulk) ClearEmailVerified() *IdentityUpsertBulk {
+	return u.Update(func(s *IdentityUpsert) {
+		s.ClearEmailVerified()
 	})
 }
 

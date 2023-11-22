@@ -27,6 +27,9 @@ var schemaGraph = func() *sqlgraph.Schema {
 		},
 		Type: "ApexCustomer",
 		Fields: map[string]*sqlgraph.FieldSpec{
+			apexcustomer.FieldCreatedAt:     {Type: field.TypeTime, Column: apexcustomer.FieldCreatedAt},
+			apexcustomer.FieldModifiedAt:    {Type: field.TypeTime, Column: apexcustomer.FieldModifiedAt},
+			apexcustomer.FieldDeletedAt:     {Type: field.TypeTime, Column: apexcustomer.FieldDeletedAt},
 			apexcustomer.FieldEventRaisedAt: {Type: field.TypeTime, Column: apexcustomer.FieldEventRaisedAt},
 			apexcustomer.FieldName:          {Type: field.TypeString, Column: apexcustomer.FieldName},
 			apexcustomer.FieldGivenName:     {Type: field.TypeString, Column: apexcustomer.FieldGivenName},
@@ -39,9 +42,6 @@ var schemaGraph = func() *sqlgraph.Schema {
 			apexcustomer.FieldPhotoURL72:    {Type: field.TypeString, Column: apexcustomer.FieldPhotoURL72},
 			apexcustomer.FieldPhotoURL192:   {Type: field.TypeString, Column: apexcustomer.FieldPhotoURL192},
 			apexcustomer.FieldPhotoURL512:   {Type: field.TypeString, Column: apexcustomer.FieldPhotoURL512},
-			apexcustomer.FieldCreatedAt:     {Type: field.TypeTime, Column: apexcustomer.FieldCreatedAt},
-			apexcustomer.FieldModifiedAt:    {Type: field.TypeTime, Column: apexcustomer.FieldModifiedAt},
-			apexcustomer.FieldDeletedAt:     {Type: field.TypeTime, Column: apexcustomer.FieldDeletedAt},
 		},
 	}
 	graph.Nodes[1] = &sqlgraph.Node{
@@ -55,11 +55,11 @@ var schemaGraph = func() *sqlgraph.Schema {
 		},
 		Type: "ApexCustomerIdentity",
 		Fields: map[string]*sqlgraph.FieldSpec{
-			apexcustomeridentity.FieldEmail:         {Type: field.TypeString, Column: apexcustomeridentity.FieldEmail},
-			apexcustomeridentity.FieldEmailVerified: {Type: field.TypeBool, Column: apexcustomeridentity.FieldEmailVerified},
 			apexcustomeridentity.FieldCreatedAt:     {Type: field.TypeTime, Column: apexcustomeridentity.FieldCreatedAt},
 			apexcustomeridentity.FieldModifiedAt:    {Type: field.TypeTime, Column: apexcustomeridentity.FieldModifiedAt},
 			apexcustomeridentity.FieldDeletedAt:     {Type: field.TypeTime, Column: apexcustomeridentity.FieldDeletedAt},
+			apexcustomeridentity.FieldEmail:         {Type: field.TypeString, Column: apexcustomeridentity.FieldEmail},
+			apexcustomeridentity.FieldEmailVerified: {Type: field.TypeBool, Column: apexcustomeridentity.FieldEmailVerified},
 		},
 	}
 	graph.MustAddE(
@@ -135,6 +135,21 @@ func (f *ApexCustomerFilter) WhereID(p entql.StringP) {
 	f.Where(p.Field(apexcustomer.FieldID))
 }
 
+// WhereCreatedAt applies the entql time.Time predicate on the created_at field.
+func (f *ApexCustomerFilter) WhereCreatedAt(p entql.TimeP) {
+	f.Where(p.Field(apexcustomer.FieldCreatedAt))
+}
+
+// WhereModifiedAt applies the entql time.Time predicate on the modified_at field.
+func (f *ApexCustomerFilter) WhereModifiedAt(p entql.TimeP) {
+	f.Where(p.Field(apexcustomer.FieldModifiedAt))
+}
+
+// WhereDeletedAt applies the entql time.Time predicate on the deleted_at field.
+func (f *ApexCustomerFilter) WhereDeletedAt(p entql.TimeP) {
+	f.Where(p.Field(apexcustomer.FieldDeletedAt))
+}
+
 // WhereEventRaisedAt applies the entql time.Time predicate on the event_raised_at field.
 func (f *ApexCustomerFilter) WhereEventRaisedAt(p entql.TimeP) {
 	f.Where(p.Field(apexcustomer.FieldEventRaisedAt))
@@ -195,21 +210,6 @@ func (f *ApexCustomerFilter) WherePhotoURL512(p entql.StringP) {
 	f.Where(p.Field(apexcustomer.FieldPhotoURL512))
 }
 
-// WhereCreatedAt applies the entql time.Time predicate on the created_at field.
-func (f *ApexCustomerFilter) WhereCreatedAt(p entql.TimeP) {
-	f.Where(p.Field(apexcustomer.FieldCreatedAt))
-}
-
-// WhereModifiedAt applies the entql time.Time predicate on the modified_at field.
-func (f *ApexCustomerFilter) WhereModifiedAt(p entql.TimeP) {
-	f.Where(p.Field(apexcustomer.FieldModifiedAt))
-}
-
-// WhereDeletedAt applies the entql time.Time predicate on the deleted_at field.
-func (f *ApexCustomerFilter) WhereDeletedAt(p entql.TimeP) {
-	f.Where(p.Field(apexcustomer.FieldDeletedAt))
-}
-
 // WhereHasIdentities applies a predicate to check if query has an edge identities.
 func (f *ApexCustomerFilter) WhereHasIdentities() {
 	f.Where(entql.HasEdge("identities"))
@@ -264,16 +264,6 @@ func (f *ApexCustomerIdentityFilter) WhereID(p entql.StringP) {
 	f.Where(p.Field(apexcustomeridentity.FieldID))
 }
 
-// WhereEmail applies the entql string predicate on the email field.
-func (f *ApexCustomerIdentityFilter) WhereEmail(p entql.StringP) {
-	f.Where(p.Field(apexcustomeridentity.FieldEmail))
-}
-
-// WhereEmailVerified applies the entql bool predicate on the email_verified field.
-func (f *ApexCustomerIdentityFilter) WhereEmailVerified(p entql.BoolP) {
-	f.Where(p.Field(apexcustomeridentity.FieldEmailVerified))
-}
-
 // WhereCreatedAt applies the entql time.Time predicate on the created_at field.
 func (f *ApexCustomerIdentityFilter) WhereCreatedAt(p entql.TimeP) {
 	f.Where(p.Field(apexcustomeridentity.FieldCreatedAt))
@@ -287,6 +277,16 @@ func (f *ApexCustomerIdentityFilter) WhereModifiedAt(p entql.TimeP) {
 // WhereDeletedAt applies the entql time.Time predicate on the deleted_at field.
 func (f *ApexCustomerIdentityFilter) WhereDeletedAt(p entql.TimeP) {
 	f.Where(p.Field(apexcustomeridentity.FieldDeletedAt))
+}
+
+// WhereEmail applies the entql string predicate on the email field.
+func (f *ApexCustomerIdentityFilter) WhereEmail(p entql.StringP) {
+	f.Where(p.Field(apexcustomeridentity.FieldEmail))
+}
+
+// WhereEmailVerified applies the entql bool predicate on the email_verified field.
+func (f *ApexCustomerIdentityFilter) WhereEmailVerified(p entql.BoolP) {
+	f.Where(p.Field(apexcustomeridentity.FieldEmailVerified))
 }
 
 // WhereHasCustomer applies a predicate to check if query has an edge customer.

@@ -321,6 +321,48 @@ var (
 			}
 		},
 	}
+	// CustomerOrderFieldCreatedAt orders Customer by created_at.
+	CustomerOrderFieldCreatedAt = &CustomerOrderField{
+		Value: func(c *Customer) (ent.Value, error) {
+			return c.CreatedAt, nil
+		},
+		column: customer.FieldCreatedAt,
+		toTerm: customer.ByCreatedAt,
+		toCursor: func(c *Customer) Cursor {
+			return Cursor{
+				ID:    c.ID,
+				Value: c.CreatedAt,
+			}
+		},
+	}
+	// CustomerOrderFieldModifiedAt orders Customer by modified_at.
+	CustomerOrderFieldModifiedAt = &CustomerOrderField{
+		Value: func(c *Customer) (ent.Value, error) {
+			return c.ModifiedAt, nil
+		},
+		column: customer.FieldModifiedAt,
+		toTerm: customer.ByModifiedAt,
+		toCursor: func(c *Customer) Cursor {
+			return Cursor{
+				ID:    c.ID,
+				Value: c.ModifiedAt,
+			}
+		},
+	}
+	// CustomerOrderFieldDeletedAt orders Customer by deleted_at.
+	CustomerOrderFieldDeletedAt = &CustomerOrderField{
+		Value: func(c *Customer) (ent.Value, error) {
+			return c.DeletedAt, nil
+		},
+		column: customer.FieldDeletedAt,
+		toTerm: customer.ByDeletedAt,
+		toCursor: func(c *Customer) Cursor {
+			return Cursor{
+				ID:    c.ID,
+				Value: c.DeletedAt,
+			}
+		},
+	}
 	// CustomerOrderFieldDesignation orders Customer by designation.
 	CustomerOrderFieldDesignation = &CustomerOrderField{
 		Value: func(c *Customer) (ent.Value, error) {
@@ -531,48 +573,6 @@ var (
 			}
 		},
 	}
-	// CustomerOrderFieldCreatedAt orders Customer by created_at.
-	CustomerOrderFieldCreatedAt = &CustomerOrderField{
-		Value: func(c *Customer) (ent.Value, error) {
-			return c.CreatedAt, nil
-		},
-		column: customer.FieldCreatedAt,
-		toTerm: customer.ByCreatedAt,
-		toCursor: func(c *Customer) Cursor {
-			return Cursor{
-				ID:    c.ID,
-				Value: c.CreatedAt,
-			}
-		},
-	}
-	// CustomerOrderFieldModifiedAt orders Customer by modified_at.
-	CustomerOrderFieldModifiedAt = &CustomerOrderField{
-		Value: func(c *Customer) (ent.Value, error) {
-			return c.ModifiedAt, nil
-		},
-		column: customer.FieldModifiedAt,
-		toTerm: customer.ByModifiedAt,
-		toCursor: func(c *Customer) Cursor {
-			return Cursor{
-				ID:    c.ID,
-				Value: c.ModifiedAt,
-			}
-		},
-	}
-	// CustomerOrderFieldDeletedAt orders Customer by deleted_at.
-	CustomerOrderFieldDeletedAt = &CustomerOrderField{
-		Value: func(c *Customer) (ent.Value, error) {
-			return c.DeletedAt, nil
-		},
-		column: customer.FieldDeletedAt,
-		toTerm: customer.ByDeletedAt,
-		toCursor: func(c *Customer) Cursor {
-			return Cursor{
-				ID:    c.ID,
-				Value: c.DeletedAt,
-			}
-		},
-	}
 )
 
 // String implement fmt.Stringer interface.
@@ -581,6 +581,12 @@ func (f CustomerOrderField) String() string {
 	switch f.column {
 	case CustomerOrderFieldID.column:
 		str = "id"
+	case CustomerOrderFieldCreatedAt.column:
+		str = "createdAt"
+	case CustomerOrderFieldModifiedAt.column:
+		str = "modifiedAt"
+	case CustomerOrderFieldDeletedAt.column:
+		str = "deletedAt"
 	case CustomerOrderFieldDesignation.column:
 		str = "designation"
 	case CustomerOrderFieldTitle.column:
@@ -611,12 +617,6 @@ func (f CustomerOrderField) String() string {
 		str = "timezone"
 	case CustomerOrderFieldLocale.column:
 		str = "locale"
-	case CustomerOrderFieldCreatedAt.column:
-		str = "createdAt"
-	case CustomerOrderFieldModifiedAt.column:
-		str = "modifiedAt"
-	case CustomerOrderFieldDeletedAt.column:
-		str = "deletedAt"
 	}
 	return str
 }
@@ -635,6 +635,12 @@ func (f *CustomerOrderField) UnmarshalGQL(v interface{}) error {
 	switch str {
 	case "id":
 		*f = *CustomerOrderFieldID
+	case "createdAt":
+		*f = *CustomerOrderFieldCreatedAt
+	case "modifiedAt":
+		*f = *CustomerOrderFieldModifiedAt
+	case "deletedAt":
+		*f = *CustomerOrderFieldDeletedAt
 	case "designation":
 		*f = *CustomerOrderFieldDesignation
 	case "title":
@@ -665,12 +671,6 @@ func (f *CustomerOrderField) UnmarshalGQL(v interface{}) error {
 		*f = *CustomerOrderFieldTimezone
 	case "locale":
 		*f = *CustomerOrderFieldLocale
-	case "createdAt":
-		*f = *CustomerOrderFieldCreatedAt
-	case "modifiedAt":
-		*f = *CustomerOrderFieldModifiedAt
-	case "deletedAt":
-		*f = *CustomerOrderFieldDeletedAt
 	default:
 		return fmt.Errorf("%s is not a valid CustomerOrderField", str)
 	}
@@ -1596,34 +1596,6 @@ var (
 			}
 		},
 	}
-	// IdentityOrderFieldEmail orders Identity by email.
-	IdentityOrderFieldEmail = &IdentityOrderField{
-		Value: func(i *Identity) (ent.Value, error) {
-			return i.Email, nil
-		},
-		column: identity.FieldEmail,
-		toTerm: identity.ByEmail,
-		toCursor: func(i *Identity) Cursor {
-			return Cursor{
-				ID:    i.ID,
-				Value: i.Email,
-			}
-		},
-	}
-	// IdentityOrderFieldEmailVerified orders Identity by email_verified.
-	IdentityOrderFieldEmailVerified = &IdentityOrderField{
-		Value: func(i *Identity) (ent.Value, error) {
-			return i.EmailVerified, nil
-		},
-		column: identity.FieldEmailVerified,
-		toTerm: identity.ByEmailVerified,
-		toCursor: func(i *Identity) Cursor {
-			return Cursor{
-				ID:    i.ID,
-				Value: i.EmailVerified,
-			}
-		},
-	}
 	// IdentityOrderFieldCreatedAt orders Identity by created_at.
 	IdentityOrderFieldCreatedAt = &IdentityOrderField{
 		Value: func(i *Identity) (ent.Value, error) {
@@ -1666,6 +1638,34 @@ var (
 			}
 		},
 	}
+	// IdentityOrderFieldEmail orders Identity by email.
+	IdentityOrderFieldEmail = &IdentityOrderField{
+		Value: func(i *Identity) (ent.Value, error) {
+			return i.Email, nil
+		},
+		column: identity.FieldEmail,
+		toTerm: identity.ByEmail,
+		toCursor: func(i *Identity) Cursor {
+			return Cursor{
+				ID:    i.ID,
+				Value: i.Email,
+			}
+		},
+	}
+	// IdentityOrderFieldEmailVerified orders Identity by email_verified.
+	IdentityOrderFieldEmailVerified = &IdentityOrderField{
+		Value: func(i *Identity) (ent.Value, error) {
+			return i.EmailVerified, nil
+		},
+		column: identity.FieldEmailVerified,
+		toTerm: identity.ByEmailVerified,
+		toCursor: func(i *Identity) Cursor {
+			return Cursor{
+				ID:    i.ID,
+				Value: i.EmailVerified,
+			}
+		},
+	}
 )
 
 // String implement fmt.Stringer interface.
@@ -1674,16 +1674,16 @@ func (f IdentityOrderField) String() string {
 	switch f.column {
 	case IdentityOrderFieldID.column:
 		str = "id"
-	case IdentityOrderFieldEmail.column:
-		str = "email"
-	case IdentityOrderFieldEmailVerified.column:
-		str = "emailVerified"
 	case IdentityOrderFieldCreatedAt.column:
 		str = "createdAt"
 	case IdentityOrderFieldModifiedAt.column:
 		str = "modifiedAt"
 	case IdentityOrderFieldDeletedAt.column:
 		str = "deletedAt"
+	case IdentityOrderFieldEmail.column:
+		str = "email"
+	case IdentityOrderFieldEmailVerified.column:
+		str = "emailVerified"
 	}
 	return str
 }
@@ -1702,16 +1702,16 @@ func (f *IdentityOrderField) UnmarshalGQL(v interface{}) error {
 	switch str {
 	case "id":
 		*f = *IdentityOrderFieldID
-	case "email":
-		*f = *IdentityOrderFieldEmail
-	case "emailVerified":
-		*f = *IdentityOrderFieldEmailVerified
 	case "createdAt":
 		*f = *IdentityOrderFieldCreatedAt
 	case "modifiedAt":
 		*f = *IdentityOrderFieldModifiedAt
 	case "deletedAt":
 		*f = *IdentityOrderFieldDeletedAt
+	case "email":
+		*f = *IdentityOrderFieldEmail
+	case "emailVerified":
+		*f = *IdentityOrderFieldEmailVerified
 	default:
 		return fmt.Errorf("%s is not a valid IdentityOrderField", str)
 	}

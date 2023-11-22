@@ -18,6 +18,12 @@ type Customer struct {
 	config `json:"-"`
 	// ID of the ent.
 	ID string `json:"id,omitempty"`
+	// CreatedAt holds the value of the "created_at" field.
+	CreatedAt time.Time `json:"created_at,omitempty"`
+	// ModifiedAt holds the value of the "modified_at" field.
+	ModifiedAt time.Time `json:"modified_at,omitempty"`
+	// DeletedAt holds the value of the "deleted_at" field.
+	DeletedAt time.Time `json:"deleted_at,omitempty"`
 	// Designation holds the value of the "designation" field.
 	Designation string `json:"designation,omitempty"`
 	// Title holds the value of the "title" field.
@@ -48,12 +54,6 @@ type Customer struct {
 	Timezone string `json:"timezone,omitempty"`
 	// Locale holds the value of the "locale" field.
 	Locale string `json:"locale,omitempty"`
-	// CreatedAt holds the value of the "created_at" field.
-	CreatedAt time.Time `json:"created_at,omitempty"`
-	// ModifiedAt holds the value of the "modified_at" field.
-	ModifiedAt time.Time `json:"modified_at,omitempty"`
-	// DeletedAt holds the value of the "deleted_at" field.
-	DeletedAt time.Time `json:"deleted_at,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
 	// The values are being populated by the CustomerQuery when eager-loading is set.
 	Edges        CustomerEdges `json:"edges"`
@@ -126,6 +126,24 @@ func (c *Customer) assignValues(columns []string, values []any) error {
 				return fmt.Errorf("unexpected type %T for field id", values[i])
 			} else if value.Valid {
 				c.ID = value.String
+			}
+		case customer.FieldCreatedAt:
+			if value, ok := values[i].(*sql.NullTime); !ok {
+				return fmt.Errorf("unexpected type %T for field created_at", values[i])
+			} else if value.Valid {
+				c.CreatedAt = value.Time
+			}
+		case customer.FieldModifiedAt:
+			if value, ok := values[i].(*sql.NullTime); !ok {
+				return fmt.Errorf("unexpected type %T for field modified_at", values[i])
+			} else if value.Valid {
+				c.ModifiedAt = value.Time
+			}
+		case customer.FieldDeletedAt:
+			if value, ok := values[i].(*sql.NullTime); !ok {
+				return fmt.Errorf("unexpected type %T for field deleted_at", values[i])
+			} else if value.Valid {
+				c.DeletedAt = value.Time
 			}
 		case customer.FieldDesignation:
 			if value, ok := values[i].(*sql.NullString); !ok {
@@ -217,24 +235,6 @@ func (c *Customer) assignValues(columns []string, values []any) error {
 			} else if value.Valid {
 				c.Locale = value.String
 			}
-		case customer.FieldCreatedAt:
-			if value, ok := values[i].(*sql.NullTime); !ok {
-				return fmt.Errorf("unexpected type %T for field created_at", values[i])
-			} else if value.Valid {
-				c.CreatedAt = value.Time
-			}
-		case customer.FieldModifiedAt:
-			if value, ok := values[i].(*sql.NullTime); !ok {
-				return fmt.Errorf("unexpected type %T for field modified_at", values[i])
-			} else if value.Valid {
-				c.ModifiedAt = value.Time
-			}
-		case customer.FieldDeletedAt:
-			if value, ok := values[i].(*sql.NullTime); !ok {
-				return fmt.Errorf("unexpected type %T for field deleted_at", values[i])
-			} else if value.Valid {
-				c.DeletedAt = value.Time
-			}
 		default:
 			c.selectValues.Set(columns[i], values[i])
 		}
@@ -281,6 +281,15 @@ func (c *Customer) String() string {
 	var builder strings.Builder
 	builder.WriteString("Customer(")
 	builder.WriteString(fmt.Sprintf("id=%v, ", c.ID))
+	builder.WriteString("created_at=")
+	builder.WriteString(c.CreatedAt.Format(time.ANSIC))
+	builder.WriteString(", ")
+	builder.WriteString("modified_at=")
+	builder.WriteString(c.ModifiedAt.Format(time.ANSIC))
+	builder.WriteString(", ")
+	builder.WriteString("deleted_at=")
+	builder.WriteString(c.DeletedAt.Format(time.ANSIC))
+	builder.WriteString(", ")
 	builder.WriteString("designation=")
 	builder.WriteString(c.Designation)
 	builder.WriteString(", ")
@@ -325,15 +334,6 @@ func (c *Customer) String() string {
 	builder.WriteString(", ")
 	builder.WriteString("locale=")
 	builder.WriteString(c.Locale)
-	builder.WriteString(", ")
-	builder.WriteString("created_at=")
-	builder.WriteString(c.CreatedAt.Format(time.ANSIC))
-	builder.WriteString(", ")
-	builder.WriteString("modified_at=")
-	builder.WriteString(c.ModifiedAt.Format(time.ANSIC))
-	builder.WriteString(", ")
-	builder.WriteString("deleted_at=")
-	builder.WriteString(c.DeletedAt.Format(time.ANSIC))
 	builder.WriteByte(')')
 	return builder.String()
 }

@@ -11,6 +11,9 @@ var (
 	// CustomersColumns holds the columns for the "customers" table.
 	CustomersColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeString},
+		{Name: "created_at", Type: field.TypeTime},
+		{Name: "modified_at", Type: field.TypeTime, Nullable: true},
+		{Name: "deleted_at", Type: field.TypeTime, Nullable: true},
 		{Name: "designation", Type: field.TypeString, Nullable: true},
 		{Name: "title", Type: field.TypeString, Nullable: true},
 		{Name: "name", Type: field.TypeString, Nullable: true},
@@ -26,9 +29,6 @@ var (
 		{Name: "photo_url_512", Type: field.TypeString, Nullable: true},
 		{Name: "timezone", Type: field.TypeString, Nullable: true},
 		{Name: "locale", Type: field.TypeString, Nullable: true},
-		{Name: "created_at", Type: field.TypeTime},
-		{Name: "modified_at", Type: field.TypeTime, Nullable: true},
-		{Name: "deleted_at", Type: field.TypeTime, Nullable: true},
 	}
 	// CustomersTable holds the schema information for the "customers" table.
 	CustomersTable = &schema.Table{
@@ -37,39 +37,39 @@ var (
 		PrimaryKey: []*schema.Column{CustomersColumns[0]},
 		Indexes: []*schema.Index{
 			{
-				Name:    "customer_designation",
-				Unique:  false,
-				Columns: []*schema.Column{CustomersColumns[1]},
-			},
-			{
-				Name:    "customer_title",
-				Unique:  false,
-				Columns: []*schema.Column{CustomersColumns[2]},
-			},
-			{
-				Name:    "customer_name",
+				Name:    "customer_deleted_at",
 				Unique:  false,
 				Columns: []*schema.Column{CustomersColumns[3]},
 			},
 			{
-				Name:    "customer_given_name",
+				Name:    "customer_designation",
 				Unique:  false,
 				Columns: []*schema.Column{CustomersColumns[4]},
 			},
 			{
-				Name:    "customer_middle_name",
+				Name:    "customer_title",
 				Unique:  false,
 				Columns: []*schema.Column{CustomersColumns[5]},
 			},
 			{
-				Name:    "customer_family_name",
+				Name:    "customer_name",
 				Unique:  false,
 				Columns: []*schema.Column{CustomersColumns[6]},
 			},
 			{
-				Name:    "customer_deleted_at",
+				Name:    "customer_given_name",
 				Unique:  false,
-				Columns: []*schema.Column{CustomersColumns[18]},
+				Columns: []*schema.Column{CustomersColumns[7]},
+			},
+			{
+				Name:    "customer_middle_name",
+				Unique:  false,
+				Columns: []*schema.Column{CustomersColumns[8]},
+			},
+			{
+				Name:    "customer_family_name",
+				Unique:  false,
+				Columns: []*schema.Column{CustomersColumns[9]},
 			},
 		},
 	}
@@ -122,25 +122,25 @@ var (
 		},
 		Indexes: []*schema.Index{
 			{
-				Name:    "customersetting_customer_customer_settings",
-				Unique:  true,
-				Columns: []*schema.Column{CustomerSettingsColumns[4]},
-			},
-			{
 				Name:    "customersetting_deleted_at",
 				Unique:  false,
 				Columns: []*schema.Column{CustomerSettingsColumns[3]},
+			},
+			{
+				Name:    "customersetting_customer_customer_settings",
+				Unique:  true,
+				Columns: []*schema.Column{CustomerSettingsColumns[4]},
 			},
 		},
 	}
 	// IdentitiesColumns holds the columns for the "identities" table.
 	IdentitiesColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeString},
-		{Name: "email", Type: field.TypeString, Nullable: true},
-		{Name: "email_verified", Type: field.TypeBool, Nullable: true},
 		{Name: "created_at", Type: field.TypeTime},
 		{Name: "modified_at", Type: field.TypeTime, Nullable: true},
 		{Name: "deleted_at", Type: field.TypeTime, Nullable: true},
+		{Name: "email", Type: field.TypeString, Nullable: true},
+		{Name: "email_verified", Type: field.TypeBool, Nullable: true},
 		{Name: "customer_identities", Type: field.TypeString},
 	}
 	// IdentitiesTable holds the schema information for the "identities" table.
@@ -158,24 +158,24 @@ var (
 		},
 		Indexes: []*schema.Index{
 			{
+				Name:    "identity_deleted_at",
+				Unique:  false,
+				Columns: []*schema.Column{IdentitiesColumns[3]},
+			},
+			{
 				Name:    "identity_email",
 				Unique:  false,
-				Columns: []*schema.Column{IdentitiesColumns[1]},
+				Columns: []*schema.Column{IdentitiesColumns[4]},
 			},
 			{
 				Name:    "identity_email_verified",
 				Unique:  false,
-				Columns: []*schema.Column{IdentitiesColumns[2]},
+				Columns: []*schema.Column{IdentitiesColumns[5]},
 			},
 			{
 				Name:    "identity_customer_identities",
 				Unique:  false,
 				Columns: []*schema.Column{IdentitiesColumns[6]},
-			},
-			{
-				Name:    "identity_deleted_at",
-				Unique:  false,
-				Columns: []*schema.Column{IdentitiesColumns[5]},
 			},
 		},
 	}

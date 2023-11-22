@@ -5,10 +5,11 @@ import (
 	"entgo.io/ent"
 	"entgo.io/ent/schema/field"
 	"entgo.io/ent/schema/index"
+	"entgo.io/ent/schema/mixin"
 )
 
 type BaseEntity struct {
-	ent.Schema
+	mixin.Schema
 }
 
 func (BaseEntity) Fields() []ent.Field {
@@ -17,10 +18,6 @@ func (BaseEntity) Fields() []ent.Field {
 		field.Time("modified_at").Optional().Annotations(entgql.OrderField("modifiedAt")),
 		field.Time("deleted_at").Optional().Annotations(entgql.OrderField("deletedAt")),
 	}
-}
-
-func (BaseEntity) Edges() []ent.Edge {
-	return []ent.Edge{}
 }
 
 func (BaseEntity) Indexes() []ent.Index {

@@ -17,6 +17,12 @@ type ApexCustomer struct {
 	config `json:"-"`
 	// ID of the ent.
 	ID string `json:"id,omitempty"`
+	// CreatedAt holds the value of the "created_at" field.
+	CreatedAt time.Time `json:"created_at,omitempty"`
+	// ModifiedAt holds the value of the "modified_at" field.
+	ModifiedAt time.Time `json:"modified_at,omitempty"`
+	// DeletedAt holds the value of the "deleted_at" field.
+	DeletedAt time.Time `json:"deleted_at,omitempty"`
 	// EventRaisedAt holds the value of the "event_raised_at" field.
 	EventRaisedAt time.Time `json:"event_raised_at,omitempty"`
 	// Name holds the value of the "name" field.
@@ -41,12 +47,6 @@ type ApexCustomer struct {
 	PhotoURL192 string `json:"photo_url_192,omitempty"`
 	// PhotoURL512 holds the value of the "photo_url_512" field.
 	PhotoURL512 string `json:"photo_url_512,omitempty"`
-	// CreatedAt holds the value of the "created_at" field.
-	CreatedAt time.Time `json:"created_at,omitempty"`
-	// ModifiedAt holds the value of the "modified_at" field.
-	ModifiedAt time.Time `json:"modified_at,omitempty"`
-	// DeletedAt holds the value of the "deleted_at" field.
-	DeletedAt time.Time `json:"deleted_at,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
 	// The values are being populated by the ApexCustomerQuery when eager-loading is set.
 	Edges        ApexCustomerEdges `json:"edges"`
@@ -82,7 +82,7 @@ func (*ApexCustomer) scanValues(columns []string) ([]any, error) {
 		switch columns[i] {
 		case apexcustomer.FieldID, apexcustomer.FieldName, apexcustomer.FieldGivenName, apexcustomer.FieldMiddleName, apexcustomer.FieldFamilyName, apexcustomer.FieldPhotoURL, apexcustomer.FieldPhotoURL24, apexcustomer.FieldPhotoURL32, apexcustomer.FieldPhotoURL48, apexcustomer.FieldPhotoURL72, apexcustomer.FieldPhotoURL192, apexcustomer.FieldPhotoURL512:
 			values[i] = new(sql.NullString)
-		case apexcustomer.FieldEventRaisedAt, apexcustomer.FieldCreatedAt, apexcustomer.FieldModifiedAt, apexcustomer.FieldDeletedAt:
+		case apexcustomer.FieldCreatedAt, apexcustomer.FieldModifiedAt, apexcustomer.FieldDeletedAt, apexcustomer.FieldEventRaisedAt:
 			values[i] = new(sql.NullTime)
 		default:
 			values[i] = new(sql.UnknownType)
@@ -104,6 +104,24 @@ func (ac *ApexCustomer) assignValues(columns []string, values []any) error {
 				return fmt.Errorf("unexpected type %T for field id", values[i])
 			} else if value.Valid {
 				ac.ID = value.String
+			}
+		case apexcustomer.FieldCreatedAt:
+			if value, ok := values[i].(*sql.NullTime); !ok {
+				return fmt.Errorf("unexpected type %T for field created_at", values[i])
+			} else if value.Valid {
+				ac.CreatedAt = value.Time
+			}
+		case apexcustomer.FieldModifiedAt:
+			if value, ok := values[i].(*sql.NullTime); !ok {
+				return fmt.Errorf("unexpected type %T for field modified_at", values[i])
+			} else if value.Valid {
+				ac.ModifiedAt = value.Time
+			}
+		case apexcustomer.FieldDeletedAt:
+			if value, ok := values[i].(*sql.NullTime); !ok {
+				return fmt.Errorf("unexpected type %T for field deleted_at", values[i])
+			} else if value.Valid {
+				ac.DeletedAt = value.Time
 			}
 		case apexcustomer.FieldEventRaisedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
@@ -177,24 +195,6 @@ func (ac *ApexCustomer) assignValues(columns []string, values []any) error {
 			} else if value.Valid {
 				ac.PhotoURL512 = value.String
 			}
-		case apexcustomer.FieldCreatedAt:
-			if value, ok := values[i].(*sql.NullTime); !ok {
-				return fmt.Errorf("unexpected type %T for field created_at", values[i])
-			} else if value.Valid {
-				ac.CreatedAt = value.Time
-			}
-		case apexcustomer.FieldModifiedAt:
-			if value, ok := values[i].(*sql.NullTime); !ok {
-				return fmt.Errorf("unexpected type %T for field modified_at", values[i])
-			} else if value.Valid {
-				ac.ModifiedAt = value.Time
-			}
-		case apexcustomer.FieldDeletedAt:
-			if value, ok := values[i].(*sql.NullTime); !ok {
-				return fmt.Errorf("unexpected type %T for field deleted_at", values[i])
-			} else if value.Valid {
-				ac.DeletedAt = value.Time
-			}
 		default:
 			ac.selectValues.Set(columns[i], values[i])
 		}
@@ -236,6 +236,15 @@ func (ac *ApexCustomer) String() string {
 	var builder strings.Builder
 	builder.WriteString("ApexCustomer(")
 	builder.WriteString(fmt.Sprintf("id=%v, ", ac.ID))
+	builder.WriteString("created_at=")
+	builder.WriteString(ac.CreatedAt.Format(time.ANSIC))
+	builder.WriteString(", ")
+	builder.WriteString("modified_at=")
+	builder.WriteString(ac.ModifiedAt.Format(time.ANSIC))
+	builder.WriteString(", ")
+	builder.WriteString("deleted_at=")
+	builder.WriteString(ac.DeletedAt.Format(time.ANSIC))
+	builder.WriteString(", ")
 	builder.WriteString("event_raised_at=")
 	builder.WriteString(ac.EventRaisedAt.Format(time.ANSIC))
 	builder.WriteString(", ")
@@ -271,15 +280,6 @@ func (ac *ApexCustomer) String() string {
 	builder.WriteString(", ")
 	builder.WriteString("photo_url_512=")
 	builder.WriteString(ac.PhotoURL512)
-	builder.WriteString(", ")
-	builder.WriteString("created_at=")
-	builder.WriteString(ac.CreatedAt.Format(time.ANSIC))
-	builder.WriteString(", ")
-	builder.WriteString("modified_at=")
-	builder.WriteString(ac.ModifiedAt.Format(time.ANSIC))
-	builder.WriteString(", ")
-	builder.WriteString("deleted_at=")
-	builder.WriteString(ac.DeletedAt.Format(time.ANSIC))
 	builder.WriteByte(')')
 	return builder.String()
 }

@@ -33,6 +33,52 @@ func (cu *CustomerUpdate) Where(ps ...predicate.Customer) *CustomerUpdate {
 	return cu
 }
 
+// SetCreatedAt sets the "created_at" field.
+func (cu *CustomerUpdate) SetCreatedAt(t time.Time) *CustomerUpdate {
+	cu.mutation.SetCreatedAt(t)
+	return cu
+}
+
+// SetModifiedAt sets the "modified_at" field.
+func (cu *CustomerUpdate) SetModifiedAt(t time.Time) *CustomerUpdate {
+	cu.mutation.SetModifiedAt(t)
+	return cu
+}
+
+// SetNillableModifiedAt sets the "modified_at" field if the given value is not nil.
+func (cu *CustomerUpdate) SetNillableModifiedAt(t *time.Time) *CustomerUpdate {
+	if t != nil {
+		cu.SetModifiedAt(*t)
+	}
+	return cu
+}
+
+// ClearModifiedAt clears the value of the "modified_at" field.
+func (cu *CustomerUpdate) ClearModifiedAt() *CustomerUpdate {
+	cu.mutation.ClearModifiedAt()
+	return cu
+}
+
+// SetDeletedAt sets the "deleted_at" field.
+func (cu *CustomerUpdate) SetDeletedAt(t time.Time) *CustomerUpdate {
+	cu.mutation.SetDeletedAt(t)
+	return cu
+}
+
+// SetNillableDeletedAt sets the "deleted_at" field if the given value is not nil.
+func (cu *CustomerUpdate) SetNillableDeletedAt(t *time.Time) *CustomerUpdate {
+	if t != nil {
+		cu.SetDeletedAt(*t)
+	}
+	return cu
+}
+
+// ClearDeletedAt clears the value of the "deleted_at" field.
+func (cu *CustomerUpdate) ClearDeletedAt() *CustomerUpdate {
+	cu.mutation.ClearDeletedAt()
+	return cu
+}
+
 // SetDesignation sets the "designation" field.
 func (cu *CustomerUpdate) SetDesignation(s string) *CustomerUpdate {
 	cu.mutation.SetDesignation(s)
@@ -333,52 +379,6 @@ func (cu *CustomerUpdate) ClearLocale() *CustomerUpdate {
 	return cu
 }
 
-// SetCreatedAt sets the "created_at" field.
-func (cu *CustomerUpdate) SetCreatedAt(t time.Time) *CustomerUpdate {
-	cu.mutation.SetCreatedAt(t)
-	return cu
-}
-
-// SetModifiedAt sets the "modified_at" field.
-func (cu *CustomerUpdate) SetModifiedAt(t time.Time) *CustomerUpdate {
-	cu.mutation.SetModifiedAt(t)
-	return cu
-}
-
-// SetNillableModifiedAt sets the "modified_at" field if the given value is not nil.
-func (cu *CustomerUpdate) SetNillableModifiedAt(t *time.Time) *CustomerUpdate {
-	if t != nil {
-		cu.SetModifiedAt(*t)
-	}
-	return cu
-}
-
-// ClearModifiedAt clears the value of the "modified_at" field.
-func (cu *CustomerUpdate) ClearModifiedAt() *CustomerUpdate {
-	cu.mutation.ClearModifiedAt()
-	return cu
-}
-
-// SetDeletedAt sets the "deleted_at" field.
-func (cu *CustomerUpdate) SetDeletedAt(t time.Time) *CustomerUpdate {
-	cu.mutation.SetDeletedAt(t)
-	return cu
-}
-
-// SetNillableDeletedAt sets the "deleted_at" field if the given value is not nil.
-func (cu *CustomerUpdate) SetNillableDeletedAt(t *time.Time) *CustomerUpdate {
-	if t != nil {
-		cu.SetDeletedAt(*t)
-	}
-	return cu
-}
-
-// ClearDeletedAt clears the value of the "deleted_at" field.
-func (cu *CustomerUpdate) ClearDeletedAt() *CustomerUpdate {
-	cu.mutation.ClearDeletedAt()
-	return cu
-}
-
 // AddIdentityIDs adds the "identities" edge to the Identity entity by IDs.
 func (cu *CustomerUpdate) AddIdentityIDs(ids ...string) *CustomerUpdate {
 	cu.mutation.AddIdentityIDs(ids...)
@@ -487,6 +487,21 @@ func (cu *CustomerUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			}
 		}
 	}
+	if value, ok := cu.mutation.CreatedAt(); ok {
+		_spec.SetField(customer.FieldCreatedAt, field.TypeTime, value)
+	}
+	if value, ok := cu.mutation.ModifiedAt(); ok {
+		_spec.SetField(customer.FieldModifiedAt, field.TypeTime, value)
+	}
+	if cu.mutation.ModifiedAtCleared() {
+		_spec.ClearField(customer.FieldModifiedAt, field.TypeTime)
+	}
+	if value, ok := cu.mutation.DeletedAt(); ok {
+		_spec.SetField(customer.FieldDeletedAt, field.TypeTime, value)
+	}
+	if cu.mutation.DeletedAtCleared() {
+		_spec.ClearField(customer.FieldDeletedAt, field.TypeTime)
+	}
 	if value, ok := cu.mutation.Designation(); ok {
 		_spec.SetField(customer.FieldDesignation, field.TypeString, value)
 	}
@@ -576,21 +591,6 @@ func (cu *CustomerUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	}
 	if cu.mutation.LocaleCleared() {
 		_spec.ClearField(customer.FieldLocale, field.TypeString)
-	}
-	if value, ok := cu.mutation.CreatedAt(); ok {
-		_spec.SetField(customer.FieldCreatedAt, field.TypeTime, value)
-	}
-	if value, ok := cu.mutation.ModifiedAt(); ok {
-		_spec.SetField(customer.FieldModifiedAt, field.TypeTime, value)
-	}
-	if cu.mutation.ModifiedAtCleared() {
-		_spec.ClearField(customer.FieldModifiedAt, field.TypeTime)
-	}
-	if value, ok := cu.mutation.DeletedAt(); ok {
-		_spec.SetField(customer.FieldDeletedAt, field.TypeTime, value)
-	}
-	if cu.mutation.DeletedAtCleared() {
-		_spec.ClearField(customer.FieldDeletedAt, field.TypeTime)
 	}
 	if cu.mutation.IdentitiesCleared() {
 		edge := &sqlgraph.EdgeSpec{
@@ -693,6 +693,52 @@ type CustomerUpdateOne struct {
 	hooks     []Hook
 	mutation  *CustomerMutation
 	modifiers []func(*sql.UpdateBuilder)
+}
+
+// SetCreatedAt sets the "created_at" field.
+func (cuo *CustomerUpdateOne) SetCreatedAt(t time.Time) *CustomerUpdateOne {
+	cuo.mutation.SetCreatedAt(t)
+	return cuo
+}
+
+// SetModifiedAt sets the "modified_at" field.
+func (cuo *CustomerUpdateOne) SetModifiedAt(t time.Time) *CustomerUpdateOne {
+	cuo.mutation.SetModifiedAt(t)
+	return cuo
+}
+
+// SetNillableModifiedAt sets the "modified_at" field if the given value is not nil.
+func (cuo *CustomerUpdateOne) SetNillableModifiedAt(t *time.Time) *CustomerUpdateOne {
+	if t != nil {
+		cuo.SetModifiedAt(*t)
+	}
+	return cuo
+}
+
+// ClearModifiedAt clears the value of the "modified_at" field.
+func (cuo *CustomerUpdateOne) ClearModifiedAt() *CustomerUpdateOne {
+	cuo.mutation.ClearModifiedAt()
+	return cuo
+}
+
+// SetDeletedAt sets the "deleted_at" field.
+func (cuo *CustomerUpdateOne) SetDeletedAt(t time.Time) *CustomerUpdateOne {
+	cuo.mutation.SetDeletedAt(t)
+	return cuo
+}
+
+// SetNillableDeletedAt sets the "deleted_at" field if the given value is not nil.
+func (cuo *CustomerUpdateOne) SetNillableDeletedAt(t *time.Time) *CustomerUpdateOne {
+	if t != nil {
+		cuo.SetDeletedAt(*t)
+	}
+	return cuo
+}
+
+// ClearDeletedAt clears the value of the "deleted_at" field.
+func (cuo *CustomerUpdateOne) ClearDeletedAt() *CustomerUpdateOne {
+	cuo.mutation.ClearDeletedAt()
+	return cuo
 }
 
 // SetDesignation sets the "designation" field.
@@ -995,52 +1041,6 @@ func (cuo *CustomerUpdateOne) ClearLocale() *CustomerUpdateOne {
 	return cuo
 }
 
-// SetCreatedAt sets the "created_at" field.
-func (cuo *CustomerUpdateOne) SetCreatedAt(t time.Time) *CustomerUpdateOne {
-	cuo.mutation.SetCreatedAt(t)
-	return cuo
-}
-
-// SetModifiedAt sets the "modified_at" field.
-func (cuo *CustomerUpdateOne) SetModifiedAt(t time.Time) *CustomerUpdateOne {
-	cuo.mutation.SetModifiedAt(t)
-	return cuo
-}
-
-// SetNillableModifiedAt sets the "modified_at" field if the given value is not nil.
-func (cuo *CustomerUpdateOne) SetNillableModifiedAt(t *time.Time) *CustomerUpdateOne {
-	if t != nil {
-		cuo.SetModifiedAt(*t)
-	}
-	return cuo
-}
-
-// ClearModifiedAt clears the value of the "modified_at" field.
-func (cuo *CustomerUpdateOne) ClearModifiedAt() *CustomerUpdateOne {
-	cuo.mutation.ClearModifiedAt()
-	return cuo
-}
-
-// SetDeletedAt sets the "deleted_at" field.
-func (cuo *CustomerUpdateOne) SetDeletedAt(t time.Time) *CustomerUpdateOne {
-	cuo.mutation.SetDeletedAt(t)
-	return cuo
-}
-
-// SetNillableDeletedAt sets the "deleted_at" field if the given value is not nil.
-func (cuo *CustomerUpdateOne) SetNillableDeletedAt(t *time.Time) *CustomerUpdateOne {
-	if t != nil {
-		cuo.SetDeletedAt(*t)
-	}
-	return cuo
-}
-
-// ClearDeletedAt clears the value of the "deleted_at" field.
-func (cuo *CustomerUpdateOne) ClearDeletedAt() *CustomerUpdateOne {
-	cuo.mutation.ClearDeletedAt()
-	return cuo
-}
-
 // AddIdentityIDs adds the "identities" edge to the Identity entity by IDs.
 func (cuo *CustomerUpdateOne) AddIdentityIDs(ids ...string) *CustomerUpdateOne {
 	cuo.mutation.AddIdentityIDs(ids...)
@@ -1179,6 +1179,21 @@ func (cuo *CustomerUpdateOne) sqlSave(ctx context.Context) (_node *Customer, err
 			}
 		}
 	}
+	if value, ok := cuo.mutation.CreatedAt(); ok {
+		_spec.SetField(customer.FieldCreatedAt, field.TypeTime, value)
+	}
+	if value, ok := cuo.mutation.ModifiedAt(); ok {
+		_spec.SetField(customer.FieldModifiedAt, field.TypeTime, value)
+	}
+	if cuo.mutation.ModifiedAtCleared() {
+		_spec.ClearField(customer.FieldModifiedAt, field.TypeTime)
+	}
+	if value, ok := cuo.mutation.DeletedAt(); ok {
+		_spec.SetField(customer.FieldDeletedAt, field.TypeTime, value)
+	}
+	if cuo.mutation.DeletedAtCleared() {
+		_spec.ClearField(customer.FieldDeletedAt, field.TypeTime)
+	}
 	if value, ok := cuo.mutation.Designation(); ok {
 		_spec.SetField(customer.FieldDesignation, field.TypeString, value)
 	}
@@ -1268,21 +1283,6 @@ func (cuo *CustomerUpdateOne) sqlSave(ctx context.Context) (_node *Customer, err
 	}
 	if cuo.mutation.LocaleCleared() {
 		_spec.ClearField(customer.FieldLocale, field.TypeString)
-	}
-	if value, ok := cuo.mutation.CreatedAt(); ok {
-		_spec.SetField(customer.FieldCreatedAt, field.TypeTime, value)
-	}
-	if value, ok := cuo.mutation.ModifiedAt(); ok {
-		_spec.SetField(customer.FieldModifiedAt, field.TypeTime, value)
-	}
-	if cuo.mutation.ModifiedAtCleared() {
-		_spec.ClearField(customer.FieldModifiedAt, field.TypeTime)
-	}
-	if value, ok := cuo.mutation.DeletedAt(); ok {
-		_spec.SetField(customer.FieldDeletedAt, field.TypeTime, value)
-	}
-	if cuo.mutation.DeletedAtCleared() {
-		_spec.ClearField(customer.FieldDeletedAt, field.TypeTime)
 	}
 	if cuo.mutation.IdentitiesCleared() {
 		edge := &sqlgraph.EdgeSpec{

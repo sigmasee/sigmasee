@@ -14,14 +14,17 @@ type Identity struct {
 }
 
 func (Identity) Fields() []ent.Field {
-	return append(
-		[]ent.Field{
-			field.String("id").Annotations(entgql.OrderField("id")),
-			field.String("email").Optional().Annotations(entgql.OrderField("email")),
-			field.Bool("email_verified").Optional().Annotations(entgql.OrderField("emailVerified")),
-		},
-		entities.BaseEntity{}.Fields()...,
-	)
+	return []ent.Field{
+		field.String("id").Annotations(entgql.OrderField("id")),
+		field.String("email").Optional().Annotations(entgql.OrderField("email")),
+		field.Bool("email_verified").Optional().Annotations(entgql.OrderField("emailVerified")),
+	}
+}
+
+func (Identity) Mixin() []ent.Mixin {
+	return []ent.Mixin{
+		entities.BaseEntity{},
+	}
 }
 
 func (Identity) Edges() []ent.Edge {
@@ -31,13 +34,10 @@ func (Identity) Edges() []ent.Edge {
 }
 
 func (Identity) Indexes() []ent.Index {
-	return append(
-		[]ent.Index{
-			index.Fields("email"),
-			index.Fields("email_verified"),
+	return []ent.Index{
+		index.Fields("email"),
+		index.Fields("email_verified"),
 
-			index.Edges("customer"),
-		},
-		entities.BaseEntity{}.Indexes()...,
-	)
+		index.Edges("customer"),
+	}
 }

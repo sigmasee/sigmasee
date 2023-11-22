@@ -18,16 +18,16 @@ type Identity struct {
 	config `json:"-"`
 	// ID of the ent.
 	ID string `json:"id,omitempty"`
-	// Email holds the value of the "email" field.
-	Email string `json:"email,omitempty"`
-	// EmailVerified holds the value of the "email_verified" field.
-	EmailVerified bool `json:"email_verified,omitempty"`
 	// CreatedAt holds the value of the "created_at" field.
 	CreatedAt time.Time `json:"created_at,omitempty"`
 	// ModifiedAt holds the value of the "modified_at" field.
 	ModifiedAt time.Time `json:"modified_at,omitempty"`
 	// DeletedAt holds the value of the "deleted_at" field.
 	DeletedAt time.Time `json:"deleted_at,omitempty"`
+	// Email holds the value of the "email" field.
+	Email string `json:"email,omitempty"`
+	// EmailVerified holds the value of the "email_verified" field.
+	EmailVerified bool `json:"email_verified,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
 	// The values are being populated by the IdentityQuery when eager-loading is set.
 	Edges               IdentityEdges `json:"edges"`
@@ -93,18 +93,6 @@ func (i *Identity) assignValues(columns []string, values []any) error {
 			} else if value.Valid {
 				i.ID = value.String
 			}
-		case identity.FieldEmail:
-			if value, ok := values[j].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field email", values[j])
-			} else if value.Valid {
-				i.Email = value.String
-			}
-		case identity.FieldEmailVerified:
-			if value, ok := values[j].(*sql.NullBool); !ok {
-				return fmt.Errorf("unexpected type %T for field email_verified", values[j])
-			} else if value.Valid {
-				i.EmailVerified = value.Bool
-			}
 		case identity.FieldCreatedAt:
 			if value, ok := values[j].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field created_at", values[j])
@@ -122,6 +110,18 @@ func (i *Identity) assignValues(columns []string, values []any) error {
 				return fmt.Errorf("unexpected type %T for field deleted_at", values[j])
 			} else if value.Valid {
 				i.DeletedAt = value.Time
+			}
+		case identity.FieldEmail:
+			if value, ok := values[j].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field email", values[j])
+			} else if value.Valid {
+				i.Email = value.String
+			}
+		case identity.FieldEmailVerified:
+			if value, ok := values[j].(*sql.NullBool); !ok {
+				return fmt.Errorf("unexpected type %T for field email_verified", values[j])
+			} else if value.Valid {
+				i.EmailVerified = value.Bool
 			}
 		case identity.ForeignKeys[0]:
 			if value, ok := values[j].(*sql.NullString); !ok {
@@ -171,12 +171,6 @@ func (i *Identity) String() string {
 	var builder strings.Builder
 	builder.WriteString("Identity(")
 	builder.WriteString(fmt.Sprintf("id=%v, ", i.ID))
-	builder.WriteString("email=")
-	builder.WriteString(i.Email)
-	builder.WriteString(", ")
-	builder.WriteString("email_verified=")
-	builder.WriteString(fmt.Sprintf("%v", i.EmailVerified))
-	builder.WriteString(", ")
 	builder.WriteString("created_at=")
 	builder.WriteString(i.CreatedAt.Format(time.ANSIC))
 	builder.WriteString(", ")
@@ -185,6 +179,12 @@ func (i *Identity) String() string {
 	builder.WriteString(", ")
 	builder.WriteString("deleted_at=")
 	builder.WriteString(i.DeletedAt.Format(time.ANSIC))
+	builder.WriteString(", ")
+	builder.WriteString("email=")
+	builder.WriteString(i.Email)
+	builder.WriteString(", ")
+	builder.WriteString("email_verified=")
+	builder.WriteString(fmt.Sprintf("%v", i.EmailVerified))
 	builder.WriteByte(')')
 	return builder.String()
 }

@@ -346,12 +346,12 @@ func (cq *CustomerQuery) WithCustomerSettings(opts ...func(*CustomerSettingQuery
 // Example:
 //
 //	var v []struct {
-//		Designation string `json:"designation,omitempty"`
+//		CreatedAt time.Time `json:"created_at,omitempty"`
 //		Count int `json:"count,omitempty"`
 //	}
 //
 //	client.Customer.Query().
-//		GroupBy(customer.FieldDesignation).
+//		GroupBy(customer.FieldCreatedAt).
 //		Aggregate(entities.Count()).
 //		Scan(ctx, &v)
 func (cq *CustomerQuery) GroupBy(field string, fields ...string) *CustomerGroupBy {
@@ -369,11 +369,11 @@ func (cq *CustomerQuery) GroupBy(field string, fields ...string) *CustomerGroupB
 // Example:
 //
 //	var v []struct {
-//		Designation string `json:"designation,omitempty"`
+//		CreatedAt time.Time `json:"created_at,omitempty"`
 //	}
 //
 //	client.Customer.Query().
-//		Select(customer.FieldDesignation).
+//		Select(customer.FieldCreatedAt).
 //		Scan(ctx, &v)
 func (cq *CustomerQuery) Select(fields ...string) *CustomerSelect {
 	cq.ctx.Fields = append(cq.ctx.Fields, fields...)

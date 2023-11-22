@@ -67,16 +67,6 @@ func IDContainsFold(id string) predicate.Identity {
 	return predicate.Identity(sql.FieldContainsFold(FieldID, id))
 }
 
-// Email applies equality check predicate on the "email" field. It's identical to EmailEQ.
-func Email(v string) predicate.Identity {
-	return predicate.Identity(sql.FieldEQ(FieldEmail, v))
-}
-
-// EmailVerified applies equality check predicate on the "email_verified" field. It's identical to EmailVerifiedEQ.
-func EmailVerified(v bool) predicate.Identity {
-	return predicate.Identity(sql.FieldEQ(FieldEmailVerified, v))
-}
-
 // CreatedAt applies equality check predicate on the "created_at" field. It's identical to CreatedAtEQ.
 func CreatedAt(v time.Time) predicate.Identity {
 	return predicate.Identity(sql.FieldEQ(FieldCreatedAt, v))
@@ -92,99 +82,14 @@ func DeletedAt(v time.Time) predicate.Identity {
 	return predicate.Identity(sql.FieldEQ(FieldDeletedAt, v))
 }
 
-// EmailEQ applies the EQ predicate on the "email" field.
-func EmailEQ(v string) predicate.Identity {
+// Email applies equality check predicate on the "email" field. It's identical to EmailEQ.
+func Email(v string) predicate.Identity {
 	return predicate.Identity(sql.FieldEQ(FieldEmail, v))
 }
 
-// EmailNEQ applies the NEQ predicate on the "email" field.
-func EmailNEQ(v string) predicate.Identity {
-	return predicate.Identity(sql.FieldNEQ(FieldEmail, v))
-}
-
-// EmailIn applies the In predicate on the "email" field.
-func EmailIn(vs ...string) predicate.Identity {
-	return predicate.Identity(sql.FieldIn(FieldEmail, vs...))
-}
-
-// EmailNotIn applies the NotIn predicate on the "email" field.
-func EmailNotIn(vs ...string) predicate.Identity {
-	return predicate.Identity(sql.FieldNotIn(FieldEmail, vs...))
-}
-
-// EmailGT applies the GT predicate on the "email" field.
-func EmailGT(v string) predicate.Identity {
-	return predicate.Identity(sql.FieldGT(FieldEmail, v))
-}
-
-// EmailGTE applies the GTE predicate on the "email" field.
-func EmailGTE(v string) predicate.Identity {
-	return predicate.Identity(sql.FieldGTE(FieldEmail, v))
-}
-
-// EmailLT applies the LT predicate on the "email" field.
-func EmailLT(v string) predicate.Identity {
-	return predicate.Identity(sql.FieldLT(FieldEmail, v))
-}
-
-// EmailLTE applies the LTE predicate on the "email" field.
-func EmailLTE(v string) predicate.Identity {
-	return predicate.Identity(sql.FieldLTE(FieldEmail, v))
-}
-
-// EmailContains applies the Contains predicate on the "email" field.
-func EmailContains(v string) predicate.Identity {
-	return predicate.Identity(sql.FieldContains(FieldEmail, v))
-}
-
-// EmailHasPrefix applies the HasPrefix predicate on the "email" field.
-func EmailHasPrefix(v string) predicate.Identity {
-	return predicate.Identity(sql.FieldHasPrefix(FieldEmail, v))
-}
-
-// EmailHasSuffix applies the HasSuffix predicate on the "email" field.
-func EmailHasSuffix(v string) predicate.Identity {
-	return predicate.Identity(sql.FieldHasSuffix(FieldEmail, v))
-}
-
-// EmailIsNil applies the IsNil predicate on the "email" field.
-func EmailIsNil() predicate.Identity {
-	return predicate.Identity(sql.FieldIsNull(FieldEmail))
-}
-
-// EmailNotNil applies the NotNil predicate on the "email" field.
-func EmailNotNil() predicate.Identity {
-	return predicate.Identity(sql.FieldNotNull(FieldEmail))
-}
-
-// EmailEqualFold applies the EqualFold predicate on the "email" field.
-func EmailEqualFold(v string) predicate.Identity {
-	return predicate.Identity(sql.FieldEqualFold(FieldEmail, v))
-}
-
-// EmailContainsFold applies the ContainsFold predicate on the "email" field.
-func EmailContainsFold(v string) predicate.Identity {
-	return predicate.Identity(sql.FieldContainsFold(FieldEmail, v))
-}
-
-// EmailVerifiedEQ applies the EQ predicate on the "email_verified" field.
-func EmailVerifiedEQ(v bool) predicate.Identity {
+// EmailVerified applies equality check predicate on the "email_verified" field. It's identical to EmailVerifiedEQ.
+func EmailVerified(v bool) predicate.Identity {
 	return predicate.Identity(sql.FieldEQ(FieldEmailVerified, v))
-}
-
-// EmailVerifiedNEQ applies the NEQ predicate on the "email_verified" field.
-func EmailVerifiedNEQ(v bool) predicate.Identity {
-	return predicate.Identity(sql.FieldNEQ(FieldEmailVerified, v))
-}
-
-// EmailVerifiedIsNil applies the IsNil predicate on the "email_verified" field.
-func EmailVerifiedIsNil() predicate.Identity {
-	return predicate.Identity(sql.FieldIsNull(FieldEmailVerified))
-}
-
-// EmailVerifiedNotNil applies the NotNil predicate on the "email_verified" field.
-func EmailVerifiedNotNil() predicate.Identity {
-	return predicate.Identity(sql.FieldNotNull(FieldEmailVerified))
 }
 
 // CreatedAtEQ applies the EQ predicate on the "created_at" field.
@@ -325,6 +230,101 @@ func DeletedAtIsNil() predicate.Identity {
 // DeletedAtNotNil applies the NotNil predicate on the "deleted_at" field.
 func DeletedAtNotNil() predicate.Identity {
 	return predicate.Identity(sql.FieldNotNull(FieldDeletedAt))
+}
+
+// EmailEQ applies the EQ predicate on the "email" field.
+func EmailEQ(v string) predicate.Identity {
+	return predicate.Identity(sql.FieldEQ(FieldEmail, v))
+}
+
+// EmailNEQ applies the NEQ predicate on the "email" field.
+func EmailNEQ(v string) predicate.Identity {
+	return predicate.Identity(sql.FieldNEQ(FieldEmail, v))
+}
+
+// EmailIn applies the In predicate on the "email" field.
+func EmailIn(vs ...string) predicate.Identity {
+	return predicate.Identity(sql.FieldIn(FieldEmail, vs...))
+}
+
+// EmailNotIn applies the NotIn predicate on the "email" field.
+func EmailNotIn(vs ...string) predicate.Identity {
+	return predicate.Identity(sql.FieldNotIn(FieldEmail, vs...))
+}
+
+// EmailGT applies the GT predicate on the "email" field.
+func EmailGT(v string) predicate.Identity {
+	return predicate.Identity(sql.FieldGT(FieldEmail, v))
+}
+
+// EmailGTE applies the GTE predicate on the "email" field.
+func EmailGTE(v string) predicate.Identity {
+	return predicate.Identity(sql.FieldGTE(FieldEmail, v))
+}
+
+// EmailLT applies the LT predicate on the "email" field.
+func EmailLT(v string) predicate.Identity {
+	return predicate.Identity(sql.FieldLT(FieldEmail, v))
+}
+
+// EmailLTE applies the LTE predicate on the "email" field.
+func EmailLTE(v string) predicate.Identity {
+	return predicate.Identity(sql.FieldLTE(FieldEmail, v))
+}
+
+// EmailContains applies the Contains predicate on the "email" field.
+func EmailContains(v string) predicate.Identity {
+	return predicate.Identity(sql.FieldContains(FieldEmail, v))
+}
+
+// EmailHasPrefix applies the HasPrefix predicate on the "email" field.
+func EmailHasPrefix(v string) predicate.Identity {
+	return predicate.Identity(sql.FieldHasPrefix(FieldEmail, v))
+}
+
+// EmailHasSuffix applies the HasSuffix predicate on the "email" field.
+func EmailHasSuffix(v string) predicate.Identity {
+	return predicate.Identity(sql.FieldHasSuffix(FieldEmail, v))
+}
+
+// EmailIsNil applies the IsNil predicate on the "email" field.
+func EmailIsNil() predicate.Identity {
+	return predicate.Identity(sql.FieldIsNull(FieldEmail))
+}
+
+// EmailNotNil applies the NotNil predicate on the "email" field.
+func EmailNotNil() predicate.Identity {
+	return predicate.Identity(sql.FieldNotNull(FieldEmail))
+}
+
+// EmailEqualFold applies the EqualFold predicate on the "email" field.
+func EmailEqualFold(v string) predicate.Identity {
+	return predicate.Identity(sql.FieldEqualFold(FieldEmail, v))
+}
+
+// EmailContainsFold applies the ContainsFold predicate on the "email" field.
+func EmailContainsFold(v string) predicate.Identity {
+	return predicate.Identity(sql.FieldContainsFold(FieldEmail, v))
+}
+
+// EmailVerifiedEQ applies the EQ predicate on the "email_verified" field.
+func EmailVerifiedEQ(v bool) predicate.Identity {
+	return predicate.Identity(sql.FieldEQ(FieldEmailVerified, v))
+}
+
+// EmailVerifiedNEQ applies the NEQ predicate on the "email_verified" field.
+func EmailVerifiedNEQ(v bool) predicate.Identity {
+	return predicate.Identity(sql.FieldNEQ(FieldEmailVerified, v))
+}
+
+// EmailVerifiedIsNil applies the IsNil predicate on the "email_verified" field.
+func EmailVerifiedIsNil() predicate.Identity {
+	return predicate.Identity(sql.FieldIsNull(FieldEmailVerified))
+}
+
+// EmailVerifiedNotNil applies the NotNil predicate on the "email_verified" field.
+func EmailVerifiedNotNil() predicate.Identity {
+	return predicate.Identity(sql.FieldNotNull(FieldEmailVerified))
 }
 
 // HasCustomer applies the HasEdge predicate on the "customer" edge.

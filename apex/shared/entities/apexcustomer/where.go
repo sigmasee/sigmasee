@@ -67,6 +67,21 @@ func IDContainsFold(id string) predicate.ApexCustomer {
 	return predicate.ApexCustomer(sql.FieldContainsFold(FieldID, id))
 }
 
+// CreatedAt applies equality check predicate on the "created_at" field. It's identical to CreatedAtEQ.
+func CreatedAt(v time.Time) predicate.ApexCustomer {
+	return predicate.ApexCustomer(sql.FieldEQ(FieldCreatedAt, v))
+}
+
+// ModifiedAt applies equality check predicate on the "modified_at" field. It's identical to ModifiedAtEQ.
+func ModifiedAt(v time.Time) predicate.ApexCustomer {
+	return predicate.ApexCustomer(sql.FieldEQ(FieldModifiedAt, v))
+}
+
+// DeletedAt applies equality check predicate on the "deleted_at" field. It's identical to DeletedAtEQ.
+func DeletedAt(v time.Time) predicate.ApexCustomer {
+	return predicate.ApexCustomer(sql.FieldEQ(FieldDeletedAt, v))
+}
+
 // EventRaisedAt applies equality check predicate on the "event_raised_at" field. It's identical to EventRaisedAtEQ.
 func EventRaisedAt(v time.Time) predicate.ApexCustomer {
 	return predicate.ApexCustomer(sql.FieldEQ(FieldEventRaisedAt, v))
@@ -127,19 +142,144 @@ func PhotoURL512(v string) predicate.ApexCustomer {
 	return predicate.ApexCustomer(sql.FieldEQ(FieldPhotoURL512, v))
 }
 
-// CreatedAt applies equality check predicate on the "created_at" field. It's identical to CreatedAtEQ.
-func CreatedAt(v time.Time) predicate.ApexCustomer {
+// CreatedAtEQ applies the EQ predicate on the "created_at" field.
+func CreatedAtEQ(v time.Time) predicate.ApexCustomer {
 	return predicate.ApexCustomer(sql.FieldEQ(FieldCreatedAt, v))
 }
 
-// ModifiedAt applies equality check predicate on the "modified_at" field. It's identical to ModifiedAtEQ.
-func ModifiedAt(v time.Time) predicate.ApexCustomer {
+// CreatedAtNEQ applies the NEQ predicate on the "created_at" field.
+func CreatedAtNEQ(v time.Time) predicate.ApexCustomer {
+	return predicate.ApexCustomer(sql.FieldNEQ(FieldCreatedAt, v))
+}
+
+// CreatedAtIn applies the In predicate on the "created_at" field.
+func CreatedAtIn(vs ...time.Time) predicate.ApexCustomer {
+	return predicate.ApexCustomer(sql.FieldIn(FieldCreatedAt, vs...))
+}
+
+// CreatedAtNotIn applies the NotIn predicate on the "created_at" field.
+func CreatedAtNotIn(vs ...time.Time) predicate.ApexCustomer {
+	return predicate.ApexCustomer(sql.FieldNotIn(FieldCreatedAt, vs...))
+}
+
+// CreatedAtGT applies the GT predicate on the "created_at" field.
+func CreatedAtGT(v time.Time) predicate.ApexCustomer {
+	return predicate.ApexCustomer(sql.FieldGT(FieldCreatedAt, v))
+}
+
+// CreatedAtGTE applies the GTE predicate on the "created_at" field.
+func CreatedAtGTE(v time.Time) predicate.ApexCustomer {
+	return predicate.ApexCustomer(sql.FieldGTE(FieldCreatedAt, v))
+}
+
+// CreatedAtLT applies the LT predicate on the "created_at" field.
+func CreatedAtLT(v time.Time) predicate.ApexCustomer {
+	return predicate.ApexCustomer(sql.FieldLT(FieldCreatedAt, v))
+}
+
+// CreatedAtLTE applies the LTE predicate on the "created_at" field.
+func CreatedAtLTE(v time.Time) predicate.ApexCustomer {
+	return predicate.ApexCustomer(sql.FieldLTE(FieldCreatedAt, v))
+}
+
+// ModifiedAtEQ applies the EQ predicate on the "modified_at" field.
+func ModifiedAtEQ(v time.Time) predicate.ApexCustomer {
 	return predicate.ApexCustomer(sql.FieldEQ(FieldModifiedAt, v))
 }
 
-// DeletedAt applies equality check predicate on the "deleted_at" field. It's identical to DeletedAtEQ.
-func DeletedAt(v time.Time) predicate.ApexCustomer {
+// ModifiedAtNEQ applies the NEQ predicate on the "modified_at" field.
+func ModifiedAtNEQ(v time.Time) predicate.ApexCustomer {
+	return predicate.ApexCustomer(sql.FieldNEQ(FieldModifiedAt, v))
+}
+
+// ModifiedAtIn applies the In predicate on the "modified_at" field.
+func ModifiedAtIn(vs ...time.Time) predicate.ApexCustomer {
+	return predicate.ApexCustomer(sql.FieldIn(FieldModifiedAt, vs...))
+}
+
+// ModifiedAtNotIn applies the NotIn predicate on the "modified_at" field.
+func ModifiedAtNotIn(vs ...time.Time) predicate.ApexCustomer {
+	return predicate.ApexCustomer(sql.FieldNotIn(FieldModifiedAt, vs...))
+}
+
+// ModifiedAtGT applies the GT predicate on the "modified_at" field.
+func ModifiedAtGT(v time.Time) predicate.ApexCustomer {
+	return predicate.ApexCustomer(sql.FieldGT(FieldModifiedAt, v))
+}
+
+// ModifiedAtGTE applies the GTE predicate on the "modified_at" field.
+func ModifiedAtGTE(v time.Time) predicate.ApexCustomer {
+	return predicate.ApexCustomer(sql.FieldGTE(FieldModifiedAt, v))
+}
+
+// ModifiedAtLT applies the LT predicate on the "modified_at" field.
+func ModifiedAtLT(v time.Time) predicate.ApexCustomer {
+	return predicate.ApexCustomer(sql.FieldLT(FieldModifiedAt, v))
+}
+
+// ModifiedAtLTE applies the LTE predicate on the "modified_at" field.
+func ModifiedAtLTE(v time.Time) predicate.ApexCustomer {
+	return predicate.ApexCustomer(sql.FieldLTE(FieldModifiedAt, v))
+}
+
+// ModifiedAtIsNil applies the IsNil predicate on the "modified_at" field.
+func ModifiedAtIsNil() predicate.ApexCustomer {
+	return predicate.ApexCustomer(sql.FieldIsNull(FieldModifiedAt))
+}
+
+// ModifiedAtNotNil applies the NotNil predicate on the "modified_at" field.
+func ModifiedAtNotNil() predicate.ApexCustomer {
+	return predicate.ApexCustomer(sql.FieldNotNull(FieldModifiedAt))
+}
+
+// DeletedAtEQ applies the EQ predicate on the "deleted_at" field.
+func DeletedAtEQ(v time.Time) predicate.ApexCustomer {
 	return predicate.ApexCustomer(sql.FieldEQ(FieldDeletedAt, v))
+}
+
+// DeletedAtNEQ applies the NEQ predicate on the "deleted_at" field.
+func DeletedAtNEQ(v time.Time) predicate.ApexCustomer {
+	return predicate.ApexCustomer(sql.FieldNEQ(FieldDeletedAt, v))
+}
+
+// DeletedAtIn applies the In predicate on the "deleted_at" field.
+func DeletedAtIn(vs ...time.Time) predicate.ApexCustomer {
+	return predicate.ApexCustomer(sql.FieldIn(FieldDeletedAt, vs...))
+}
+
+// DeletedAtNotIn applies the NotIn predicate on the "deleted_at" field.
+func DeletedAtNotIn(vs ...time.Time) predicate.ApexCustomer {
+	return predicate.ApexCustomer(sql.FieldNotIn(FieldDeletedAt, vs...))
+}
+
+// DeletedAtGT applies the GT predicate on the "deleted_at" field.
+func DeletedAtGT(v time.Time) predicate.ApexCustomer {
+	return predicate.ApexCustomer(sql.FieldGT(FieldDeletedAt, v))
+}
+
+// DeletedAtGTE applies the GTE predicate on the "deleted_at" field.
+func DeletedAtGTE(v time.Time) predicate.ApexCustomer {
+	return predicate.ApexCustomer(sql.FieldGTE(FieldDeletedAt, v))
+}
+
+// DeletedAtLT applies the LT predicate on the "deleted_at" field.
+func DeletedAtLT(v time.Time) predicate.ApexCustomer {
+	return predicate.ApexCustomer(sql.FieldLT(FieldDeletedAt, v))
+}
+
+// DeletedAtLTE applies the LTE predicate on the "deleted_at" field.
+func DeletedAtLTE(v time.Time) predicate.ApexCustomer {
+	return predicate.ApexCustomer(sql.FieldLTE(FieldDeletedAt, v))
+}
+
+// DeletedAtIsNil applies the IsNil predicate on the "deleted_at" field.
+func DeletedAtIsNil() predicate.ApexCustomer {
+	return predicate.ApexCustomer(sql.FieldIsNull(FieldDeletedAt))
+}
+
+// DeletedAtNotNil applies the NotNil predicate on the "deleted_at" field.
+func DeletedAtNotNil() predicate.ApexCustomer {
+	return predicate.ApexCustomer(sql.FieldNotNull(FieldDeletedAt))
 }
 
 // EventRaisedAtEQ applies the EQ predicate on the "event_raised_at" field.
@@ -1005,146 +1145,6 @@ func PhotoURL512EqualFold(v string) predicate.ApexCustomer {
 // PhotoURL512ContainsFold applies the ContainsFold predicate on the "photo_url_512" field.
 func PhotoURL512ContainsFold(v string) predicate.ApexCustomer {
 	return predicate.ApexCustomer(sql.FieldContainsFold(FieldPhotoURL512, v))
-}
-
-// CreatedAtEQ applies the EQ predicate on the "created_at" field.
-func CreatedAtEQ(v time.Time) predicate.ApexCustomer {
-	return predicate.ApexCustomer(sql.FieldEQ(FieldCreatedAt, v))
-}
-
-// CreatedAtNEQ applies the NEQ predicate on the "created_at" field.
-func CreatedAtNEQ(v time.Time) predicate.ApexCustomer {
-	return predicate.ApexCustomer(sql.FieldNEQ(FieldCreatedAt, v))
-}
-
-// CreatedAtIn applies the In predicate on the "created_at" field.
-func CreatedAtIn(vs ...time.Time) predicate.ApexCustomer {
-	return predicate.ApexCustomer(sql.FieldIn(FieldCreatedAt, vs...))
-}
-
-// CreatedAtNotIn applies the NotIn predicate on the "created_at" field.
-func CreatedAtNotIn(vs ...time.Time) predicate.ApexCustomer {
-	return predicate.ApexCustomer(sql.FieldNotIn(FieldCreatedAt, vs...))
-}
-
-// CreatedAtGT applies the GT predicate on the "created_at" field.
-func CreatedAtGT(v time.Time) predicate.ApexCustomer {
-	return predicate.ApexCustomer(sql.FieldGT(FieldCreatedAt, v))
-}
-
-// CreatedAtGTE applies the GTE predicate on the "created_at" field.
-func CreatedAtGTE(v time.Time) predicate.ApexCustomer {
-	return predicate.ApexCustomer(sql.FieldGTE(FieldCreatedAt, v))
-}
-
-// CreatedAtLT applies the LT predicate on the "created_at" field.
-func CreatedAtLT(v time.Time) predicate.ApexCustomer {
-	return predicate.ApexCustomer(sql.FieldLT(FieldCreatedAt, v))
-}
-
-// CreatedAtLTE applies the LTE predicate on the "created_at" field.
-func CreatedAtLTE(v time.Time) predicate.ApexCustomer {
-	return predicate.ApexCustomer(sql.FieldLTE(FieldCreatedAt, v))
-}
-
-// ModifiedAtEQ applies the EQ predicate on the "modified_at" field.
-func ModifiedAtEQ(v time.Time) predicate.ApexCustomer {
-	return predicate.ApexCustomer(sql.FieldEQ(FieldModifiedAt, v))
-}
-
-// ModifiedAtNEQ applies the NEQ predicate on the "modified_at" field.
-func ModifiedAtNEQ(v time.Time) predicate.ApexCustomer {
-	return predicate.ApexCustomer(sql.FieldNEQ(FieldModifiedAt, v))
-}
-
-// ModifiedAtIn applies the In predicate on the "modified_at" field.
-func ModifiedAtIn(vs ...time.Time) predicate.ApexCustomer {
-	return predicate.ApexCustomer(sql.FieldIn(FieldModifiedAt, vs...))
-}
-
-// ModifiedAtNotIn applies the NotIn predicate on the "modified_at" field.
-func ModifiedAtNotIn(vs ...time.Time) predicate.ApexCustomer {
-	return predicate.ApexCustomer(sql.FieldNotIn(FieldModifiedAt, vs...))
-}
-
-// ModifiedAtGT applies the GT predicate on the "modified_at" field.
-func ModifiedAtGT(v time.Time) predicate.ApexCustomer {
-	return predicate.ApexCustomer(sql.FieldGT(FieldModifiedAt, v))
-}
-
-// ModifiedAtGTE applies the GTE predicate on the "modified_at" field.
-func ModifiedAtGTE(v time.Time) predicate.ApexCustomer {
-	return predicate.ApexCustomer(sql.FieldGTE(FieldModifiedAt, v))
-}
-
-// ModifiedAtLT applies the LT predicate on the "modified_at" field.
-func ModifiedAtLT(v time.Time) predicate.ApexCustomer {
-	return predicate.ApexCustomer(sql.FieldLT(FieldModifiedAt, v))
-}
-
-// ModifiedAtLTE applies the LTE predicate on the "modified_at" field.
-func ModifiedAtLTE(v time.Time) predicate.ApexCustomer {
-	return predicate.ApexCustomer(sql.FieldLTE(FieldModifiedAt, v))
-}
-
-// ModifiedAtIsNil applies the IsNil predicate on the "modified_at" field.
-func ModifiedAtIsNil() predicate.ApexCustomer {
-	return predicate.ApexCustomer(sql.FieldIsNull(FieldModifiedAt))
-}
-
-// ModifiedAtNotNil applies the NotNil predicate on the "modified_at" field.
-func ModifiedAtNotNil() predicate.ApexCustomer {
-	return predicate.ApexCustomer(sql.FieldNotNull(FieldModifiedAt))
-}
-
-// DeletedAtEQ applies the EQ predicate on the "deleted_at" field.
-func DeletedAtEQ(v time.Time) predicate.ApexCustomer {
-	return predicate.ApexCustomer(sql.FieldEQ(FieldDeletedAt, v))
-}
-
-// DeletedAtNEQ applies the NEQ predicate on the "deleted_at" field.
-func DeletedAtNEQ(v time.Time) predicate.ApexCustomer {
-	return predicate.ApexCustomer(sql.FieldNEQ(FieldDeletedAt, v))
-}
-
-// DeletedAtIn applies the In predicate on the "deleted_at" field.
-func DeletedAtIn(vs ...time.Time) predicate.ApexCustomer {
-	return predicate.ApexCustomer(sql.FieldIn(FieldDeletedAt, vs...))
-}
-
-// DeletedAtNotIn applies the NotIn predicate on the "deleted_at" field.
-func DeletedAtNotIn(vs ...time.Time) predicate.ApexCustomer {
-	return predicate.ApexCustomer(sql.FieldNotIn(FieldDeletedAt, vs...))
-}
-
-// DeletedAtGT applies the GT predicate on the "deleted_at" field.
-func DeletedAtGT(v time.Time) predicate.ApexCustomer {
-	return predicate.ApexCustomer(sql.FieldGT(FieldDeletedAt, v))
-}
-
-// DeletedAtGTE applies the GTE predicate on the "deleted_at" field.
-func DeletedAtGTE(v time.Time) predicate.ApexCustomer {
-	return predicate.ApexCustomer(sql.FieldGTE(FieldDeletedAt, v))
-}
-
-// DeletedAtLT applies the LT predicate on the "deleted_at" field.
-func DeletedAtLT(v time.Time) predicate.ApexCustomer {
-	return predicate.ApexCustomer(sql.FieldLT(FieldDeletedAt, v))
-}
-
-// DeletedAtLTE applies the LTE predicate on the "deleted_at" field.
-func DeletedAtLTE(v time.Time) predicate.ApexCustomer {
-	return predicate.ApexCustomer(sql.FieldLTE(FieldDeletedAt, v))
-}
-
-// DeletedAtIsNil applies the IsNil predicate on the "deleted_at" field.
-func DeletedAtIsNil() predicate.ApexCustomer {
-	return predicate.ApexCustomer(sql.FieldIsNull(FieldDeletedAt))
-}
-
-// DeletedAtNotNil applies the NotNil predicate on the "deleted_at" field.
-func DeletedAtNotNil() predicate.ApexCustomer {
-	return predicate.ApexCustomer(sql.FieldNotNull(FieldDeletedAt))
 }
 
 // HasIdentities applies the HasEdge predicate on the "identities" edge.

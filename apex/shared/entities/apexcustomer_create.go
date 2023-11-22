@@ -24,6 +24,40 @@ type ApexCustomerCreate struct {
 	conflict []sql.ConflictOption
 }
 
+// SetCreatedAt sets the "created_at" field.
+func (acc *ApexCustomerCreate) SetCreatedAt(t time.Time) *ApexCustomerCreate {
+	acc.mutation.SetCreatedAt(t)
+	return acc
+}
+
+// SetModifiedAt sets the "modified_at" field.
+func (acc *ApexCustomerCreate) SetModifiedAt(t time.Time) *ApexCustomerCreate {
+	acc.mutation.SetModifiedAt(t)
+	return acc
+}
+
+// SetNillableModifiedAt sets the "modified_at" field if the given value is not nil.
+func (acc *ApexCustomerCreate) SetNillableModifiedAt(t *time.Time) *ApexCustomerCreate {
+	if t != nil {
+		acc.SetModifiedAt(*t)
+	}
+	return acc
+}
+
+// SetDeletedAt sets the "deleted_at" field.
+func (acc *ApexCustomerCreate) SetDeletedAt(t time.Time) *ApexCustomerCreate {
+	acc.mutation.SetDeletedAt(t)
+	return acc
+}
+
+// SetNillableDeletedAt sets the "deleted_at" field if the given value is not nil.
+func (acc *ApexCustomerCreate) SetNillableDeletedAt(t *time.Time) *ApexCustomerCreate {
+	if t != nil {
+		acc.SetDeletedAt(*t)
+	}
+	return acc
+}
+
 // SetEventRaisedAt sets the "event_raised_at" field.
 func (acc *ApexCustomerCreate) SetEventRaisedAt(t time.Time) *ApexCustomerCreate {
 	acc.mutation.SetEventRaisedAt(t)
@@ -184,40 +218,6 @@ func (acc *ApexCustomerCreate) SetNillablePhotoURL512(s *string) *ApexCustomerCr
 	return acc
 }
 
-// SetCreatedAt sets the "created_at" field.
-func (acc *ApexCustomerCreate) SetCreatedAt(t time.Time) *ApexCustomerCreate {
-	acc.mutation.SetCreatedAt(t)
-	return acc
-}
-
-// SetModifiedAt sets the "modified_at" field.
-func (acc *ApexCustomerCreate) SetModifiedAt(t time.Time) *ApexCustomerCreate {
-	acc.mutation.SetModifiedAt(t)
-	return acc
-}
-
-// SetNillableModifiedAt sets the "modified_at" field if the given value is not nil.
-func (acc *ApexCustomerCreate) SetNillableModifiedAt(t *time.Time) *ApexCustomerCreate {
-	if t != nil {
-		acc.SetModifiedAt(*t)
-	}
-	return acc
-}
-
-// SetDeletedAt sets the "deleted_at" field.
-func (acc *ApexCustomerCreate) SetDeletedAt(t time.Time) *ApexCustomerCreate {
-	acc.mutation.SetDeletedAt(t)
-	return acc
-}
-
-// SetNillableDeletedAt sets the "deleted_at" field if the given value is not nil.
-func (acc *ApexCustomerCreate) SetNillableDeletedAt(t *time.Time) *ApexCustomerCreate {
-	if t != nil {
-		acc.SetDeletedAt(*t)
-	}
-	return acc
-}
-
 // SetID sets the "id" field.
 func (acc *ApexCustomerCreate) SetID(s string) *ApexCustomerCreate {
 	acc.mutation.SetID(s)
@@ -273,11 +273,11 @@ func (acc *ApexCustomerCreate) ExecX(ctx context.Context) {
 
 // check runs all checks and user-defined validators on the builder.
 func (acc *ApexCustomerCreate) check() error {
-	if _, ok := acc.mutation.EventRaisedAt(); !ok {
-		return &ValidationError{Name: "event_raised_at", err: errors.New(`entities: missing required field "ApexCustomer.event_raised_at"`)}
-	}
 	if _, ok := acc.mutation.CreatedAt(); !ok {
 		return &ValidationError{Name: "created_at", err: errors.New(`entities: missing required field "ApexCustomer.created_at"`)}
+	}
+	if _, ok := acc.mutation.EventRaisedAt(); !ok {
+		return &ValidationError{Name: "event_raised_at", err: errors.New(`entities: missing required field "ApexCustomer.event_raised_at"`)}
 	}
 	return nil
 }
@@ -315,6 +315,18 @@ func (acc *ApexCustomerCreate) createSpec() (*ApexCustomer, *sqlgraph.CreateSpec
 	if id, ok := acc.mutation.ID(); ok {
 		_node.ID = id
 		_spec.ID.Value = id
+	}
+	if value, ok := acc.mutation.CreatedAt(); ok {
+		_spec.SetField(apexcustomer.FieldCreatedAt, field.TypeTime, value)
+		_node.CreatedAt = value
+	}
+	if value, ok := acc.mutation.ModifiedAt(); ok {
+		_spec.SetField(apexcustomer.FieldModifiedAt, field.TypeTime, value)
+		_node.ModifiedAt = value
+	}
+	if value, ok := acc.mutation.DeletedAt(); ok {
+		_spec.SetField(apexcustomer.FieldDeletedAt, field.TypeTime, value)
+		_node.DeletedAt = value
 	}
 	if value, ok := acc.mutation.EventRaisedAt(); ok {
 		_spec.SetField(apexcustomer.FieldEventRaisedAt, field.TypeTime, value)
@@ -364,18 +376,6 @@ func (acc *ApexCustomerCreate) createSpec() (*ApexCustomer, *sqlgraph.CreateSpec
 		_spec.SetField(apexcustomer.FieldPhotoURL512, field.TypeString, value)
 		_node.PhotoURL512 = value
 	}
-	if value, ok := acc.mutation.CreatedAt(); ok {
-		_spec.SetField(apexcustomer.FieldCreatedAt, field.TypeTime, value)
-		_node.CreatedAt = value
-	}
-	if value, ok := acc.mutation.ModifiedAt(); ok {
-		_spec.SetField(apexcustomer.FieldModifiedAt, field.TypeTime, value)
-		_node.ModifiedAt = value
-	}
-	if value, ok := acc.mutation.DeletedAt(); ok {
-		_spec.SetField(apexcustomer.FieldDeletedAt, field.TypeTime, value)
-		_node.DeletedAt = value
-	}
 	if nodes := acc.mutation.IdentitiesIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
@@ -400,7 +400,7 @@ func (acc *ApexCustomerCreate) createSpec() (*ApexCustomer, *sqlgraph.CreateSpec
 // of the `INSERT` statement. For example:
 //
 //	client.ApexCustomer.Create().
-//		SetEventRaisedAt(v).
+//		SetCreatedAt(v).
 //		OnConflict(
 //			// Update the row with the new values
 //			// the was proposed for insertion.
@@ -409,7 +409,7 @@ func (acc *ApexCustomerCreate) createSpec() (*ApexCustomer, *sqlgraph.CreateSpec
 //		// Override some of the fields with custom
 //		// update values.
 //		Update(func(u *ent.ApexCustomerUpsert) {
-//			SetEventRaisedAt(v+v).
+//			SetCreatedAt(v+v).
 //		}).
 //		Exec(ctx)
 func (acc *ApexCustomerCreate) OnConflict(opts ...sql.ConflictOption) *ApexCustomerUpsertOne {
@@ -444,6 +444,54 @@ type (
 		*sql.UpdateSet
 	}
 )
+
+// SetCreatedAt sets the "created_at" field.
+func (u *ApexCustomerUpsert) SetCreatedAt(v time.Time) *ApexCustomerUpsert {
+	u.Set(apexcustomer.FieldCreatedAt, v)
+	return u
+}
+
+// UpdateCreatedAt sets the "created_at" field to the value that was provided on create.
+func (u *ApexCustomerUpsert) UpdateCreatedAt() *ApexCustomerUpsert {
+	u.SetExcluded(apexcustomer.FieldCreatedAt)
+	return u
+}
+
+// SetModifiedAt sets the "modified_at" field.
+func (u *ApexCustomerUpsert) SetModifiedAt(v time.Time) *ApexCustomerUpsert {
+	u.Set(apexcustomer.FieldModifiedAt, v)
+	return u
+}
+
+// UpdateModifiedAt sets the "modified_at" field to the value that was provided on create.
+func (u *ApexCustomerUpsert) UpdateModifiedAt() *ApexCustomerUpsert {
+	u.SetExcluded(apexcustomer.FieldModifiedAt)
+	return u
+}
+
+// ClearModifiedAt clears the value of the "modified_at" field.
+func (u *ApexCustomerUpsert) ClearModifiedAt() *ApexCustomerUpsert {
+	u.SetNull(apexcustomer.FieldModifiedAt)
+	return u
+}
+
+// SetDeletedAt sets the "deleted_at" field.
+func (u *ApexCustomerUpsert) SetDeletedAt(v time.Time) *ApexCustomerUpsert {
+	u.Set(apexcustomer.FieldDeletedAt, v)
+	return u
+}
+
+// UpdateDeletedAt sets the "deleted_at" field to the value that was provided on create.
+func (u *ApexCustomerUpsert) UpdateDeletedAt() *ApexCustomerUpsert {
+	u.SetExcluded(apexcustomer.FieldDeletedAt)
+	return u
+}
+
+// ClearDeletedAt clears the value of the "deleted_at" field.
+func (u *ApexCustomerUpsert) ClearDeletedAt() *ApexCustomerUpsert {
+	u.SetNull(apexcustomer.FieldDeletedAt)
+	return u
+}
 
 // SetEventRaisedAt sets the "event_raised_at" field.
 func (u *ApexCustomerUpsert) SetEventRaisedAt(v time.Time) *ApexCustomerUpsert {
@@ -655,54 +703,6 @@ func (u *ApexCustomerUpsert) ClearPhotoURL512() *ApexCustomerUpsert {
 	return u
 }
 
-// SetCreatedAt sets the "created_at" field.
-func (u *ApexCustomerUpsert) SetCreatedAt(v time.Time) *ApexCustomerUpsert {
-	u.Set(apexcustomer.FieldCreatedAt, v)
-	return u
-}
-
-// UpdateCreatedAt sets the "created_at" field to the value that was provided on create.
-func (u *ApexCustomerUpsert) UpdateCreatedAt() *ApexCustomerUpsert {
-	u.SetExcluded(apexcustomer.FieldCreatedAt)
-	return u
-}
-
-// SetModifiedAt sets the "modified_at" field.
-func (u *ApexCustomerUpsert) SetModifiedAt(v time.Time) *ApexCustomerUpsert {
-	u.Set(apexcustomer.FieldModifiedAt, v)
-	return u
-}
-
-// UpdateModifiedAt sets the "modified_at" field to the value that was provided on create.
-func (u *ApexCustomerUpsert) UpdateModifiedAt() *ApexCustomerUpsert {
-	u.SetExcluded(apexcustomer.FieldModifiedAt)
-	return u
-}
-
-// ClearModifiedAt clears the value of the "modified_at" field.
-func (u *ApexCustomerUpsert) ClearModifiedAt() *ApexCustomerUpsert {
-	u.SetNull(apexcustomer.FieldModifiedAt)
-	return u
-}
-
-// SetDeletedAt sets the "deleted_at" field.
-func (u *ApexCustomerUpsert) SetDeletedAt(v time.Time) *ApexCustomerUpsert {
-	u.Set(apexcustomer.FieldDeletedAt, v)
-	return u
-}
-
-// UpdateDeletedAt sets the "deleted_at" field to the value that was provided on create.
-func (u *ApexCustomerUpsert) UpdateDeletedAt() *ApexCustomerUpsert {
-	u.SetExcluded(apexcustomer.FieldDeletedAt)
-	return u
-}
-
-// ClearDeletedAt clears the value of the "deleted_at" field.
-func (u *ApexCustomerUpsert) ClearDeletedAt() *ApexCustomerUpsert {
-	u.SetNull(apexcustomer.FieldDeletedAt)
-	return u
-}
-
 // UpdateNewValues updates the mutable fields using the new values that were set on create except the ID field.
 // Using this option is equivalent to using:
 //
@@ -749,6 +749,62 @@ func (u *ApexCustomerUpsertOne) Update(set func(*ApexCustomerUpsert)) *ApexCusto
 		set(&ApexCustomerUpsert{UpdateSet: update})
 	}))
 	return u
+}
+
+// SetCreatedAt sets the "created_at" field.
+func (u *ApexCustomerUpsertOne) SetCreatedAt(v time.Time) *ApexCustomerUpsertOne {
+	return u.Update(func(s *ApexCustomerUpsert) {
+		s.SetCreatedAt(v)
+	})
+}
+
+// UpdateCreatedAt sets the "created_at" field to the value that was provided on create.
+func (u *ApexCustomerUpsertOne) UpdateCreatedAt() *ApexCustomerUpsertOne {
+	return u.Update(func(s *ApexCustomerUpsert) {
+		s.UpdateCreatedAt()
+	})
+}
+
+// SetModifiedAt sets the "modified_at" field.
+func (u *ApexCustomerUpsertOne) SetModifiedAt(v time.Time) *ApexCustomerUpsertOne {
+	return u.Update(func(s *ApexCustomerUpsert) {
+		s.SetModifiedAt(v)
+	})
+}
+
+// UpdateModifiedAt sets the "modified_at" field to the value that was provided on create.
+func (u *ApexCustomerUpsertOne) UpdateModifiedAt() *ApexCustomerUpsertOne {
+	return u.Update(func(s *ApexCustomerUpsert) {
+		s.UpdateModifiedAt()
+	})
+}
+
+// ClearModifiedAt clears the value of the "modified_at" field.
+func (u *ApexCustomerUpsertOne) ClearModifiedAt() *ApexCustomerUpsertOne {
+	return u.Update(func(s *ApexCustomerUpsert) {
+		s.ClearModifiedAt()
+	})
+}
+
+// SetDeletedAt sets the "deleted_at" field.
+func (u *ApexCustomerUpsertOne) SetDeletedAt(v time.Time) *ApexCustomerUpsertOne {
+	return u.Update(func(s *ApexCustomerUpsert) {
+		s.SetDeletedAt(v)
+	})
+}
+
+// UpdateDeletedAt sets the "deleted_at" field to the value that was provided on create.
+func (u *ApexCustomerUpsertOne) UpdateDeletedAt() *ApexCustomerUpsertOne {
+	return u.Update(func(s *ApexCustomerUpsert) {
+		s.UpdateDeletedAt()
+	})
+}
+
+// ClearDeletedAt clears the value of the "deleted_at" field.
+func (u *ApexCustomerUpsertOne) ClearDeletedAt() *ApexCustomerUpsertOne {
+	return u.Update(func(s *ApexCustomerUpsert) {
+		s.ClearDeletedAt()
+	})
 }
 
 // SetEventRaisedAt sets the "event_raised_at" field.
@@ -996,62 +1052,6 @@ func (u *ApexCustomerUpsertOne) ClearPhotoURL512() *ApexCustomerUpsertOne {
 	})
 }
 
-// SetCreatedAt sets the "created_at" field.
-func (u *ApexCustomerUpsertOne) SetCreatedAt(v time.Time) *ApexCustomerUpsertOne {
-	return u.Update(func(s *ApexCustomerUpsert) {
-		s.SetCreatedAt(v)
-	})
-}
-
-// UpdateCreatedAt sets the "created_at" field to the value that was provided on create.
-func (u *ApexCustomerUpsertOne) UpdateCreatedAt() *ApexCustomerUpsertOne {
-	return u.Update(func(s *ApexCustomerUpsert) {
-		s.UpdateCreatedAt()
-	})
-}
-
-// SetModifiedAt sets the "modified_at" field.
-func (u *ApexCustomerUpsertOne) SetModifiedAt(v time.Time) *ApexCustomerUpsertOne {
-	return u.Update(func(s *ApexCustomerUpsert) {
-		s.SetModifiedAt(v)
-	})
-}
-
-// UpdateModifiedAt sets the "modified_at" field to the value that was provided on create.
-func (u *ApexCustomerUpsertOne) UpdateModifiedAt() *ApexCustomerUpsertOne {
-	return u.Update(func(s *ApexCustomerUpsert) {
-		s.UpdateModifiedAt()
-	})
-}
-
-// ClearModifiedAt clears the value of the "modified_at" field.
-func (u *ApexCustomerUpsertOne) ClearModifiedAt() *ApexCustomerUpsertOne {
-	return u.Update(func(s *ApexCustomerUpsert) {
-		s.ClearModifiedAt()
-	})
-}
-
-// SetDeletedAt sets the "deleted_at" field.
-func (u *ApexCustomerUpsertOne) SetDeletedAt(v time.Time) *ApexCustomerUpsertOne {
-	return u.Update(func(s *ApexCustomerUpsert) {
-		s.SetDeletedAt(v)
-	})
-}
-
-// UpdateDeletedAt sets the "deleted_at" field to the value that was provided on create.
-func (u *ApexCustomerUpsertOne) UpdateDeletedAt() *ApexCustomerUpsertOne {
-	return u.Update(func(s *ApexCustomerUpsert) {
-		s.UpdateDeletedAt()
-	})
-}
-
-// ClearDeletedAt clears the value of the "deleted_at" field.
-func (u *ApexCustomerUpsertOne) ClearDeletedAt() *ApexCustomerUpsertOne {
-	return u.Update(func(s *ApexCustomerUpsert) {
-		s.ClearDeletedAt()
-	})
-}
-
 // Exec executes the query.
 func (u *ApexCustomerUpsertOne) Exec(ctx context.Context) error {
 	if len(u.create.conflict) == 0 {
@@ -1187,7 +1187,7 @@ func (accb *ApexCustomerCreateBulk) ExecX(ctx context.Context) {
 //		// Override some of the fields with custom
 //		// update values.
 //		Update(func(u *ent.ApexCustomerUpsert) {
-//			SetEventRaisedAt(v+v).
+//			SetCreatedAt(v+v).
 //		}).
 //		Exec(ctx)
 func (accb *ApexCustomerCreateBulk) OnConflict(opts ...sql.ConflictOption) *ApexCustomerUpsertBulk {
@@ -1264,6 +1264,62 @@ func (u *ApexCustomerUpsertBulk) Update(set func(*ApexCustomerUpsert)) *ApexCust
 		set(&ApexCustomerUpsert{UpdateSet: update})
 	}))
 	return u
+}
+
+// SetCreatedAt sets the "created_at" field.
+func (u *ApexCustomerUpsertBulk) SetCreatedAt(v time.Time) *ApexCustomerUpsertBulk {
+	return u.Update(func(s *ApexCustomerUpsert) {
+		s.SetCreatedAt(v)
+	})
+}
+
+// UpdateCreatedAt sets the "created_at" field to the value that was provided on create.
+func (u *ApexCustomerUpsertBulk) UpdateCreatedAt() *ApexCustomerUpsertBulk {
+	return u.Update(func(s *ApexCustomerUpsert) {
+		s.UpdateCreatedAt()
+	})
+}
+
+// SetModifiedAt sets the "modified_at" field.
+func (u *ApexCustomerUpsertBulk) SetModifiedAt(v time.Time) *ApexCustomerUpsertBulk {
+	return u.Update(func(s *ApexCustomerUpsert) {
+		s.SetModifiedAt(v)
+	})
+}
+
+// UpdateModifiedAt sets the "modified_at" field to the value that was provided on create.
+func (u *ApexCustomerUpsertBulk) UpdateModifiedAt() *ApexCustomerUpsertBulk {
+	return u.Update(func(s *ApexCustomerUpsert) {
+		s.UpdateModifiedAt()
+	})
+}
+
+// ClearModifiedAt clears the value of the "modified_at" field.
+func (u *ApexCustomerUpsertBulk) ClearModifiedAt() *ApexCustomerUpsertBulk {
+	return u.Update(func(s *ApexCustomerUpsert) {
+		s.ClearModifiedAt()
+	})
+}
+
+// SetDeletedAt sets the "deleted_at" field.
+func (u *ApexCustomerUpsertBulk) SetDeletedAt(v time.Time) *ApexCustomerUpsertBulk {
+	return u.Update(func(s *ApexCustomerUpsert) {
+		s.SetDeletedAt(v)
+	})
+}
+
+// UpdateDeletedAt sets the "deleted_at" field to the value that was provided on create.
+func (u *ApexCustomerUpsertBulk) UpdateDeletedAt() *ApexCustomerUpsertBulk {
+	return u.Update(func(s *ApexCustomerUpsert) {
+		s.UpdateDeletedAt()
+	})
+}
+
+// ClearDeletedAt clears the value of the "deleted_at" field.
+func (u *ApexCustomerUpsertBulk) ClearDeletedAt() *ApexCustomerUpsertBulk {
+	return u.Update(func(s *ApexCustomerUpsert) {
+		s.ClearDeletedAt()
+	})
 }
 
 // SetEventRaisedAt sets the "event_raised_at" field.
@@ -1508,62 +1564,6 @@ func (u *ApexCustomerUpsertBulk) UpdatePhotoURL512() *ApexCustomerUpsertBulk {
 func (u *ApexCustomerUpsertBulk) ClearPhotoURL512() *ApexCustomerUpsertBulk {
 	return u.Update(func(s *ApexCustomerUpsert) {
 		s.ClearPhotoURL512()
-	})
-}
-
-// SetCreatedAt sets the "created_at" field.
-func (u *ApexCustomerUpsertBulk) SetCreatedAt(v time.Time) *ApexCustomerUpsertBulk {
-	return u.Update(func(s *ApexCustomerUpsert) {
-		s.SetCreatedAt(v)
-	})
-}
-
-// UpdateCreatedAt sets the "created_at" field to the value that was provided on create.
-func (u *ApexCustomerUpsertBulk) UpdateCreatedAt() *ApexCustomerUpsertBulk {
-	return u.Update(func(s *ApexCustomerUpsert) {
-		s.UpdateCreatedAt()
-	})
-}
-
-// SetModifiedAt sets the "modified_at" field.
-func (u *ApexCustomerUpsertBulk) SetModifiedAt(v time.Time) *ApexCustomerUpsertBulk {
-	return u.Update(func(s *ApexCustomerUpsert) {
-		s.SetModifiedAt(v)
-	})
-}
-
-// UpdateModifiedAt sets the "modified_at" field to the value that was provided on create.
-func (u *ApexCustomerUpsertBulk) UpdateModifiedAt() *ApexCustomerUpsertBulk {
-	return u.Update(func(s *ApexCustomerUpsert) {
-		s.UpdateModifiedAt()
-	})
-}
-
-// ClearModifiedAt clears the value of the "modified_at" field.
-func (u *ApexCustomerUpsertBulk) ClearModifiedAt() *ApexCustomerUpsertBulk {
-	return u.Update(func(s *ApexCustomerUpsert) {
-		s.ClearModifiedAt()
-	})
-}
-
-// SetDeletedAt sets the "deleted_at" field.
-func (u *ApexCustomerUpsertBulk) SetDeletedAt(v time.Time) *ApexCustomerUpsertBulk {
-	return u.Update(func(s *ApexCustomerUpsert) {
-		s.SetDeletedAt(v)
-	})
-}
-
-// UpdateDeletedAt sets the "deleted_at" field to the value that was provided on create.
-func (u *ApexCustomerUpsertBulk) UpdateDeletedAt() *ApexCustomerUpsertBulk {
-	return u.Update(func(s *ApexCustomerUpsert) {
-		s.UpdateDeletedAt()
-	})
-}
-
-// ClearDeletedAt clears the value of the "deleted_at" field.
-func (u *ApexCustomerUpsertBulk) ClearDeletedAt() *ApexCustomerUpsertBulk {
-	return u.Update(func(s *ApexCustomerUpsert) {
-		s.ClearDeletedAt()
 	})
 }
 

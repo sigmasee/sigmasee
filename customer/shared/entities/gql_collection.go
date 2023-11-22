@@ -57,6 +57,21 @@ func (c *CustomerQuery) collectField(ctx context.Context, opCtx *graphql.Operati
 				return err
 			}
 			c.withCustomerSettings = query
+		case "createdAt":
+			if _, ok := fieldSeen[customer.FieldCreatedAt]; !ok {
+				selectedFields = append(selectedFields, customer.FieldCreatedAt)
+				fieldSeen[customer.FieldCreatedAt] = struct{}{}
+			}
+		case "modifiedAt":
+			if _, ok := fieldSeen[customer.FieldModifiedAt]; !ok {
+				selectedFields = append(selectedFields, customer.FieldModifiedAt)
+				fieldSeen[customer.FieldModifiedAt] = struct{}{}
+			}
+		case "deletedAt":
+			if _, ok := fieldSeen[customer.FieldDeletedAt]; !ok {
+				selectedFields = append(selectedFields, customer.FieldDeletedAt)
+				fieldSeen[customer.FieldDeletedAt] = struct{}{}
+			}
 		case "designation":
 			if _, ok := fieldSeen[customer.FieldDesignation]; !ok {
 				selectedFields = append(selectedFields, customer.FieldDesignation)
@@ -131,21 +146,6 @@ func (c *CustomerQuery) collectField(ctx context.Context, opCtx *graphql.Operati
 			if _, ok := fieldSeen[customer.FieldLocale]; !ok {
 				selectedFields = append(selectedFields, customer.FieldLocale)
 				fieldSeen[customer.FieldLocale] = struct{}{}
-			}
-		case "createdAt":
-			if _, ok := fieldSeen[customer.FieldCreatedAt]; !ok {
-				selectedFields = append(selectedFields, customer.FieldCreatedAt)
-				fieldSeen[customer.FieldCreatedAt] = struct{}{}
-			}
-		case "modifiedAt":
-			if _, ok := fieldSeen[customer.FieldModifiedAt]; !ok {
-				selectedFields = append(selectedFields, customer.FieldModifiedAt)
-				fieldSeen[customer.FieldModifiedAt] = struct{}{}
-			}
-		case "deletedAt":
-			if _, ok := fieldSeen[customer.FieldDeletedAt]; !ok {
-				selectedFields = append(selectedFields, customer.FieldDeletedAt)
-				fieldSeen[customer.FieldDeletedAt] = struct{}{}
 			}
 		case "id":
 		case "__typename":
@@ -479,16 +479,6 @@ func (i *IdentityQuery) collectField(ctx context.Context, opCtx *graphql.Operati
 				return err
 			}
 			i.withCustomer = query
-		case "email":
-			if _, ok := fieldSeen[identity.FieldEmail]; !ok {
-				selectedFields = append(selectedFields, identity.FieldEmail)
-				fieldSeen[identity.FieldEmail] = struct{}{}
-			}
-		case "emailVerified":
-			if _, ok := fieldSeen[identity.FieldEmailVerified]; !ok {
-				selectedFields = append(selectedFields, identity.FieldEmailVerified)
-				fieldSeen[identity.FieldEmailVerified] = struct{}{}
-			}
 		case "createdAt":
 			if _, ok := fieldSeen[identity.FieldCreatedAt]; !ok {
 				selectedFields = append(selectedFields, identity.FieldCreatedAt)
@@ -503,6 +493,16 @@ func (i *IdentityQuery) collectField(ctx context.Context, opCtx *graphql.Operati
 			if _, ok := fieldSeen[identity.FieldDeletedAt]; !ok {
 				selectedFields = append(selectedFields, identity.FieldDeletedAt)
 				fieldSeen[identity.FieldDeletedAt] = struct{}{}
+			}
+		case "email":
+			if _, ok := fieldSeen[identity.FieldEmail]; !ok {
+				selectedFields = append(selectedFields, identity.FieldEmail)
+				fieldSeen[identity.FieldEmail] = struct{}{}
+			}
+		case "emailVerified":
+			if _, ok := fieldSeen[identity.FieldEmailVerified]; !ok {
+				selectedFields = append(selectedFields, identity.FieldEmailVerified)
+				fieldSeen[identity.FieldEmailVerified] = struct{}{}
 			}
 		case "id":
 		case "__typename":

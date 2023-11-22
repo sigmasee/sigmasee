@@ -15,31 +15,34 @@ type Customer struct {
 }
 
 func (Customer) Fields() []ent.Field {
-	return append(
-		[]ent.Field{
-			field.String("id").Annotations(entgql.OrderField("id")),
+	return []ent.Field{
+		field.String("id").Annotations(entgql.OrderField("id")),
 
-			field.String("designation").Optional().Annotations(entgql.OrderField("designation")),
+		field.String("designation").Optional().Annotations(entgql.OrderField("designation")),
 
-			field.String("title").Optional().Annotations(entgql.OrderField("title")),
-			field.String("name").Optional().Annotations(entgql.OrderField("name")),
-			field.String("given_name").Optional().Annotations(entgql.OrderField("givenName")),
-			field.String("middle_name").Optional().Annotations(entgql.OrderField("middleName")),
-			field.String("family_name").Optional().Annotations(entgql.OrderField("familyName")),
+		field.String("title").Optional().Annotations(entgql.OrderField("title")),
+		field.String("name").Optional().Annotations(entgql.OrderField("name")),
+		field.String("given_name").Optional().Annotations(entgql.OrderField("givenName")),
+		field.String("middle_name").Optional().Annotations(entgql.OrderField("middleName")),
+		field.String("family_name").Optional().Annotations(entgql.OrderField("familyName")),
 
-			field.String("photo_url").Optional().Annotations(entgql.OrderField("photoUrl")),
-			field.String("photo_url_24").Optional().Annotations(entgql.OrderField("photoUrl24")),
-			field.String("photo_url_32").Optional().Annotations(entgql.OrderField("photoUrl32")),
-			field.String("photo_url_48").Optional().Annotations(entgql.OrderField("photoUrl48")),
-			field.String("photo_url_72").Optional().Annotations(entgql.OrderField("photoUrl72")),
-			field.String("photo_url_192").Optional().Annotations(entgql.OrderField("photoUrl192")),
-			field.String("photo_url_512").Optional().Annotations(entgql.OrderField("photoUrl512")),
+		field.String("photo_url").Optional().Annotations(entgql.OrderField("photoUrl")),
+		field.String("photo_url_24").Optional().Annotations(entgql.OrderField("photoUrl24")),
+		field.String("photo_url_32").Optional().Annotations(entgql.OrderField("photoUrl32")),
+		field.String("photo_url_48").Optional().Annotations(entgql.OrderField("photoUrl48")),
+		field.String("photo_url_72").Optional().Annotations(entgql.OrderField("photoUrl72")),
+		field.String("photo_url_192").Optional().Annotations(entgql.OrderField("photoUrl192")),
+		field.String("photo_url_512").Optional().Annotations(entgql.OrderField("photoUrl512")),
 
-			field.String("timezone").Optional().Annotations(entgql.OrderField("timezone")),
-			field.String("locale").Optional().Annotations(entgql.OrderField("locale")),
-		},
-		entities.BaseEntity{}.Fields()...,
-	)
+		field.String("timezone").Optional().Annotations(entgql.OrderField("timezone")),
+		field.String("locale").Optional().Annotations(entgql.OrderField("locale")),
+	}
+}
+
+func (Customer) Mixin() []ent.Mixin {
+	return []ent.Mixin{
+		entities.BaseEntity{},
+	}
 }
 
 func (Customer) Edges() []ent.Edge {
@@ -50,15 +53,12 @@ func (Customer) Edges() []ent.Edge {
 }
 
 func (Customer) Indexes() []ent.Index {
-	return append(
-		[]ent.Index{
-			index.Fields("designation"),
-			index.Fields("title"),
-			index.Fields("name"),
-			index.Fields("given_name"),
-			index.Fields("middle_name"),
-			index.Fields("family_name"),
-		},
-		entities.BaseEntity{}.Indexes()...,
-	)
+	return []ent.Index{
+		index.Fields("designation"),
+		index.Fields("title"),
+		index.Fields("name"),
+		index.Fields("given_name"),
+		index.Fields("middle_name"),
+		index.Fields("family_name"),
+	}
 }

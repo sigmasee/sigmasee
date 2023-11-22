@@ -24,34 +24,6 @@ type ApexCustomerIdentityCreate struct {
 	conflict []sql.ConflictOption
 }
 
-// SetEmail sets the "email" field.
-func (acic *ApexCustomerIdentityCreate) SetEmail(s string) *ApexCustomerIdentityCreate {
-	acic.mutation.SetEmail(s)
-	return acic
-}
-
-// SetNillableEmail sets the "email" field if the given value is not nil.
-func (acic *ApexCustomerIdentityCreate) SetNillableEmail(s *string) *ApexCustomerIdentityCreate {
-	if s != nil {
-		acic.SetEmail(*s)
-	}
-	return acic
-}
-
-// SetEmailVerified sets the "email_verified" field.
-func (acic *ApexCustomerIdentityCreate) SetEmailVerified(b bool) *ApexCustomerIdentityCreate {
-	acic.mutation.SetEmailVerified(b)
-	return acic
-}
-
-// SetNillableEmailVerified sets the "email_verified" field if the given value is not nil.
-func (acic *ApexCustomerIdentityCreate) SetNillableEmailVerified(b *bool) *ApexCustomerIdentityCreate {
-	if b != nil {
-		acic.SetEmailVerified(*b)
-	}
-	return acic
-}
-
 // SetCreatedAt sets the "created_at" field.
 func (acic *ApexCustomerIdentityCreate) SetCreatedAt(t time.Time) *ApexCustomerIdentityCreate {
 	acic.mutation.SetCreatedAt(t)
@@ -82,6 +54,34 @@ func (acic *ApexCustomerIdentityCreate) SetDeletedAt(t time.Time) *ApexCustomerI
 func (acic *ApexCustomerIdentityCreate) SetNillableDeletedAt(t *time.Time) *ApexCustomerIdentityCreate {
 	if t != nil {
 		acic.SetDeletedAt(*t)
+	}
+	return acic
+}
+
+// SetEmail sets the "email" field.
+func (acic *ApexCustomerIdentityCreate) SetEmail(s string) *ApexCustomerIdentityCreate {
+	acic.mutation.SetEmail(s)
+	return acic
+}
+
+// SetNillableEmail sets the "email" field if the given value is not nil.
+func (acic *ApexCustomerIdentityCreate) SetNillableEmail(s *string) *ApexCustomerIdentityCreate {
+	if s != nil {
+		acic.SetEmail(*s)
+	}
+	return acic
+}
+
+// SetEmailVerified sets the "email_verified" field.
+func (acic *ApexCustomerIdentityCreate) SetEmailVerified(b bool) *ApexCustomerIdentityCreate {
+	acic.mutation.SetEmailVerified(b)
+	return acic
+}
+
+// SetNillableEmailVerified sets the "email_verified" field if the given value is not nil.
+func (acic *ApexCustomerIdentityCreate) SetNillableEmailVerified(b *bool) *ApexCustomerIdentityCreate {
+	if b != nil {
+		acic.SetEmailVerified(*b)
 	}
 	return acic
 }
@@ -180,14 +180,6 @@ func (acic *ApexCustomerIdentityCreate) createSpec() (*ApexCustomerIdentity, *sq
 		_node.ID = id
 		_spec.ID.Value = id
 	}
-	if value, ok := acic.mutation.Email(); ok {
-		_spec.SetField(apexcustomeridentity.FieldEmail, field.TypeString, value)
-		_node.Email = value
-	}
-	if value, ok := acic.mutation.EmailVerified(); ok {
-		_spec.SetField(apexcustomeridentity.FieldEmailVerified, field.TypeBool, value)
-		_node.EmailVerified = value
-	}
 	if value, ok := acic.mutation.CreatedAt(); ok {
 		_spec.SetField(apexcustomeridentity.FieldCreatedAt, field.TypeTime, value)
 		_node.CreatedAt = value
@@ -199,6 +191,14 @@ func (acic *ApexCustomerIdentityCreate) createSpec() (*ApexCustomerIdentity, *sq
 	if value, ok := acic.mutation.DeletedAt(); ok {
 		_spec.SetField(apexcustomeridentity.FieldDeletedAt, field.TypeTime, value)
 		_node.DeletedAt = value
+	}
+	if value, ok := acic.mutation.Email(); ok {
+		_spec.SetField(apexcustomeridentity.FieldEmail, field.TypeString, value)
+		_node.Email = value
+	}
+	if value, ok := acic.mutation.EmailVerified(); ok {
+		_spec.SetField(apexcustomeridentity.FieldEmailVerified, field.TypeBool, value)
+		_node.EmailVerified = value
 	}
 	if nodes := acic.mutation.CustomerIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
@@ -225,7 +225,7 @@ func (acic *ApexCustomerIdentityCreate) createSpec() (*ApexCustomerIdentity, *sq
 // of the `INSERT` statement. For example:
 //
 //	client.ApexCustomerIdentity.Create().
-//		SetEmail(v).
+//		SetCreatedAt(v).
 //		OnConflict(
 //			// Update the row with the new values
 //			// the was proposed for insertion.
@@ -234,7 +234,7 @@ func (acic *ApexCustomerIdentityCreate) createSpec() (*ApexCustomerIdentity, *sq
 //		// Override some of the fields with custom
 //		// update values.
 //		Update(func(u *ent.ApexCustomerIdentityUpsert) {
-//			SetEmail(v+v).
+//			SetCreatedAt(v+v).
 //		}).
 //		Exec(ctx)
 func (acic *ApexCustomerIdentityCreate) OnConflict(opts ...sql.ConflictOption) *ApexCustomerIdentityUpsertOne {
@@ -269,42 +269,6 @@ type (
 		*sql.UpdateSet
 	}
 )
-
-// SetEmail sets the "email" field.
-func (u *ApexCustomerIdentityUpsert) SetEmail(v string) *ApexCustomerIdentityUpsert {
-	u.Set(apexcustomeridentity.FieldEmail, v)
-	return u
-}
-
-// UpdateEmail sets the "email" field to the value that was provided on create.
-func (u *ApexCustomerIdentityUpsert) UpdateEmail() *ApexCustomerIdentityUpsert {
-	u.SetExcluded(apexcustomeridentity.FieldEmail)
-	return u
-}
-
-// ClearEmail clears the value of the "email" field.
-func (u *ApexCustomerIdentityUpsert) ClearEmail() *ApexCustomerIdentityUpsert {
-	u.SetNull(apexcustomeridentity.FieldEmail)
-	return u
-}
-
-// SetEmailVerified sets the "email_verified" field.
-func (u *ApexCustomerIdentityUpsert) SetEmailVerified(v bool) *ApexCustomerIdentityUpsert {
-	u.Set(apexcustomeridentity.FieldEmailVerified, v)
-	return u
-}
-
-// UpdateEmailVerified sets the "email_verified" field to the value that was provided on create.
-func (u *ApexCustomerIdentityUpsert) UpdateEmailVerified() *ApexCustomerIdentityUpsert {
-	u.SetExcluded(apexcustomeridentity.FieldEmailVerified)
-	return u
-}
-
-// ClearEmailVerified clears the value of the "email_verified" field.
-func (u *ApexCustomerIdentityUpsert) ClearEmailVerified() *ApexCustomerIdentityUpsert {
-	u.SetNull(apexcustomeridentity.FieldEmailVerified)
-	return u
-}
 
 // SetCreatedAt sets the "created_at" field.
 func (u *ApexCustomerIdentityUpsert) SetCreatedAt(v time.Time) *ApexCustomerIdentityUpsert {
@@ -354,6 +318,42 @@ func (u *ApexCustomerIdentityUpsert) ClearDeletedAt() *ApexCustomerIdentityUpser
 	return u
 }
 
+// SetEmail sets the "email" field.
+func (u *ApexCustomerIdentityUpsert) SetEmail(v string) *ApexCustomerIdentityUpsert {
+	u.Set(apexcustomeridentity.FieldEmail, v)
+	return u
+}
+
+// UpdateEmail sets the "email" field to the value that was provided on create.
+func (u *ApexCustomerIdentityUpsert) UpdateEmail() *ApexCustomerIdentityUpsert {
+	u.SetExcluded(apexcustomeridentity.FieldEmail)
+	return u
+}
+
+// ClearEmail clears the value of the "email" field.
+func (u *ApexCustomerIdentityUpsert) ClearEmail() *ApexCustomerIdentityUpsert {
+	u.SetNull(apexcustomeridentity.FieldEmail)
+	return u
+}
+
+// SetEmailVerified sets the "email_verified" field.
+func (u *ApexCustomerIdentityUpsert) SetEmailVerified(v bool) *ApexCustomerIdentityUpsert {
+	u.Set(apexcustomeridentity.FieldEmailVerified, v)
+	return u
+}
+
+// UpdateEmailVerified sets the "email_verified" field to the value that was provided on create.
+func (u *ApexCustomerIdentityUpsert) UpdateEmailVerified() *ApexCustomerIdentityUpsert {
+	u.SetExcluded(apexcustomeridentity.FieldEmailVerified)
+	return u
+}
+
+// ClearEmailVerified clears the value of the "email_verified" field.
+func (u *ApexCustomerIdentityUpsert) ClearEmailVerified() *ApexCustomerIdentityUpsert {
+	u.SetNull(apexcustomeridentity.FieldEmailVerified)
+	return u
+}
+
 // UpdateNewValues updates the mutable fields using the new values that were set on create except the ID field.
 // Using this option is equivalent to using:
 //
@@ -400,48 +400,6 @@ func (u *ApexCustomerIdentityUpsertOne) Update(set func(*ApexCustomerIdentityUps
 		set(&ApexCustomerIdentityUpsert{UpdateSet: update})
 	}))
 	return u
-}
-
-// SetEmail sets the "email" field.
-func (u *ApexCustomerIdentityUpsertOne) SetEmail(v string) *ApexCustomerIdentityUpsertOne {
-	return u.Update(func(s *ApexCustomerIdentityUpsert) {
-		s.SetEmail(v)
-	})
-}
-
-// UpdateEmail sets the "email" field to the value that was provided on create.
-func (u *ApexCustomerIdentityUpsertOne) UpdateEmail() *ApexCustomerIdentityUpsertOne {
-	return u.Update(func(s *ApexCustomerIdentityUpsert) {
-		s.UpdateEmail()
-	})
-}
-
-// ClearEmail clears the value of the "email" field.
-func (u *ApexCustomerIdentityUpsertOne) ClearEmail() *ApexCustomerIdentityUpsertOne {
-	return u.Update(func(s *ApexCustomerIdentityUpsert) {
-		s.ClearEmail()
-	})
-}
-
-// SetEmailVerified sets the "email_verified" field.
-func (u *ApexCustomerIdentityUpsertOne) SetEmailVerified(v bool) *ApexCustomerIdentityUpsertOne {
-	return u.Update(func(s *ApexCustomerIdentityUpsert) {
-		s.SetEmailVerified(v)
-	})
-}
-
-// UpdateEmailVerified sets the "email_verified" field to the value that was provided on create.
-func (u *ApexCustomerIdentityUpsertOne) UpdateEmailVerified() *ApexCustomerIdentityUpsertOne {
-	return u.Update(func(s *ApexCustomerIdentityUpsert) {
-		s.UpdateEmailVerified()
-	})
-}
-
-// ClearEmailVerified clears the value of the "email_verified" field.
-func (u *ApexCustomerIdentityUpsertOne) ClearEmailVerified() *ApexCustomerIdentityUpsertOne {
-	return u.Update(func(s *ApexCustomerIdentityUpsert) {
-		s.ClearEmailVerified()
-	})
 }
 
 // SetCreatedAt sets the "created_at" field.
@@ -497,6 +455,48 @@ func (u *ApexCustomerIdentityUpsertOne) UpdateDeletedAt() *ApexCustomerIdentityU
 func (u *ApexCustomerIdentityUpsertOne) ClearDeletedAt() *ApexCustomerIdentityUpsertOne {
 	return u.Update(func(s *ApexCustomerIdentityUpsert) {
 		s.ClearDeletedAt()
+	})
+}
+
+// SetEmail sets the "email" field.
+func (u *ApexCustomerIdentityUpsertOne) SetEmail(v string) *ApexCustomerIdentityUpsertOne {
+	return u.Update(func(s *ApexCustomerIdentityUpsert) {
+		s.SetEmail(v)
+	})
+}
+
+// UpdateEmail sets the "email" field to the value that was provided on create.
+func (u *ApexCustomerIdentityUpsertOne) UpdateEmail() *ApexCustomerIdentityUpsertOne {
+	return u.Update(func(s *ApexCustomerIdentityUpsert) {
+		s.UpdateEmail()
+	})
+}
+
+// ClearEmail clears the value of the "email" field.
+func (u *ApexCustomerIdentityUpsertOne) ClearEmail() *ApexCustomerIdentityUpsertOne {
+	return u.Update(func(s *ApexCustomerIdentityUpsert) {
+		s.ClearEmail()
+	})
+}
+
+// SetEmailVerified sets the "email_verified" field.
+func (u *ApexCustomerIdentityUpsertOne) SetEmailVerified(v bool) *ApexCustomerIdentityUpsertOne {
+	return u.Update(func(s *ApexCustomerIdentityUpsert) {
+		s.SetEmailVerified(v)
+	})
+}
+
+// UpdateEmailVerified sets the "email_verified" field to the value that was provided on create.
+func (u *ApexCustomerIdentityUpsertOne) UpdateEmailVerified() *ApexCustomerIdentityUpsertOne {
+	return u.Update(func(s *ApexCustomerIdentityUpsert) {
+		s.UpdateEmailVerified()
+	})
+}
+
+// ClearEmailVerified clears the value of the "email_verified" field.
+func (u *ApexCustomerIdentityUpsertOne) ClearEmailVerified() *ApexCustomerIdentityUpsertOne {
+	return u.Update(func(s *ApexCustomerIdentityUpsert) {
+		s.ClearEmailVerified()
 	})
 }
 
@@ -635,7 +635,7 @@ func (acicb *ApexCustomerIdentityCreateBulk) ExecX(ctx context.Context) {
 //		// Override some of the fields with custom
 //		// update values.
 //		Update(func(u *ent.ApexCustomerIdentityUpsert) {
-//			SetEmail(v+v).
+//			SetCreatedAt(v+v).
 //		}).
 //		Exec(ctx)
 func (acicb *ApexCustomerIdentityCreateBulk) OnConflict(opts ...sql.ConflictOption) *ApexCustomerIdentityUpsertBulk {
@@ -714,48 +714,6 @@ func (u *ApexCustomerIdentityUpsertBulk) Update(set func(*ApexCustomerIdentityUp
 	return u
 }
 
-// SetEmail sets the "email" field.
-func (u *ApexCustomerIdentityUpsertBulk) SetEmail(v string) *ApexCustomerIdentityUpsertBulk {
-	return u.Update(func(s *ApexCustomerIdentityUpsert) {
-		s.SetEmail(v)
-	})
-}
-
-// UpdateEmail sets the "email" field to the value that was provided on create.
-func (u *ApexCustomerIdentityUpsertBulk) UpdateEmail() *ApexCustomerIdentityUpsertBulk {
-	return u.Update(func(s *ApexCustomerIdentityUpsert) {
-		s.UpdateEmail()
-	})
-}
-
-// ClearEmail clears the value of the "email" field.
-func (u *ApexCustomerIdentityUpsertBulk) ClearEmail() *ApexCustomerIdentityUpsertBulk {
-	return u.Update(func(s *ApexCustomerIdentityUpsert) {
-		s.ClearEmail()
-	})
-}
-
-// SetEmailVerified sets the "email_verified" field.
-func (u *ApexCustomerIdentityUpsertBulk) SetEmailVerified(v bool) *ApexCustomerIdentityUpsertBulk {
-	return u.Update(func(s *ApexCustomerIdentityUpsert) {
-		s.SetEmailVerified(v)
-	})
-}
-
-// UpdateEmailVerified sets the "email_verified" field to the value that was provided on create.
-func (u *ApexCustomerIdentityUpsertBulk) UpdateEmailVerified() *ApexCustomerIdentityUpsertBulk {
-	return u.Update(func(s *ApexCustomerIdentityUpsert) {
-		s.UpdateEmailVerified()
-	})
-}
-
-// ClearEmailVerified clears the value of the "email_verified" field.
-func (u *ApexCustomerIdentityUpsertBulk) ClearEmailVerified() *ApexCustomerIdentityUpsertBulk {
-	return u.Update(func(s *ApexCustomerIdentityUpsert) {
-		s.ClearEmailVerified()
-	})
-}
-
 // SetCreatedAt sets the "created_at" field.
 func (u *ApexCustomerIdentityUpsertBulk) SetCreatedAt(v time.Time) *ApexCustomerIdentityUpsertBulk {
 	return u.Update(func(s *ApexCustomerIdentityUpsert) {
@@ -809,6 +767,48 @@ func (u *ApexCustomerIdentityUpsertBulk) UpdateDeletedAt() *ApexCustomerIdentity
 func (u *ApexCustomerIdentityUpsertBulk) ClearDeletedAt() *ApexCustomerIdentityUpsertBulk {
 	return u.Update(func(s *ApexCustomerIdentityUpsert) {
 		s.ClearDeletedAt()
+	})
+}
+
+// SetEmail sets the "email" field.
+func (u *ApexCustomerIdentityUpsertBulk) SetEmail(v string) *ApexCustomerIdentityUpsertBulk {
+	return u.Update(func(s *ApexCustomerIdentityUpsert) {
+		s.SetEmail(v)
+	})
+}
+
+// UpdateEmail sets the "email" field to the value that was provided on create.
+func (u *ApexCustomerIdentityUpsertBulk) UpdateEmail() *ApexCustomerIdentityUpsertBulk {
+	return u.Update(func(s *ApexCustomerIdentityUpsert) {
+		s.UpdateEmail()
+	})
+}
+
+// ClearEmail clears the value of the "email" field.
+func (u *ApexCustomerIdentityUpsertBulk) ClearEmail() *ApexCustomerIdentityUpsertBulk {
+	return u.Update(func(s *ApexCustomerIdentityUpsert) {
+		s.ClearEmail()
+	})
+}
+
+// SetEmailVerified sets the "email_verified" field.
+func (u *ApexCustomerIdentityUpsertBulk) SetEmailVerified(v bool) *ApexCustomerIdentityUpsertBulk {
+	return u.Update(func(s *ApexCustomerIdentityUpsert) {
+		s.SetEmailVerified(v)
+	})
+}
+
+// UpdateEmailVerified sets the "email_verified" field to the value that was provided on create.
+func (u *ApexCustomerIdentityUpsertBulk) UpdateEmailVerified() *ApexCustomerIdentityUpsertBulk {
+	return u.Update(func(s *ApexCustomerIdentityUpsert) {
+		s.UpdateEmailVerified()
+	})
+}
+
+// ClearEmailVerified clears the value of the "email_verified" field.
+func (u *ApexCustomerIdentityUpsertBulk) ClearEmailVerified() *ApexCustomerIdentityUpsertBulk {
+	return u.Update(func(s *ApexCustomerIdentityUpsert) {
+		s.ClearEmailVerified()
 	})
 }
 

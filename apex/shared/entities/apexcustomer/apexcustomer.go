@@ -12,6 +12,12 @@ const (
 	Label = "apex_customer"
 	// FieldID holds the string denoting the id field in the database.
 	FieldID = "id"
+	// FieldCreatedAt holds the string denoting the created_at field in the database.
+	FieldCreatedAt = "created_at"
+	// FieldModifiedAt holds the string denoting the modified_at field in the database.
+	FieldModifiedAt = "modified_at"
+	// FieldDeletedAt holds the string denoting the deleted_at field in the database.
+	FieldDeletedAt = "deleted_at"
 	// FieldEventRaisedAt holds the string denoting the event_raised_at field in the database.
 	FieldEventRaisedAt = "event_raised_at"
 	// FieldName holds the string denoting the name field in the database.
@@ -36,12 +42,6 @@ const (
 	FieldPhotoURL192 = "photo_url_192"
 	// FieldPhotoURL512 holds the string denoting the photo_url_512 field in the database.
 	FieldPhotoURL512 = "photo_url_512"
-	// FieldCreatedAt holds the string denoting the created_at field in the database.
-	FieldCreatedAt = "created_at"
-	// FieldModifiedAt holds the string denoting the modified_at field in the database.
-	FieldModifiedAt = "modified_at"
-	// FieldDeletedAt holds the string denoting the deleted_at field in the database.
-	FieldDeletedAt = "deleted_at"
 	// EdgeIdentities holds the string denoting the identities edge name in mutations.
 	EdgeIdentities = "identities"
 	// Table holds the table name of the apexcustomer in the database.
@@ -58,6 +58,9 @@ const (
 // Columns holds all SQL columns for apexcustomer fields.
 var Columns = []string{
 	FieldID,
+	FieldCreatedAt,
+	FieldModifiedAt,
+	FieldDeletedAt,
 	FieldEventRaisedAt,
 	FieldName,
 	FieldGivenName,
@@ -70,9 +73,6 @@ var Columns = []string{
 	FieldPhotoURL72,
 	FieldPhotoURL192,
 	FieldPhotoURL512,
-	FieldCreatedAt,
-	FieldModifiedAt,
-	FieldDeletedAt,
 }
 
 // ValidColumn reports if the column name is valid (part of the table columns).
@@ -91,6 +91,21 @@ type OrderOption func(*sql.Selector)
 // ByID orders the results by the id field.
 func ByID(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldID, opts...).ToFunc()
+}
+
+// ByCreatedAt orders the results by the created_at field.
+func ByCreatedAt(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldCreatedAt, opts...).ToFunc()
+}
+
+// ByModifiedAt orders the results by the modified_at field.
+func ByModifiedAt(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldModifiedAt, opts...).ToFunc()
+}
+
+// ByDeletedAt orders the results by the deleted_at field.
+func ByDeletedAt(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldDeletedAt, opts...).ToFunc()
 }
 
 // ByEventRaisedAt orders the results by the event_raised_at field.
@@ -151,21 +166,6 @@ func ByPhotoURL192(opts ...sql.OrderTermOption) OrderOption {
 // ByPhotoURL512 orders the results by the photo_url_512 field.
 func ByPhotoURL512(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldPhotoURL512, opts...).ToFunc()
-}
-
-// ByCreatedAt orders the results by the created_at field.
-func ByCreatedAt(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldCreatedAt, opts...).ToFunc()
-}
-
-// ByModifiedAt orders the results by the modified_at field.
-func ByModifiedAt(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldModifiedAt, opts...).ToFunc()
-}
-
-// ByDeletedAt orders the results by the deleted_at field.
-func ByDeletedAt(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldDeletedAt, opts...).ToFunc()
 }
 
 // ByIdentitiesCount orders the results by identities count.

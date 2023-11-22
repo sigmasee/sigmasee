@@ -25,6 +25,40 @@ type CustomerCreate struct {
 	conflict []sql.ConflictOption
 }
 
+// SetCreatedAt sets the "created_at" field.
+func (cc *CustomerCreate) SetCreatedAt(t time.Time) *CustomerCreate {
+	cc.mutation.SetCreatedAt(t)
+	return cc
+}
+
+// SetModifiedAt sets the "modified_at" field.
+func (cc *CustomerCreate) SetModifiedAt(t time.Time) *CustomerCreate {
+	cc.mutation.SetModifiedAt(t)
+	return cc
+}
+
+// SetNillableModifiedAt sets the "modified_at" field if the given value is not nil.
+func (cc *CustomerCreate) SetNillableModifiedAt(t *time.Time) *CustomerCreate {
+	if t != nil {
+		cc.SetModifiedAt(*t)
+	}
+	return cc
+}
+
+// SetDeletedAt sets the "deleted_at" field.
+func (cc *CustomerCreate) SetDeletedAt(t time.Time) *CustomerCreate {
+	cc.mutation.SetDeletedAt(t)
+	return cc
+}
+
+// SetNillableDeletedAt sets the "deleted_at" field if the given value is not nil.
+func (cc *CustomerCreate) SetNillableDeletedAt(t *time.Time) *CustomerCreate {
+	if t != nil {
+		cc.SetDeletedAt(*t)
+	}
+	return cc
+}
+
 // SetDesignation sets the "designation" field.
 func (cc *CustomerCreate) SetDesignation(s string) *CustomerCreate {
 	cc.mutation.SetDesignation(s)
@@ -235,40 +269,6 @@ func (cc *CustomerCreate) SetNillableLocale(s *string) *CustomerCreate {
 	return cc
 }
 
-// SetCreatedAt sets the "created_at" field.
-func (cc *CustomerCreate) SetCreatedAt(t time.Time) *CustomerCreate {
-	cc.mutation.SetCreatedAt(t)
-	return cc
-}
-
-// SetModifiedAt sets the "modified_at" field.
-func (cc *CustomerCreate) SetModifiedAt(t time.Time) *CustomerCreate {
-	cc.mutation.SetModifiedAt(t)
-	return cc
-}
-
-// SetNillableModifiedAt sets the "modified_at" field if the given value is not nil.
-func (cc *CustomerCreate) SetNillableModifiedAt(t *time.Time) *CustomerCreate {
-	if t != nil {
-		cc.SetModifiedAt(*t)
-	}
-	return cc
-}
-
-// SetDeletedAt sets the "deleted_at" field.
-func (cc *CustomerCreate) SetDeletedAt(t time.Time) *CustomerCreate {
-	cc.mutation.SetDeletedAt(t)
-	return cc
-}
-
-// SetNillableDeletedAt sets the "deleted_at" field if the given value is not nil.
-func (cc *CustomerCreate) SetNillableDeletedAt(t *time.Time) *CustomerCreate {
-	if t != nil {
-		cc.SetDeletedAt(*t)
-	}
-	return cc
-}
-
 // SetID sets the "id" field.
 func (cc *CustomerCreate) SetID(s string) *CustomerCreate {
 	cc.mutation.SetID(s)
@@ -383,6 +383,18 @@ func (cc *CustomerCreate) createSpec() (*Customer, *sqlgraph.CreateSpec) {
 		_node.ID = id
 		_spec.ID.Value = id
 	}
+	if value, ok := cc.mutation.CreatedAt(); ok {
+		_spec.SetField(customer.FieldCreatedAt, field.TypeTime, value)
+		_node.CreatedAt = value
+	}
+	if value, ok := cc.mutation.ModifiedAt(); ok {
+		_spec.SetField(customer.FieldModifiedAt, field.TypeTime, value)
+		_node.ModifiedAt = value
+	}
+	if value, ok := cc.mutation.DeletedAt(); ok {
+		_spec.SetField(customer.FieldDeletedAt, field.TypeTime, value)
+		_node.DeletedAt = value
+	}
 	if value, ok := cc.mutation.Designation(); ok {
 		_spec.SetField(customer.FieldDesignation, field.TypeString, value)
 		_node.Designation = value
@@ -443,18 +455,6 @@ func (cc *CustomerCreate) createSpec() (*Customer, *sqlgraph.CreateSpec) {
 		_spec.SetField(customer.FieldLocale, field.TypeString, value)
 		_node.Locale = value
 	}
-	if value, ok := cc.mutation.CreatedAt(); ok {
-		_spec.SetField(customer.FieldCreatedAt, field.TypeTime, value)
-		_node.CreatedAt = value
-	}
-	if value, ok := cc.mutation.ModifiedAt(); ok {
-		_spec.SetField(customer.FieldModifiedAt, field.TypeTime, value)
-		_node.ModifiedAt = value
-	}
-	if value, ok := cc.mutation.DeletedAt(); ok {
-		_spec.SetField(customer.FieldDeletedAt, field.TypeTime, value)
-		_node.DeletedAt = value
-	}
 	if nodes := cc.mutation.IdentitiesIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
@@ -496,7 +496,7 @@ func (cc *CustomerCreate) createSpec() (*Customer, *sqlgraph.CreateSpec) {
 // of the `INSERT` statement. For example:
 //
 //	client.Customer.Create().
-//		SetDesignation(v).
+//		SetCreatedAt(v).
 //		OnConflict(
 //			// Update the row with the new values
 //			// the was proposed for insertion.
@@ -505,7 +505,7 @@ func (cc *CustomerCreate) createSpec() (*Customer, *sqlgraph.CreateSpec) {
 //		// Override some of the fields with custom
 //		// update values.
 //		Update(func(u *ent.CustomerUpsert) {
-//			SetDesignation(v+v).
+//			SetCreatedAt(v+v).
 //		}).
 //		Exec(ctx)
 func (cc *CustomerCreate) OnConflict(opts ...sql.ConflictOption) *CustomerUpsertOne {
@@ -540,6 +540,54 @@ type (
 		*sql.UpdateSet
 	}
 )
+
+// SetCreatedAt sets the "created_at" field.
+func (u *CustomerUpsert) SetCreatedAt(v time.Time) *CustomerUpsert {
+	u.Set(customer.FieldCreatedAt, v)
+	return u
+}
+
+// UpdateCreatedAt sets the "created_at" field to the value that was provided on create.
+func (u *CustomerUpsert) UpdateCreatedAt() *CustomerUpsert {
+	u.SetExcluded(customer.FieldCreatedAt)
+	return u
+}
+
+// SetModifiedAt sets the "modified_at" field.
+func (u *CustomerUpsert) SetModifiedAt(v time.Time) *CustomerUpsert {
+	u.Set(customer.FieldModifiedAt, v)
+	return u
+}
+
+// UpdateModifiedAt sets the "modified_at" field to the value that was provided on create.
+func (u *CustomerUpsert) UpdateModifiedAt() *CustomerUpsert {
+	u.SetExcluded(customer.FieldModifiedAt)
+	return u
+}
+
+// ClearModifiedAt clears the value of the "modified_at" field.
+func (u *CustomerUpsert) ClearModifiedAt() *CustomerUpsert {
+	u.SetNull(customer.FieldModifiedAt)
+	return u
+}
+
+// SetDeletedAt sets the "deleted_at" field.
+func (u *CustomerUpsert) SetDeletedAt(v time.Time) *CustomerUpsert {
+	u.Set(customer.FieldDeletedAt, v)
+	return u
+}
+
+// UpdateDeletedAt sets the "deleted_at" field to the value that was provided on create.
+func (u *CustomerUpsert) UpdateDeletedAt() *CustomerUpsert {
+	u.SetExcluded(customer.FieldDeletedAt)
+	return u
+}
+
+// ClearDeletedAt clears the value of the "deleted_at" field.
+func (u *CustomerUpsert) ClearDeletedAt() *CustomerUpsert {
+	u.SetNull(customer.FieldDeletedAt)
+	return u
+}
 
 // SetDesignation sets the "designation" field.
 func (u *CustomerUpsert) SetDesignation(v string) *CustomerUpsert {
@@ -811,54 +859,6 @@ func (u *CustomerUpsert) ClearLocale() *CustomerUpsert {
 	return u
 }
 
-// SetCreatedAt sets the "created_at" field.
-func (u *CustomerUpsert) SetCreatedAt(v time.Time) *CustomerUpsert {
-	u.Set(customer.FieldCreatedAt, v)
-	return u
-}
-
-// UpdateCreatedAt sets the "created_at" field to the value that was provided on create.
-func (u *CustomerUpsert) UpdateCreatedAt() *CustomerUpsert {
-	u.SetExcluded(customer.FieldCreatedAt)
-	return u
-}
-
-// SetModifiedAt sets the "modified_at" field.
-func (u *CustomerUpsert) SetModifiedAt(v time.Time) *CustomerUpsert {
-	u.Set(customer.FieldModifiedAt, v)
-	return u
-}
-
-// UpdateModifiedAt sets the "modified_at" field to the value that was provided on create.
-func (u *CustomerUpsert) UpdateModifiedAt() *CustomerUpsert {
-	u.SetExcluded(customer.FieldModifiedAt)
-	return u
-}
-
-// ClearModifiedAt clears the value of the "modified_at" field.
-func (u *CustomerUpsert) ClearModifiedAt() *CustomerUpsert {
-	u.SetNull(customer.FieldModifiedAt)
-	return u
-}
-
-// SetDeletedAt sets the "deleted_at" field.
-func (u *CustomerUpsert) SetDeletedAt(v time.Time) *CustomerUpsert {
-	u.Set(customer.FieldDeletedAt, v)
-	return u
-}
-
-// UpdateDeletedAt sets the "deleted_at" field to the value that was provided on create.
-func (u *CustomerUpsert) UpdateDeletedAt() *CustomerUpsert {
-	u.SetExcluded(customer.FieldDeletedAt)
-	return u
-}
-
-// ClearDeletedAt clears the value of the "deleted_at" field.
-func (u *CustomerUpsert) ClearDeletedAt() *CustomerUpsert {
-	u.SetNull(customer.FieldDeletedAt)
-	return u
-}
-
 // UpdateNewValues updates the mutable fields using the new values that were set on create except the ID field.
 // Using this option is equivalent to using:
 //
@@ -905,6 +905,62 @@ func (u *CustomerUpsertOne) Update(set func(*CustomerUpsert)) *CustomerUpsertOne
 		set(&CustomerUpsert{UpdateSet: update})
 	}))
 	return u
+}
+
+// SetCreatedAt sets the "created_at" field.
+func (u *CustomerUpsertOne) SetCreatedAt(v time.Time) *CustomerUpsertOne {
+	return u.Update(func(s *CustomerUpsert) {
+		s.SetCreatedAt(v)
+	})
+}
+
+// UpdateCreatedAt sets the "created_at" field to the value that was provided on create.
+func (u *CustomerUpsertOne) UpdateCreatedAt() *CustomerUpsertOne {
+	return u.Update(func(s *CustomerUpsert) {
+		s.UpdateCreatedAt()
+	})
+}
+
+// SetModifiedAt sets the "modified_at" field.
+func (u *CustomerUpsertOne) SetModifiedAt(v time.Time) *CustomerUpsertOne {
+	return u.Update(func(s *CustomerUpsert) {
+		s.SetModifiedAt(v)
+	})
+}
+
+// UpdateModifiedAt sets the "modified_at" field to the value that was provided on create.
+func (u *CustomerUpsertOne) UpdateModifiedAt() *CustomerUpsertOne {
+	return u.Update(func(s *CustomerUpsert) {
+		s.UpdateModifiedAt()
+	})
+}
+
+// ClearModifiedAt clears the value of the "modified_at" field.
+func (u *CustomerUpsertOne) ClearModifiedAt() *CustomerUpsertOne {
+	return u.Update(func(s *CustomerUpsert) {
+		s.ClearModifiedAt()
+	})
+}
+
+// SetDeletedAt sets the "deleted_at" field.
+func (u *CustomerUpsertOne) SetDeletedAt(v time.Time) *CustomerUpsertOne {
+	return u.Update(func(s *CustomerUpsert) {
+		s.SetDeletedAt(v)
+	})
+}
+
+// UpdateDeletedAt sets the "deleted_at" field to the value that was provided on create.
+func (u *CustomerUpsertOne) UpdateDeletedAt() *CustomerUpsertOne {
+	return u.Update(func(s *CustomerUpsert) {
+		s.UpdateDeletedAt()
+	})
+}
+
+// ClearDeletedAt clears the value of the "deleted_at" field.
+func (u *CustomerUpsertOne) ClearDeletedAt() *CustomerUpsertOne {
+	return u.Update(func(s *CustomerUpsert) {
+		s.ClearDeletedAt()
+	})
 }
 
 // SetDesignation sets the "designation" field.
@@ -1222,62 +1278,6 @@ func (u *CustomerUpsertOne) ClearLocale() *CustomerUpsertOne {
 	})
 }
 
-// SetCreatedAt sets the "created_at" field.
-func (u *CustomerUpsertOne) SetCreatedAt(v time.Time) *CustomerUpsertOne {
-	return u.Update(func(s *CustomerUpsert) {
-		s.SetCreatedAt(v)
-	})
-}
-
-// UpdateCreatedAt sets the "created_at" field to the value that was provided on create.
-func (u *CustomerUpsertOne) UpdateCreatedAt() *CustomerUpsertOne {
-	return u.Update(func(s *CustomerUpsert) {
-		s.UpdateCreatedAt()
-	})
-}
-
-// SetModifiedAt sets the "modified_at" field.
-func (u *CustomerUpsertOne) SetModifiedAt(v time.Time) *CustomerUpsertOne {
-	return u.Update(func(s *CustomerUpsert) {
-		s.SetModifiedAt(v)
-	})
-}
-
-// UpdateModifiedAt sets the "modified_at" field to the value that was provided on create.
-func (u *CustomerUpsertOne) UpdateModifiedAt() *CustomerUpsertOne {
-	return u.Update(func(s *CustomerUpsert) {
-		s.UpdateModifiedAt()
-	})
-}
-
-// ClearModifiedAt clears the value of the "modified_at" field.
-func (u *CustomerUpsertOne) ClearModifiedAt() *CustomerUpsertOne {
-	return u.Update(func(s *CustomerUpsert) {
-		s.ClearModifiedAt()
-	})
-}
-
-// SetDeletedAt sets the "deleted_at" field.
-func (u *CustomerUpsertOne) SetDeletedAt(v time.Time) *CustomerUpsertOne {
-	return u.Update(func(s *CustomerUpsert) {
-		s.SetDeletedAt(v)
-	})
-}
-
-// UpdateDeletedAt sets the "deleted_at" field to the value that was provided on create.
-func (u *CustomerUpsertOne) UpdateDeletedAt() *CustomerUpsertOne {
-	return u.Update(func(s *CustomerUpsert) {
-		s.UpdateDeletedAt()
-	})
-}
-
-// ClearDeletedAt clears the value of the "deleted_at" field.
-func (u *CustomerUpsertOne) ClearDeletedAt() *CustomerUpsertOne {
-	return u.Update(func(s *CustomerUpsert) {
-		s.ClearDeletedAt()
-	})
-}
-
 // Exec executes the query.
 func (u *CustomerUpsertOne) Exec(ctx context.Context) error {
 	if len(u.create.conflict) == 0 {
@@ -1413,7 +1413,7 @@ func (ccb *CustomerCreateBulk) ExecX(ctx context.Context) {
 //		// Override some of the fields with custom
 //		// update values.
 //		Update(func(u *ent.CustomerUpsert) {
-//			SetDesignation(v+v).
+//			SetCreatedAt(v+v).
 //		}).
 //		Exec(ctx)
 func (ccb *CustomerCreateBulk) OnConflict(opts ...sql.ConflictOption) *CustomerUpsertBulk {
@@ -1490,6 +1490,62 @@ func (u *CustomerUpsertBulk) Update(set func(*CustomerUpsert)) *CustomerUpsertBu
 		set(&CustomerUpsert{UpdateSet: update})
 	}))
 	return u
+}
+
+// SetCreatedAt sets the "created_at" field.
+func (u *CustomerUpsertBulk) SetCreatedAt(v time.Time) *CustomerUpsertBulk {
+	return u.Update(func(s *CustomerUpsert) {
+		s.SetCreatedAt(v)
+	})
+}
+
+// UpdateCreatedAt sets the "created_at" field to the value that was provided on create.
+func (u *CustomerUpsertBulk) UpdateCreatedAt() *CustomerUpsertBulk {
+	return u.Update(func(s *CustomerUpsert) {
+		s.UpdateCreatedAt()
+	})
+}
+
+// SetModifiedAt sets the "modified_at" field.
+func (u *CustomerUpsertBulk) SetModifiedAt(v time.Time) *CustomerUpsertBulk {
+	return u.Update(func(s *CustomerUpsert) {
+		s.SetModifiedAt(v)
+	})
+}
+
+// UpdateModifiedAt sets the "modified_at" field to the value that was provided on create.
+func (u *CustomerUpsertBulk) UpdateModifiedAt() *CustomerUpsertBulk {
+	return u.Update(func(s *CustomerUpsert) {
+		s.UpdateModifiedAt()
+	})
+}
+
+// ClearModifiedAt clears the value of the "modified_at" field.
+func (u *CustomerUpsertBulk) ClearModifiedAt() *CustomerUpsertBulk {
+	return u.Update(func(s *CustomerUpsert) {
+		s.ClearModifiedAt()
+	})
+}
+
+// SetDeletedAt sets the "deleted_at" field.
+func (u *CustomerUpsertBulk) SetDeletedAt(v time.Time) *CustomerUpsertBulk {
+	return u.Update(func(s *CustomerUpsert) {
+		s.SetDeletedAt(v)
+	})
+}
+
+// UpdateDeletedAt sets the "deleted_at" field to the value that was provided on create.
+func (u *CustomerUpsertBulk) UpdateDeletedAt() *CustomerUpsertBulk {
+	return u.Update(func(s *CustomerUpsert) {
+		s.UpdateDeletedAt()
+	})
+}
+
+// ClearDeletedAt clears the value of the "deleted_at" field.
+func (u *CustomerUpsertBulk) ClearDeletedAt() *CustomerUpsertBulk {
+	return u.Update(func(s *CustomerUpsert) {
+		s.ClearDeletedAt()
+	})
 }
 
 // SetDesignation sets the "designation" field.
@@ -1804,62 +1860,6 @@ func (u *CustomerUpsertBulk) UpdateLocale() *CustomerUpsertBulk {
 func (u *CustomerUpsertBulk) ClearLocale() *CustomerUpsertBulk {
 	return u.Update(func(s *CustomerUpsert) {
 		s.ClearLocale()
-	})
-}
-
-// SetCreatedAt sets the "created_at" field.
-func (u *CustomerUpsertBulk) SetCreatedAt(v time.Time) *CustomerUpsertBulk {
-	return u.Update(func(s *CustomerUpsert) {
-		s.SetCreatedAt(v)
-	})
-}
-
-// UpdateCreatedAt sets the "created_at" field to the value that was provided on create.
-func (u *CustomerUpsertBulk) UpdateCreatedAt() *CustomerUpsertBulk {
-	return u.Update(func(s *CustomerUpsert) {
-		s.UpdateCreatedAt()
-	})
-}
-
-// SetModifiedAt sets the "modified_at" field.
-func (u *CustomerUpsertBulk) SetModifiedAt(v time.Time) *CustomerUpsertBulk {
-	return u.Update(func(s *CustomerUpsert) {
-		s.SetModifiedAt(v)
-	})
-}
-
-// UpdateModifiedAt sets the "modified_at" field to the value that was provided on create.
-func (u *CustomerUpsertBulk) UpdateModifiedAt() *CustomerUpsertBulk {
-	return u.Update(func(s *CustomerUpsert) {
-		s.UpdateModifiedAt()
-	})
-}
-
-// ClearModifiedAt clears the value of the "modified_at" field.
-func (u *CustomerUpsertBulk) ClearModifiedAt() *CustomerUpsertBulk {
-	return u.Update(func(s *CustomerUpsert) {
-		s.ClearModifiedAt()
-	})
-}
-
-// SetDeletedAt sets the "deleted_at" field.
-func (u *CustomerUpsertBulk) SetDeletedAt(v time.Time) *CustomerUpsertBulk {
-	return u.Update(func(s *CustomerUpsert) {
-		s.SetDeletedAt(v)
-	})
-}
-
-// UpdateDeletedAt sets the "deleted_at" field to the value that was provided on create.
-func (u *CustomerUpsertBulk) UpdateDeletedAt() *CustomerUpsertBulk {
-	return u.Update(func(s *CustomerUpsert) {
-		s.UpdateDeletedAt()
-	})
-}
-
-// ClearDeletedAt clears the value of the "deleted_at" field.
-func (u *CustomerUpsertBulk) ClearDeletedAt() *CustomerUpsertBulk {
-	return u.Update(func(s *CustomerUpsert) {
-		s.ClearDeletedAt()
 	})
 }
 

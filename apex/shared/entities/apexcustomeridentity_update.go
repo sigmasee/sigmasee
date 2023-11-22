@@ -32,46 +32,6 @@ func (aciu *ApexCustomerIdentityUpdate) Where(ps ...predicate.ApexCustomerIdenti
 	return aciu
 }
 
-// SetEmail sets the "email" field.
-func (aciu *ApexCustomerIdentityUpdate) SetEmail(s string) *ApexCustomerIdentityUpdate {
-	aciu.mutation.SetEmail(s)
-	return aciu
-}
-
-// SetNillableEmail sets the "email" field if the given value is not nil.
-func (aciu *ApexCustomerIdentityUpdate) SetNillableEmail(s *string) *ApexCustomerIdentityUpdate {
-	if s != nil {
-		aciu.SetEmail(*s)
-	}
-	return aciu
-}
-
-// ClearEmail clears the value of the "email" field.
-func (aciu *ApexCustomerIdentityUpdate) ClearEmail() *ApexCustomerIdentityUpdate {
-	aciu.mutation.ClearEmail()
-	return aciu
-}
-
-// SetEmailVerified sets the "email_verified" field.
-func (aciu *ApexCustomerIdentityUpdate) SetEmailVerified(b bool) *ApexCustomerIdentityUpdate {
-	aciu.mutation.SetEmailVerified(b)
-	return aciu
-}
-
-// SetNillableEmailVerified sets the "email_verified" field if the given value is not nil.
-func (aciu *ApexCustomerIdentityUpdate) SetNillableEmailVerified(b *bool) *ApexCustomerIdentityUpdate {
-	if b != nil {
-		aciu.SetEmailVerified(*b)
-	}
-	return aciu
-}
-
-// ClearEmailVerified clears the value of the "email_verified" field.
-func (aciu *ApexCustomerIdentityUpdate) ClearEmailVerified() *ApexCustomerIdentityUpdate {
-	aciu.mutation.ClearEmailVerified()
-	return aciu
-}
-
 // SetCreatedAt sets the "created_at" field.
 func (aciu *ApexCustomerIdentityUpdate) SetCreatedAt(t time.Time) *ApexCustomerIdentityUpdate {
 	aciu.mutation.SetCreatedAt(t)
@@ -115,6 +75,46 @@ func (aciu *ApexCustomerIdentityUpdate) SetNillableDeletedAt(t *time.Time) *Apex
 // ClearDeletedAt clears the value of the "deleted_at" field.
 func (aciu *ApexCustomerIdentityUpdate) ClearDeletedAt() *ApexCustomerIdentityUpdate {
 	aciu.mutation.ClearDeletedAt()
+	return aciu
+}
+
+// SetEmail sets the "email" field.
+func (aciu *ApexCustomerIdentityUpdate) SetEmail(s string) *ApexCustomerIdentityUpdate {
+	aciu.mutation.SetEmail(s)
+	return aciu
+}
+
+// SetNillableEmail sets the "email" field if the given value is not nil.
+func (aciu *ApexCustomerIdentityUpdate) SetNillableEmail(s *string) *ApexCustomerIdentityUpdate {
+	if s != nil {
+		aciu.SetEmail(*s)
+	}
+	return aciu
+}
+
+// ClearEmail clears the value of the "email" field.
+func (aciu *ApexCustomerIdentityUpdate) ClearEmail() *ApexCustomerIdentityUpdate {
+	aciu.mutation.ClearEmail()
+	return aciu
+}
+
+// SetEmailVerified sets the "email_verified" field.
+func (aciu *ApexCustomerIdentityUpdate) SetEmailVerified(b bool) *ApexCustomerIdentityUpdate {
+	aciu.mutation.SetEmailVerified(b)
+	return aciu
+}
+
+// SetNillableEmailVerified sets the "email_verified" field if the given value is not nil.
+func (aciu *ApexCustomerIdentityUpdate) SetNillableEmailVerified(b *bool) *ApexCustomerIdentityUpdate {
+	if b != nil {
+		aciu.SetEmailVerified(*b)
+	}
+	return aciu
+}
+
+// ClearEmailVerified clears the value of the "email_verified" field.
+func (aciu *ApexCustomerIdentityUpdate) ClearEmailVerified() *ApexCustomerIdentityUpdate {
+	aciu.mutation.ClearEmailVerified()
 	return aciu
 }
 
@@ -193,18 +193,6 @@ func (aciu *ApexCustomerIdentityUpdate) sqlSave(ctx context.Context) (n int, err
 			}
 		}
 	}
-	if value, ok := aciu.mutation.Email(); ok {
-		_spec.SetField(apexcustomeridentity.FieldEmail, field.TypeString, value)
-	}
-	if aciu.mutation.EmailCleared() {
-		_spec.ClearField(apexcustomeridentity.FieldEmail, field.TypeString)
-	}
-	if value, ok := aciu.mutation.EmailVerified(); ok {
-		_spec.SetField(apexcustomeridentity.FieldEmailVerified, field.TypeBool, value)
-	}
-	if aciu.mutation.EmailVerifiedCleared() {
-		_spec.ClearField(apexcustomeridentity.FieldEmailVerified, field.TypeBool)
-	}
 	if value, ok := aciu.mutation.CreatedAt(); ok {
 		_spec.SetField(apexcustomeridentity.FieldCreatedAt, field.TypeTime, value)
 	}
@@ -219,6 +207,18 @@ func (aciu *ApexCustomerIdentityUpdate) sqlSave(ctx context.Context) (n int, err
 	}
 	if aciu.mutation.DeletedAtCleared() {
 		_spec.ClearField(apexcustomeridentity.FieldDeletedAt, field.TypeTime)
+	}
+	if value, ok := aciu.mutation.Email(); ok {
+		_spec.SetField(apexcustomeridentity.FieldEmail, field.TypeString, value)
+	}
+	if aciu.mutation.EmailCleared() {
+		_spec.ClearField(apexcustomeridentity.FieldEmail, field.TypeString)
+	}
+	if value, ok := aciu.mutation.EmailVerified(); ok {
+		_spec.SetField(apexcustomeridentity.FieldEmailVerified, field.TypeBool, value)
+	}
+	if aciu.mutation.EmailVerifiedCleared() {
+		_spec.ClearField(apexcustomeridentity.FieldEmailVerified, field.TypeBool)
 	}
 	if aciu.mutation.CustomerCleared() {
 		edge := &sqlgraph.EdgeSpec{
@@ -275,46 +275,6 @@ type ApexCustomerIdentityUpdateOne struct {
 	modifiers []func(*sql.UpdateBuilder)
 }
 
-// SetEmail sets the "email" field.
-func (aciuo *ApexCustomerIdentityUpdateOne) SetEmail(s string) *ApexCustomerIdentityUpdateOne {
-	aciuo.mutation.SetEmail(s)
-	return aciuo
-}
-
-// SetNillableEmail sets the "email" field if the given value is not nil.
-func (aciuo *ApexCustomerIdentityUpdateOne) SetNillableEmail(s *string) *ApexCustomerIdentityUpdateOne {
-	if s != nil {
-		aciuo.SetEmail(*s)
-	}
-	return aciuo
-}
-
-// ClearEmail clears the value of the "email" field.
-func (aciuo *ApexCustomerIdentityUpdateOne) ClearEmail() *ApexCustomerIdentityUpdateOne {
-	aciuo.mutation.ClearEmail()
-	return aciuo
-}
-
-// SetEmailVerified sets the "email_verified" field.
-func (aciuo *ApexCustomerIdentityUpdateOne) SetEmailVerified(b bool) *ApexCustomerIdentityUpdateOne {
-	aciuo.mutation.SetEmailVerified(b)
-	return aciuo
-}
-
-// SetNillableEmailVerified sets the "email_verified" field if the given value is not nil.
-func (aciuo *ApexCustomerIdentityUpdateOne) SetNillableEmailVerified(b *bool) *ApexCustomerIdentityUpdateOne {
-	if b != nil {
-		aciuo.SetEmailVerified(*b)
-	}
-	return aciuo
-}
-
-// ClearEmailVerified clears the value of the "email_verified" field.
-func (aciuo *ApexCustomerIdentityUpdateOne) ClearEmailVerified() *ApexCustomerIdentityUpdateOne {
-	aciuo.mutation.ClearEmailVerified()
-	return aciuo
-}
-
 // SetCreatedAt sets the "created_at" field.
 func (aciuo *ApexCustomerIdentityUpdateOne) SetCreatedAt(t time.Time) *ApexCustomerIdentityUpdateOne {
 	aciuo.mutation.SetCreatedAt(t)
@@ -358,6 +318,46 @@ func (aciuo *ApexCustomerIdentityUpdateOne) SetNillableDeletedAt(t *time.Time) *
 // ClearDeletedAt clears the value of the "deleted_at" field.
 func (aciuo *ApexCustomerIdentityUpdateOne) ClearDeletedAt() *ApexCustomerIdentityUpdateOne {
 	aciuo.mutation.ClearDeletedAt()
+	return aciuo
+}
+
+// SetEmail sets the "email" field.
+func (aciuo *ApexCustomerIdentityUpdateOne) SetEmail(s string) *ApexCustomerIdentityUpdateOne {
+	aciuo.mutation.SetEmail(s)
+	return aciuo
+}
+
+// SetNillableEmail sets the "email" field if the given value is not nil.
+func (aciuo *ApexCustomerIdentityUpdateOne) SetNillableEmail(s *string) *ApexCustomerIdentityUpdateOne {
+	if s != nil {
+		aciuo.SetEmail(*s)
+	}
+	return aciuo
+}
+
+// ClearEmail clears the value of the "email" field.
+func (aciuo *ApexCustomerIdentityUpdateOne) ClearEmail() *ApexCustomerIdentityUpdateOne {
+	aciuo.mutation.ClearEmail()
+	return aciuo
+}
+
+// SetEmailVerified sets the "email_verified" field.
+func (aciuo *ApexCustomerIdentityUpdateOne) SetEmailVerified(b bool) *ApexCustomerIdentityUpdateOne {
+	aciuo.mutation.SetEmailVerified(b)
+	return aciuo
+}
+
+// SetNillableEmailVerified sets the "email_verified" field if the given value is not nil.
+func (aciuo *ApexCustomerIdentityUpdateOne) SetNillableEmailVerified(b *bool) *ApexCustomerIdentityUpdateOne {
+	if b != nil {
+		aciuo.SetEmailVerified(*b)
+	}
+	return aciuo
+}
+
+// ClearEmailVerified clears the value of the "email_verified" field.
+func (aciuo *ApexCustomerIdentityUpdateOne) ClearEmailVerified() *ApexCustomerIdentityUpdateOne {
+	aciuo.mutation.ClearEmailVerified()
 	return aciuo
 }
 
@@ -466,18 +466,6 @@ func (aciuo *ApexCustomerIdentityUpdateOne) sqlSave(ctx context.Context) (_node 
 			}
 		}
 	}
-	if value, ok := aciuo.mutation.Email(); ok {
-		_spec.SetField(apexcustomeridentity.FieldEmail, field.TypeString, value)
-	}
-	if aciuo.mutation.EmailCleared() {
-		_spec.ClearField(apexcustomeridentity.FieldEmail, field.TypeString)
-	}
-	if value, ok := aciuo.mutation.EmailVerified(); ok {
-		_spec.SetField(apexcustomeridentity.FieldEmailVerified, field.TypeBool, value)
-	}
-	if aciuo.mutation.EmailVerifiedCleared() {
-		_spec.ClearField(apexcustomeridentity.FieldEmailVerified, field.TypeBool)
-	}
 	if value, ok := aciuo.mutation.CreatedAt(); ok {
 		_spec.SetField(apexcustomeridentity.FieldCreatedAt, field.TypeTime, value)
 	}
@@ -492,6 +480,18 @@ func (aciuo *ApexCustomerIdentityUpdateOne) sqlSave(ctx context.Context) (_node 
 	}
 	if aciuo.mutation.DeletedAtCleared() {
 		_spec.ClearField(apexcustomeridentity.FieldDeletedAt, field.TypeTime)
+	}
+	if value, ok := aciuo.mutation.Email(); ok {
+		_spec.SetField(apexcustomeridentity.FieldEmail, field.TypeString, value)
+	}
+	if aciuo.mutation.EmailCleared() {
+		_spec.ClearField(apexcustomeridentity.FieldEmail, field.TypeString)
+	}
+	if value, ok := aciuo.mutation.EmailVerified(); ok {
+		_spec.SetField(apexcustomeridentity.FieldEmailVerified, field.TypeBool, value)
+	}
+	if aciuo.mutation.EmailVerifiedCleared() {
+		_spec.ClearField(apexcustomeridentity.FieldEmailVerified, field.TypeBool)
 	}
 	if aciuo.mutation.CustomerCleared() {
 		edge := &sqlgraph.EdgeSpec{

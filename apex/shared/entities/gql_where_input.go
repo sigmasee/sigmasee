@@ -31,6 +31,40 @@ type ApexCustomerWhereInput struct {
 	IDEqualFold    *string  `json:"idEqualFold,omitempty"`
 	IDContainsFold *string  `json:"idContainsFold,omitempty"`
 
+	// "created_at" field predicates.
+	CreatedAt      *time.Time  `json:"createdAt,omitempty"`
+	CreatedAtNEQ   *time.Time  `json:"createdAtNEQ,omitempty"`
+	CreatedAtIn    []time.Time `json:"createdAtIn,omitempty"`
+	CreatedAtNotIn []time.Time `json:"createdAtNotIn,omitempty"`
+	CreatedAtGT    *time.Time  `json:"createdAtGT,omitempty"`
+	CreatedAtGTE   *time.Time  `json:"createdAtGTE,omitempty"`
+	CreatedAtLT    *time.Time  `json:"createdAtLT,omitempty"`
+	CreatedAtLTE   *time.Time  `json:"createdAtLTE,omitempty"`
+
+	// "modified_at" field predicates.
+	ModifiedAt       *time.Time  `json:"modifiedAt,omitempty"`
+	ModifiedAtNEQ    *time.Time  `json:"modifiedAtNEQ,omitempty"`
+	ModifiedAtIn     []time.Time `json:"modifiedAtIn,omitempty"`
+	ModifiedAtNotIn  []time.Time `json:"modifiedAtNotIn,omitempty"`
+	ModifiedAtGT     *time.Time  `json:"modifiedAtGT,omitempty"`
+	ModifiedAtGTE    *time.Time  `json:"modifiedAtGTE,omitempty"`
+	ModifiedAtLT     *time.Time  `json:"modifiedAtLT,omitempty"`
+	ModifiedAtLTE    *time.Time  `json:"modifiedAtLTE,omitempty"`
+	ModifiedAtIsNil  bool        `json:"modifiedAtIsNil,omitempty"`
+	ModifiedAtNotNil bool        `json:"modifiedAtNotNil,omitempty"`
+
+	// "deleted_at" field predicates.
+	DeletedAt       *time.Time  `json:"deletedAt,omitempty"`
+	DeletedAtNEQ    *time.Time  `json:"deletedAtNEQ,omitempty"`
+	DeletedAtIn     []time.Time `json:"deletedAtIn,omitempty"`
+	DeletedAtNotIn  []time.Time `json:"deletedAtNotIn,omitempty"`
+	DeletedAtGT     *time.Time  `json:"deletedAtGT,omitempty"`
+	DeletedAtGTE    *time.Time  `json:"deletedAtGTE,omitempty"`
+	DeletedAtLT     *time.Time  `json:"deletedAtLT,omitempty"`
+	DeletedAtLTE    *time.Time  `json:"deletedAtLTE,omitempty"`
+	DeletedAtIsNil  bool        `json:"deletedAtIsNil,omitempty"`
+	DeletedAtNotNil bool        `json:"deletedAtNotNil,omitempty"`
+
 	// "event_raised_at" field predicates.
 	EventRaisedAt      *time.Time  `json:"eventRaisedAt,omitempty"`
 	EventRaisedAtNEQ   *time.Time  `json:"eventRaisedAtNEQ,omitempty"`
@@ -228,40 +262,6 @@ type ApexCustomerWhereInput struct {
 	PhotoURL512EqualFold    *string  `json:"photoURL512EqualFold,omitempty"`
 	PhotoURL512ContainsFold *string  `json:"photoURL512ContainsFold,omitempty"`
 
-	// "created_at" field predicates.
-	CreatedAt      *time.Time  `json:"createdAt,omitempty"`
-	CreatedAtNEQ   *time.Time  `json:"createdAtNEQ,omitempty"`
-	CreatedAtIn    []time.Time `json:"createdAtIn,omitempty"`
-	CreatedAtNotIn []time.Time `json:"createdAtNotIn,omitempty"`
-	CreatedAtGT    *time.Time  `json:"createdAtGT,omitempty"`
-	CreatedAtGTE   *time.Time  `json:"createdAtGTE,omitempty"`
-	CreatedAtLT    *time.Time  `json:"createdAtLT,omitempty"`
-	CreatedAtLTE   *time.Time  `json:"createdAtLTE,omitempty"`
-
-	// "modified_at" field predicates.
-	ModifiedAt       *time.Time  `json:"modifiedAt,omitempty"`
-	ModifiedAtNEQ    *time.Time  `json:"modifiedAtNEQ,omitempty"`
-	ModifiedAtIn     []time.Time `json:"modifiedAtIn,omitempty"`
-	ModifiedAtNotIn  []time.Time `json:"modifiedAtNotIn,omitempty"`
-	ModifiedAtGT     *time.Time  `json:"modifiedAtGT,omitempty"`
-	ModifiedAtGTE    *time.Time  `json:"modifiedAtGTE,omitempty"`
-	ModifiedAtLT     *time.Time  `json:"modifiedAtLT,omitempty"`
-	ModifiedAtLTE    *time.Time  `json:"modifiedAtLTE,omitempty"`
-	ModifiedAtIsNil  bool        `json:"modifiedAtIsNil,omitempty"`
-	ModifiedAtNotNil bool        `json:"modifiedAtNotNil,omitempty"`
-
-	// "deleted_at" field predicates.
-	DeletedAt       *time.Time  `json:"deletedAt,omitempty"`
-	DeletedAtNEQ    *time.Time  `json:"deletedAtNEQ,omitempty"`
-	DeletedAtIn     []time.Time `json:"deletedAtIn,omitempty"`
-	DeletedAtNotIn  []time.Time `json:"deletedAtNotIn,omitempty"`
-	DeletedAtGT     *time.Time  `json:"deletedAtGT,omitempty"`
-	DeletedAtGTE    *time.Time  `json:"deletedAtGTE,omitempty"`
-	DeletedAtLT     *time.Time  `json:"deletedAtLT,omitempty"`
-	DeletedAtLTE    *time.Time  `json:"deletedAtLTE,omitempty"`
-	DeletedAtIsNil  bool        `json:"deletedAtIsNil,omitempty"`
-	DeletedAtNotNil bool        `json:"deletedAtNotNil,omitempty"`
-
 	// "identities" edge predicates.
 	HasIdentities     *bool                             `json:"hasIdentities,omitempty"`
 	HasIdentitiesWith []*ApexCustomerIdentityWhereInput `json:"hasIdentitiesWith,omitempty"`
@@ -367,6 +367,90 @@ func (i *ApexCustomerWhereInput) P() (predicate.ApexCustomer, error) {
 	}
 	if i.IDContainsFold != nil {
 		predicates = append(predicates, apexcustomer.IDContainsFold(*i.IDContainsFold))
+	}
+	if i.CreatedAt != nil {
+		predicates = append(predicates, apexcustomer.CreatedAtEQ(*i.CreatedAt))
+	}
+	if i.CreatedAtNEQ != nil {
+		predicates = append(predicates, apexcustomer.CreatedAtNEQ(*i.CreatedAtNEQ))
+	}
+	if len(i.CreatedAtIn) > 0 {
+		predicates = append(predicates, apexcustomer.CreatedAtIn(i.CreatedAtIn...))
+	}
+	if len(i.CreatedAtNotIn) > 0 {
+		predicates = append(predicates, apexcustomer.CreatedAtNotIn(i.CreatedAtNotIn...))
+	}
+	if i.CreatedAtGT != nil {
+		predicates = append(predicates, apexcustomer.CreatedAtGT(*i.CreatedAtGT))
+	}
+	if i.CreatedAtGTE != nil {
+		predicates = append(predicates, apexcustomer.CreatedAtGTE(*i.CreatedAtGTE))
+	}
+	if i.CreatedAtLT != nil {
+		predicates = append(predicates, apexcustomer.CreatedAtLT(*i.CreatedAtLT))
+	}
+	if i.CreatedAtLTE != nil {
+		predicates = append(predicates, apexcustomer.CreatedAtLTE(*i.CreatedAtLTE))
+	}
+	if i.ModifiedAt != nil {
+		predicates = append(predicates, apexcustomer.ModifiedAtEQ(*i.ModifiedAt))
+	}
+	if i.ModifiedAtNEQ != nil {
+		predicates = append(predicates, apexcustomer.ModifiedAtNEQ(*i.ModifiedAtNEQ))
+	}
+	if len(i.ModifiedAtIn) > 0 {
+		predicates = append(predicates, apexcustomer.ModifiedAtIn(i.ModifiedAtIn...))
+	}
+	if len(i.ModifiedAtNotIn) > 0 {
+		predicates = append(predicates, apexcustomer.ModifiedAtNotIn(i.ModifiedAtNotIn...))
+	}
+	if i.ModifiedAtGT != nil {
+		predicates = append(predicates, apexcustomer.ModifiedAtGT(*i.ModifiedAtGT))
+	}
+	if i.ModifiedAtGTE != nil {
+		predicates = append(predicates, apexcustomer.ModifiedAtGTE(*i.ModifiedAtGTE))
+	}
+	if i.ModifiedAtLT != nil {
+		predicates = append(predicates, apexcustomer.ModifiedAtLT(*i.ModifiedAtLT))
+	}
+	if i.ModifiedAtLTE != nil {
+		predicates = append(predicates, apexcustomer.ModifiedAtLTE(*i.ModifiedAtLTE))
+	}
+	if i.ModifiedAtIsNil {
+		predicates = append(predicates, apexcustomer.ModifiedAtIsNil())
+	}
+	if i.ModifiedAtNotNil {
+		predicates = append(predicates, apexcustomer.ModifiedAtNotNil())
+	}
+	if i.DeletedAt != nil {
+		predicates = append(predicates, apexcustomer.DeletedAtEQ(*i.DeletedAt))
+	}
+	if i.DeletedAtNEQ != nil {
+		predicates = append(predicates, apexcustomer.DeletedAtNEQ(*i.DeletedAtNEQ))
+	}
+	if len(i.DeletedAtIn) > 0 {
+		predicates = append(predicates, apexcustomer.DeletedAtIn(i.DeletedAtIn...))
+	}
+	if len(i.DeletedAtNotIn) > 0 {
+		predicates = append(predicates, apexcustomer.DeletedAtNotIn(i.DeletedAtNotIn...))
+	}
+	if i.DeletedAtGT != nil {
+		predicates = append(predicates, apexcustomer.DeletedAtGT(*i.DeletedAtGT))
+	}
+	if i.DeletedAtGTE != nil {
+		predicates = append(predicates, apexcustomer.DeletedAtGTE(*i.DeletedAtGTE))
+	}
+	if i.DeletedAtLT != nil {
+		predicates = append(predicates, apexcustomer.DeletedAtLT(*i.DeletedAtLT))
+	}
+	if i.DeletedAtLTE != nil {
+		predicates = append(predicates, apexcustomer.DeletedAtLTE(*i.DeletedAtLTE))
+	}
+	if i.DeletedAtIsNil {
+		predicates = append(predicates, apexcustomer.DeletedAtIsNil())
+	}
+	if i.DeletedAtNotNil {
+		predicates = append(predicates, apexcustomer.DeletedAtNotNil())
 	}
 	if i.EventRaisedAt != nil {
 		predicates = append(predicates, apexcustomer.EventRaisedAtEQ(*i.EventRaisedAt))
@@ -887,90 +971,6 @@ func (i *ApexCustomerWhereInput) P() (predicate.ApexCustomer, error) {
 	if i.PhotoURL512ContainsFold != nil {
 		predicates = append(predicates, apexcustomer.PhotoURL512ContainsFold(*i.PhotoURL512ContainsFold))
 	}
-	if i.CreatedAt != nil {
-		predicates = append(predicates, apexcustomer.CreatedAtEQ(*i.CreatedAt))
-	}
-	if i.CreatedAtNEQ != nil {
-		predicates = append(predicates, apexcustomer.CreatedAtNEQ(*i.CreatedAtNEQ))
-	}
-	if len(i.CreatedAtIn) > 0 {
-		predicates = append(predicates, apexcustomer.CreatedAtIn(i.CreatedAtIn...))
-	}
-	if len(i.CreatedAtNotIn) > 0 {
-		predicates = append(predicates, apexcustomer.CreatedAtNotIn(i.CreatedAtNotIn...))
-	}
-	if i.CreatedAtGT != nil {
-		predicates = append(predicates, apexcustomer.CreatedAtGT(*i.CreatedAtGT))
-	}
-	if i.CreatedAtGTE != nil {
-		predicates = append(predicates, apexcustomer.CreatedAtGTE(*i.CreatedAtGTE))
-	}
-	if i.CreatedAtLT != nil {
-		predicates = append(predicates, apexcustomer.CreatedAtLT(*i.CreatedAtLT))
-	}
-	if i.CreatedAtLTE != nil {
-		predicates = append(predicates, apexcustomer.CreatedAtLTE(*i.CreatedAtLTE))
-	}
-	if i.ModifiedAt != nil {
-		predicates = append(predicates, apexcustomer.ModifiedAtEQ(*i.ModifiedAt))
-	}
-	if i.ModifiedAtNEQ != nil {
-		predicates = append(predicates, apexcustomer.ModifiedAtNEQ(*i.ModifiedAtNEQ))
-	}
-	if len(i.ModifiedAtIn) > 0 {
-		predicates = append(predicates, apexcustomer.ModifiedAtIn(i.ModifiedAtIn...))
-	}
-	if len(i.ModifiedAtNotIn) > 0 {
-		predicates = append(predicates, apexcustomer.ModifiedAtNotIn(i.ModifiedAtNotIn...))
-	}
-	if i.ModifiedAtGT != nil {
-		predicates = append(predicates, apexcustomer.ModifiedAtGT(*i.ModifiedAtGT))
-	}
-	if i.ModifiedAtGTE != nil {
-		predicates = append(predicates, apexcustomer.ModifiedAtGTE(*i.ModifiedAtGTE))
-	}
-	if i.ModifiedAtLT != nil {
-		predicates = append(predicates, apexcustomer.ModifiedAtLT(*i.ModifiedAtLT))
-	}
-	if i.ModifiedAtLTE != nil {
-		predicates = append(predicates, apexcustomer.ModifiedAtLTE(*i.ModifiedAtLTE))
-	}
-	if i.ModifiedAtIsNil {
-		predicates = append(predicates, apexcustomer.ModifiedAtIsNil())
-	}
-	if i.ModifiedAtNotNil {
-		predicates = append(predicates, apexcustomer.ModifiedAtNotNil())
-	}
-	if i.DeletedAt != nil {
-		predicates = append(predicates, apexcustomer.DeletedAtEQ(*i.DeletedAt))
-	}
-	if i.DeletedAtNEQ != nil {
-		predicates = append(predicates, apexcustomer.DeletedAtNEQ(*i.DeletedAtNEQ))
-	}
-	if len(i.DeletedAtIn) > 0 {
-		predicates = append(predicates, apexcustomer.DeletedAtIn(i.DeletedAtIn...))
-	}
-	if len(i.DeletedAtNotIn) > 0 {
-		predicates = append(predicates, apexcustomer.DeletedAtNotIn(i.DeletedAtNotIn...))
-	}
-	if i.DeletedAtGT != nil {
-		predicates = append(predicates, apexcustomer.DeletedAtGT(*i.DeletedAtGT))
-	}
-	if i.DeletedAtGTE != nil {
-		predicates = append(predicates, apexcustomer.DeletedAtGTE(*i.DeletedAtGTE))
-	}
-	if i.DeletedAtLT != nil {
-		predicates = append(predicates, apexcustomer.DeletedAtLT(*i.DeletedAtLT))
-	}
-	if i.DeletedAtLTE != nil {
-		predicates = append(predicates, apexcustomer.DeletedAtLTE(*i.DeletedAtLTE))
-	}
-	if i.DeletedAtIsNil {
-		predicates = append(predicates, apexcustomer.DeletedAtIsNil())
-	}
-	if i.DeletedAtNotNil {
-		predicates = append(predicates, apexcustomer.DeletedAtNotNil())
-	}
 
 	if i.HasIdentities != nil {
 		p := apexcustomer.HasIdentities()
@@ -1019,29 +1019,6 @@ type ApexCustomerIdentityWhereInput struct {
 	IDEqualFold    *string  `json:"idEqualFold,omitempty"`
 	IDContainsFold *string  `json:"idContainsFold,omitempty"`
 
-	// "email" field predicates.
-	Email             *string  `json:"email,omitempty"`
-	EmailNEQ          *string  `json:"emailNEQ,omitempty"`
-	EmailIn           []string `json:"emailIn,omitempty"`
-	EmailNotIn        []string `json:"emailNotIn,omitempty"`
-	EmailGT           *string  `json:"emailGT,omitempty"`
-	EmailGTE          *string  `json:"emailGTE,omitempty"`
-	EmailLT           *string  `json:"emailLT,omitempty"`
-	EmailLTE          *string  `json:"emailLTE,omitempty"`
-	EmailContains     *string  `json:"emailContains,omitempty"`
-	EmailHasPrefix    *string  `json:"emailHasPrefix,omitempty"`
-	EmailHasSuffix    *string  `json:"emailHasSuffix,omitempty"`
-	EmailIsNil        bool     `json:"emailIsNil,omitempty"`
-	EmailNotNil       bool     `json:"emailNotNil,omitempty"`
-	EmailEqualFold    *string  `json:"emailEqualFold,omitempty"`
-	EmailContainsFold *string  `json:"emailContainsFold,omitempty"`
-
-	// "email_verified" field predicates.
-	EmailVerified       *bool `json:"emailVerified,omitempty"`
-	EmailVerifiedNEQ    *bool `json:"emailVerifiedNEQ,omitempty"`
-	EmailVerifiedIsNil  bool  `json:"emailVerifiedIsNil,omitempty"`
-	EmailVerifiedNotNil bool  `json:"emailVerifiedNotNil,omitempty"`
-
 	// "created_at" field predicates.
 	CreatedAt      *time.Time  `json:"createdAt,omitempty"`
 	CreatedAtNEQ   *time.Time  `json:"createdAtNEQ,omitempty"`
@@ -1075,6 +1052,29 @@ type ApexCustomerIdentityWhereInput struct {
 	DeletedAtLTE    *time.Time  `json:"deletedAtLTE,omitempty"`
 	DeletedAtIsNil  bool        `json:"deletedAtIsNil,omitempty"`
 	DeletedAtNotNil bool        `json:"deletedAtNotNil,omitempty"`
+
+	// "email" field predicates.
+	Email             *string  `json:"email,omitempty"`
+	EmailNEQ          *string  `json:"emailNEQ,omitempty"`
+	EmailIn           []string `json:"emailIn,omitempty"`
+	EmailNotIn        []string `json:"emailNotIn,omitempty"`
+	EmailGT           *string  `json:"emailGT,omitempty"`
+	EmailGTE          *string  `json:"emailGTE,omitempty"`
+	EmailLT           *string  `json:"emailLT,omitempty"`
+	EmailLTE          *string  `json:"emailLTE,omitempty"`
+	EmailContains     *string  `json:"emailContains,omitempty"`
+	EmailHasPrefix    *string  `json:"emailHasPrefix,omitempty"`
+	EmailHasSuffix    *string  `json:"emailHasSuffix,omitempty"`
+	EmailIsNil        bool     `json:"emailIsNil,omitempty"`
+	EmailNotNil       bool     `json:"emailNotNil,omitempty"`
+	EmailEqualFold    *string  `json:"emailEqualFold,omitempty"`
+	EmailContainsFold *string  `json:"emailContainsFold,omitempty"`
+
+	// "email_verified" field predicates.
+	EmailVerified       *bool `json:"emailVerified,omitempty"`
+	EmailVerifiedNEQ    *bool `json:"emailVerifiedNEQ,omitempty"`
+	EmailVerifiedIsNil  bool  `json:"emailVerifiedIsNil,omitempty"`
+	EmailVerifiedNotNil bool  `json:"emailVerifiedNotNil,omitempty"`
 
 	// "customer" edge predicates.
 	HasCustomer     *bool                     `json:"hasCustomer,omitempty"`
@@ -1182,63 +1182,6 @@ func (i *ApexCustomerIdentityWhereInput) P() (predicate.ApexCustomerIdentity, er
 	if i.IDContainsFold != nil {
 		predicates = append(predicates, apexcustomeridentity.IDContainsFold(*i.IDContainsFold))
 	}
-	if i.Email != nil {
-		predicates = append(predicates, apexcustomeridentity.EmailEQ(*i.Email))
-	}
-	if i.EmailNEQ != nil {
-		predicates = append(predicates, apexcustomeridentity.EmailNEQ(*i.EmailNEQ))
-	}
-	if len(i.EmailIn) > 0 {
-		predicates = append(predicates, apexcustomeridentity.EmailIn(i.EmailIn...))
-	}
-	if len(i.EmailNotIn) > 0 {
-		predicates = append(predicates, apexcustomeridentity.EmailNotIn(i.EmailNotIn...))
-	}
-	if i.EmailGT != nil {
-		predicates = append(predicates, apexcustomeridentity.EmailGT(*i.EmailGT))
-	}
-	if i.EmailGTE != nil {
-		predicates = append(predicates, apexcustomeridentity.EmailGTE(*i.EmailGTE))
-	}
-	if i.EmailLT != nil {
-		predicates = append(predicates, apexcustomeridentity.EmailLT(*i.EmailLT))
-	}
-	if i.EmailLTE != nil {
-		predicates = append(predicates, apexcustomeridentity.EmailLTE(*i.EmailLTE))
-	}
-	if i.EmailContains != nil {
-		predicates = append(predicates, apexcustomeridentity.EmailContains(*i.EmailContains))
-	}
-	if i.EmailHasPrefix != nil {
-		predicates = append(predicates, apexcustomeridentity.EmailHasPrefix(*i.EmailHasPrefix))
-	}
-	if i.EmailHasSuffix != nil {
-		predicates = append(predicates, apexcustomeridentity.EmailHasSuffix(*i.EmailHasSuffix))
-	}
-	if i.EmailIsNil {
-		predicates = append(predicates, apexcustomeridentity.EmailIsNil())
-	}
-	if i.EmailNotNil {
-		predicates = append(predicates, apexcustomeridentity.EmailNotNil())
-	}
-	if i.EmailEqualFold != nil {
-		predicates = append(predicates, apexcustomeridentity.EmailEqualFold(*i.EmailEqualFold))
-	}
-	if i.EmailContainsFold != nil {
-		predicates = append(predicates, apexcustomeridentity.EmailContainsFold(*i.EmailContainsFold))
-	}
-	if i.EmailVerified != nil {
-		predicates = append(predicates, apexcustomeridentity.EmailVerifiedEQ(*i.EmailVerified))
-	}
-	if i.EmailVerifiedNEQ != nil {
-		predicates = append(predicates, apexcustomeridentity.EmailVerifiedNEQ(*i.EmailVerifiedNEQ))
-	}
-	if i.EmailVerifiedIsNil {
-		predicates = append(predicates, apexcustomeridentity.EmailVerifiedIsNil())
-	}
-	if i.EmailVerifiedNotNil {
-		predicates = append(predicates, apexcustomeridentity.EmailVerifiedNotNil())
-	}
 	if i.CreatedAt != nil {
 		predicates = append(predicates, apexcustomeridentity.CreatedAtEQ(*i.CreatedAt))
 	}
@@ -1322,6 +1265,63 @@ func (i *ApexCustomerIdentityWhereInput) P() (predicate.ApexCustomerIdentity, er
 	}
 	if i.DeletedAtNotNil {
 		predicates = append(predicates, apexcustomeridentity.DeletedAtNotNil())
+	}
+	if i.Email != nil {
+		predicates = append(predicates, apexcustomeridentity.EmailEQ(*i.Email))
+	}
+	if i.EmailNEQ != nil {
+		predicates = append(predicates, apexcustomeridentity.EmailNEQ(*i.EmailNEQ))
+	}
+	if len(i.EmailIn) > 0 {
+		predicates = append(predicates, apexcustomeridentity.EmailIn(i.EmailIn...))
+	}
+	if len(i.EmailNotIn) > 0 {
+		predicates = append(predicates, apexcustomeridentity.EmailNotIn(i.EmailNotIn...))
+	}
+	if i.EmailGT != nil {
+		predicates = append(predicates, apexcustomeridentity.EmailGT(*i.EmailGT))
+	}
+	if i.EmailGTE != nil {
+		predicates = append(predicates, apexcustomeridentity.EmailGTE(*i.EmailGTE))
+	}
+	if i.EmailLT != nil {
+		predicates = append(predicates, apexcustomeridentity.EmailLT(*i.EmailLT))
+	}
+	if i.EmailLTE != nil {
+		predicates = append(predicates, apexcustomeridentity.EmailLTE(*i.EmailLTE))
+	}
+	if i.EmailContains != nil {
+		predicates = append(predicates, apexcustomeridentity.EmailContains(*i.EmailContains))
+	}
+	if i.EmailHasPrefix != nil {
+		predicates = append(predicates, apexcustomeridentity.EmailHasPrefix(*i.EmailHasPrefix))
+	}
+	if i.EmailHasSuffix != nil {
+		predicates = append(predicates, apexcustomeridentity.EmailHasSuffix(*i.EmailHasSuffix))
+	}
+	if i.EmailIsNil {
+		predicates = append(predicates, apexcustomeridentity.EmailIsNil())
+	}
+	if i.EmailNotNil {
+		predicates = append(predicates, apexcustomeridentity.EmailNotNil())
+	}
+	if i.EmailEqualFold != nil {
+		predicates = append(predicates, apexcustomeridentity.EmailEqualFold(*i.EmailEqualFold))
+	}
+	if i.EmailContainsFold != nil {
+		predicates = append(predicates, apexcustomeridentity.EmailContainsFold(*i.EmailContainsFold))
+	}
+	if i.EmailVerified != nil {
+		predicates = append(predicates, apexcustomeridentity.EmailVerifiedEQ(*i.EmailVerified))
+	}
+	if i.EmailVerifiedNEQ != nil {
+		predicates = append(predicates, apexcustomeridentity.EmailVerifiedNEQ(*i.EmailVerifiedNEQ))
+	}
+	if i.EmailVerifiedIsNil {
+		predicates = append(predicates, apexcustomeridentity.EmailVerifiedIsNil())
+	}
+	if i.EmailVerifiedNotNil {
+		predicates = append(predicates, apexcustomeridentity.EmailVerifiedNotNil())
 	}
 
 	if i.HasCustomer != nil {

@@ -306,12 +306,12 @@ func (iq *IdentityQuery) WithCustomer(opts ...func(*CustomerQuery)) *IdentityQue
 // Example:
 //
 //	var v []struct {
-//		Email string `json:"email,omitempty"`
+//		CreatedAt time.Time `json:"created_at,omitempty"`
 //		Count int `json:"count,omitempty"`
 //	}
 //
 //	client.Identity.Query().
-//		GroupBy(identity.FieldEmail).
+//		GroupBy(identity.FieldCreatedAt).
 //		Aggregate(entities.Count()).
 //		Scan(ctx, &v)
 func (iq *IdentityQuery) GroupBy(field string, fields ...string) *IdentityGroupBy {
@@ -329,11 +329,11 @@ func (iq *IdentityQuery) GroupBy(field string, fields ...string) *IdentityGroupB
 // Example:
 //
 //	var v []struct {
-//		Email string `json:"email,omitempty"`
+//		CreatedAt time.Time `json:"created_at,omitempty"`
 //	}
 //
 //	client.Identity.Query().
-//		Select(identity.FieldEmail).
+//		Select(identity.FieldCreatedAt).
 //		Scan(ctx, &v)
 func (iq *IdentityQuery) Select(fields ...string) *IdentitySelect {
 	iq.ctx.Fields = append(iq.ctx.Fields, fields...)

@@ -18,16 +18,16 @@ type ApexCustomerIdentity struct {
 	config `json:"-"`
 	// ID of the ent.
 	ID string `json:"id,omitempty"`
-	// Email holds the value of the "email" field.
-	Email string `json:"email,omitempty"`
-	// EmailVerified holds the value of the "email_verified" field.
-	EmailVerified bool `json:"email_verified,omitempty"`
 	// CreatedAt holds the value of the "created_at" field.
 	CreatedAt time.Time `json:"created_at,omitempty"`
 	// ModifiedAt holds the value of the "modified_at" field.
 	ModifiedAt time.Time `json:"modified_at,omitempty"`
 	// DeletedAt holds the value of the "deleted_at" field.
 	DeletedAt time.Time `json:"deleted_at,omitempty"`
+	// Email holds the value of the "email" field.
+	Email string `json:"email,omitempty"`
+	// EmailVerified holds the value of the "email_verified" field.
+	EmailVerified bool `json:"email_verified,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
 	// The values are being populated by the ApexCustomerIdentityQuery when eager-loading is set.
 	Edges                    ApexCustomerIdentityEdges `json:"edges"`
@@ -93,18 +93,6 @@ func (aci *ApexCustomerIdentity) assignValues(columns []string, values []any) er
 			} else if value.Valid {
 				aci.ID = value.String
 			}
-		case apexcustomeridentity.FieldEmail:
-			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field email", values[i])
-			} else if value.Valid {
-				aci.Email = value.String
-			}
-		case apexcustomeridentity.FieldEmailVerified:
-			if value, ok := values[i].(*sql.NullBool); !ok {
-				return fmt.Errorf("unexpected type %T for field email_verified", values[i])
-			} else if value.Valid {
-				aci.EmailVerified = value.Bool
-			}
 		case apexcustomeridentity.FieldCreatedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field created_at", values[i])
@@ -122,6 +110,18 @@ func (aci *ApexCustomerIdentity) assignValues(columns []string, values []any) er
 				return fmt.Errorf("unexpected type %T for field deleted_at", values[i])
 			} else if value.Valid {
 				aci.DeletedAt = value.Time
+			}
+		case apexcustomeridentity.FieldEmail:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field email", values[i])
+			} else if value.Valid {
+				aci.Email = value.String
+			}
+		case apexcustomeridentity.FieldEmailVerified:
+			if value, ok := values[i].(*sql.NullBool); !ok {
+				return fmt.Errorf("unexpected type %T for field email_verified", values[i])
+			} else if value.Valid {
+				aci.EmailVerified = value.Bool
 			}
 		case apexcustomeridentity.ForeignKeys[0]:
 			if value, ok := values[i].(*sql.NullString); !ok {
@@ -171,12 +171,6 @@ func (aci *ApexCustomerIdentity) String() string {
 	var builder strings.Builder
 	builder.WriteString("ApexCustomerIdentity(")
 	builder.WriteString(fmt.Sprintf("id=%v, ", aci.ID))
-	builder.WriteString("email=")
-	builder.WriteString(aci.Email)
-	builder.WriteString(", ")
-	builder.WriteString("email_verified=")
-	builder.WriteString(fmt.Sprintf("%v", aci.EmailVerified))
-	builder.WriteString(", ")
 	builder.WriteString("created_at=")
 	builder.WriteString(aci.CreatedAt.Format(time.ANSIC))
 	builder.WriteString(", ")
@@ -185,6 +179,12 @@ func (aci *ApexCustomerIdentity) String() string {
 	builder.WriteString(", ")
 	builder.WriteString("deleted_at=")
 	builder.WriteString(aci.DeletedAt.Format(time.ANSIC))
+	builder.WriteString(", ")
+	builder.WriteString("email=")
+	builder.WriteString(aci.Email)
+	builder.WriteString(", ")
+	builder.WriteString("email_verified=")
+	builder.WriteString(fmt.Sprintf("%v", aci.EmailVerified))
 	builder.WriteByte(')')
 	return builder.String()
 }

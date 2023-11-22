@@ -33,6 +33,40 @@ type CustomerWhereInput struct {
 	IDEqualFold    *string  `json:"idEqualFold,omitempty"`
 	IDContainsFold *string  `json:"idContainsFold,omitempty"`
 
+	// "created_at" field predicates.
+	CreatedAt      *time.Time  `json:"createdAt,omitempty"`
+	CreatedAtNEQ   *time.Time  `json:"createdAtNEQ,omitempty"`
+	CreatedAtIn    []time.Time `json:"createdAtIn,omitempty"`
+	CreatedAtNotIn []time.Time `json:"createdAtNotIn,omitempty"`
+	CreatedAtGT    *time.Time  `json:"createdAtGT,omitempty"`
+	CreatedAtGTE   *time.Time  `json:"createdAtGTE,omitempty"`
+	CreatedAtLT    *time.Time  `json:"createdAtLT,omitempty"`
+	CreatedAtLTE   *time.Time  `json:"createdAtLTE,omitempty"`
+
+	// "modified_at" field predicates.
+	ModifiedAt       *time.Time  `json:"modifiedAt,omitempty"`
+	ModifiedAtNEQ    *time.Time  `json:"modifiedAtNEQ,omitempty"`
+	ModifiedAtIn     []time.Time `json:"modifiedAtIn,omitempty"`
+	ModifiedAtNotIn  []time.Time `json:"modifiedAtNotIn,omitempty"`
+	ModifiedAtGT     *time.Time  `json:"modifiedAtGT,omitempty"`
+	ModifiedAtGTE    *time.Time  `json:"modifiedAtGTE,omitempty"`
+	ModifiedAtLT     *time.Time  `json:"modifiedAtLT,omitempty"`
+	ModifiedAtLTE    *time.Time  `json:"modifiedAtLTE,omitempty"`
+	ModifiedAtIsNil  bool        `json:"modifiedAtIsNil,omitempty"`
+	ModifiedAtNotNil bool        `json:"modifiedAtNotNil,omitempty"`
+
+	// "deleted_at" field predicates.
+	DeletedAt       *time.Time  `json:"deletedAt,omitempty"`
+	DeletedAtNEQ    *time.Time  `json:"deletedAtNEQ,omitempty"`
+	DeletedAtIn     []time.Time `json:"deletedAtIn,omitempty"`
+	DeletedAtNotIn  []time.Time `json:"deletedAtNotIn,omitempty"`
+	DeletedAtGT     *time.Time  `json:"deletedAtGT,omitempty"`
+	DeletedAtGTE    *time.Time  `json:"deletedAtGTE,omitempty"`
+	DeletedAtLT     *time.Time  `json:"deletedAtLT,omitempty"`
+	DeletedAtLTE    *time.Time  `json:"deletedAtLTE,omitempty"`
+	DeletedAtIsNil  bool        `json:"deletedAtIsNil,omitempty"`
+	DeletedAtNotNil bool        `json:"deletedAtNotNil,omitempty"`
+
 	// "designation" field predicates.
 	Designation             *string  `json:"designation,omitempty"`
 	DesignationNEQ          *string  `json:"designationNEQ,omitempty"`
@@ -288,40 +322,6 @@ type CustomerWhereInput struct {
 	LocaleEqualFold    *string  `json:"localeEqualFold,omitempty"`
 	LocaleContainsFold *string  `json:"localeContainsFold,omitempty"`
 
-	// "created_at" field predicates.
-	CreatedAt      *time.Time  `json:"createdAt,omitempty"`
-	CreatedAtNEQ   *time.Time  `json:"createdAtNEQ,omitempty"`
-	CreatedAtIn    []time.Time `json:"createdAtIn,omitempty"`
-	CreatedAtNotIn []time.Time `json:"createdAtNotIn,omitempty"`
-	CreatedAtGT    *time.Time  `json:"createdAtGT,omitempty"`
-	CreatedAtGTE   *time.Time  `json:"createdAtGTE,omitempty"`
-	CreatedAtLT    *time.Time  `json:"createdAtLT,omitempty"`
-	CreatedAtLTE   *time.Time  `json:"createdAtLTE,omitempty"`
-
-	// "modified_at" field predicates.
-	ModifiedAt       *time.Time  `json:"modifiedAt,omitempty"`
-	ModifiedAtNEQ    *time.Time  `json:"modifiedAtNEQ,omitempty"`
-	ModifiedAtIn     []time.Time `json:"modifiedAtIn,omitempty"`
-	ModifiedAtNotIn  []time.Time `json:"modifiedAtNotIn,omitempty"`
-	ModifiedAtGT     *time.Time  `json:"modifiedAtGT,omitempty"`
-	ModifiedAtGTE    *time.Time  `json:"modifiedAtGTE,omitempty"`
-	ModifiedAtLT     *time.Time  `json:"modifiedAtLT,omitempty"`
-	ModifiedAtLTE    *time.Time  `json:"modifiedAtLTE,omitempty"`
-	ModifiedAtIsNil  bool        `json:"modifiedAtIsNil,omitempty"`
-	ModifiedAtNotNil bool        `json:"modifiedAtNotNil,omitempty"`
-
-	// "deleted_at" field predicates.
-	DeletedAt       *time.Time  `json:"deletedAt,omitempty"`
-	DeletedAtNEQ    *time.Time  `json:"deletedAtNEQ,omitempty"`
-	DeletedAtIn     []time.Time `json:"deletedAtIn,omitempty"`
-	DeletedAtNotIn  []time.Time `json:"deletedAtNotIn,omitempty"`
-	DeletedAtGT     *time.Time  `json:"deletedAtGT,omitempty"`
-	DeletedAtGTE    *time.Time  `json:"deletedAtGTE,omitempty"`
-	DeletedAtLT     *time.Time  `json:"deletedAtLT,omitempty"`
-	DeletedAtLTE    *time.Time  `json:"deletedAtLTE,omitempty"`
-	DeletedAtIsNil  bool        `json:"deletedAtIsNil,omitempty"`
-	DeletedAtNotNil bool        `json:"deletedAtNotNil,omitempty"`
-
 	// "identities" edge predicates.
 	HasIdentities     *bool                 `json:"hasIdentities,omitempty"`
 	HasIdentitiesWith []*IdentityWhereInput `json:"hasIdentitiesWith,omitempty"`
@@ -431,6 +431,90 @@ func (i *CustomerWhereInput) P() (predicate.Customer, error) {
 	}
 	if i.IDContainsFold != nil {
 		predicates = append(predicates, customer.IDContainsFold(*i.IDContainsFold))
+	}
+	if i.CreatedAt != nil {
+		predicates = append(predicates, customer.CreatedAtEQ(*i.CreatedAt))
+	}
+	if i.CreatedAtNEQ != nil {
+		predicates = append(predicates, customer.CreatedAtNEQ(*i.CreatedAtNEQ))
+	}
+	if len(i.CreatedAtIn) > 0 {
+		predicates = append(predicates, customer.CreatedAtIn(i.CreatedAtIn...))
+	}
+	if len(i.CreatedAtNotIn) > 0 {
+		predicates = append(predicates, customer.CreatedAtNotIn(i.CreatedAtNotIn...))
+	}
+	if i.CreatedAtGT != nil {
+		predicates = append(predicates, customer.CreatedAtGT(*i.CreatedAtGT))
+	}
+	if i.CreatedAtGTE != nil {
+		predicates = append(predicates, customer.CreatedAtGTE(*i.CreatedAtGTE))
+	}
+	if i.CreatedAtLT != nil {
+		predicates = append(predicates, customer.CreatedAtLT(*i.CreatedAtLT))
+	}
+	if i.CreatedAtLTE != nil {
+		predicates = append(predicates, customer.CreatedAtLTE(*i.CreatedAtLTE))
+	}
+	if i.ModifiedAt != nil {
+		predicates = append(predicates, customer.ModifiedAtEQ(*i.ModifiedAt))
+	}
+	if i.ModifiedAtNEQ != nil {
+		predicates = append(predicates, customer.ModifiedAtNEQ(*i.ModifiedAtNEQ))
+	}
+	if len(i.ModifiedAtIn) > 0 {
+		predicates = append(predicates, customer.ModifiedAtIn(i.ModifiedAtIn...))
+	}
+	if len(i.ModifiedAtNotIn) > 0 {
+		predicates = append(predicates, customer.ModifiedAtNotIn(i.ModifiedAtNotIn...))
+	}
+	if i.ModifiedAtGT != nil {
+		predicates = append(predicates, customer.ModifiedAtGT(*i.ModifiedAtGT))
+	}
+	if i.ModifiedAtGTE != nil {
+		predicates = append(predicates, customer.ModifiedAtGTE(*i.ModifiedAtGTE))
+	}
+	if i.ModifiedAtLT != nil {
+		predicates = append(predicates, customer.ModifiedAtLT(*i.ModifiedAtLT))
+	}
+	if i.ModifiedAtLTE != nil {
+		predicates = append(predicates, customer.ModifiedAtLTE(*i.ModifiedAtLTE))
+	}
+	if i.ModifiedAtIsNil {
+		predicates = append(predicates, customer.ModifiedAtIsNil())
+	}
+	if i.ModifiedAtNotNil {
+		predicates = append(predicates, customer.ModifiedAtNotNil())
+	}
+	if i.DeletedAt != nil {
+		predicates = append(predicates, customer.DeletedAtEQ(*i.DeletedAt))
+	}
+	if i.DeletedAtNEQ != nil {
+		predicates = append(predicates, customer.DeletedAtNEQ(*i.DeletedAtNEQ))
+	}
+	if len(i.DeletedAtIn) > 0 {
+		predicates = append(predicates, customer.DeletedAtIn(i.DeletedAtIn...))
+	}
+	if len(i.DeletedAtNotIn) > 0 {
+		predicates = append(predicates, customer.DeletedAtNotIn(i.DeletedAtNotIn...))
+	}
+	if i.DeletedAtGT != nil {
+		predicates = append(predicates, customer.DeletedAtGT(*i.DeletedAtGT))
+	}
+	if i.DeletedAtGTE != nil {
+		predicates = append(predicates, customer.DeletedAtGTE(*i.DeletedAtGTE))
+	}
+	if i.DeletedAtLT != nil {
+		predicates = append(predicates, customer.DeletedAtLT(*i.DeletedAtLT))
+	}
+	if i.DeletedAtLTE != nil {
+		predicates = append(predicates, customer.DeletedAtLTE(*i.DeletedAtLTE))
+	}
+	if i.DeletedAtIsNil {
+		predicates = append(predicates, customer.DeletedAtIsNil())
+	}
+	if i.DeletedAtNotNil {
+		predicates = append(predicates, customer.DeletedAtNotNil())
 	}
 	if i.Designation != nil {
 		predicates = append(predicates, customer.DesignationEQ(*i.Designation))
@@ -1107,90 +1191,6 @@ func (i *CustomerWhereInput) P() (predicate.Customer, error) {
 	if i.LocaleContainsFold != nil {
 		predicates = append(predicates, customer.LocaleContainsFold(*i.LocaleContainsFold))
 	}
-	if i.CreatedAt != nil {
-		predicates = append(predicates, customer.CreatedAtEQ(*i.CreatedAt))
-	}
-	if i.CreatedAtNEQ != nil {
-		predicates = append(predicates, customer.CreatedAtNEQ(*i.CreatedAtNEQ))
-	}
-	if len(i.CreatedAtIn) > 0 {
-		predicates = append(predicates, customer.CreatedAtIn(i.CreatedAtIn...))
-	}
-	if len(i.CreatedAtNotIn) > 0 {
-		predicates = append(predicates, customer.CreatedAtNotIn(i.CreatedAtNotIn...))
-	}
-	if i.CreatedAtGT != nil {
-		predicates = append(predicates, customer.CreatedAtGT(*i.CreatedAtGT))
-	}
-	if i.CreatedAtGTE != nil {
-		predicates = append(predicates, customer.CreatedAtGTE(*i.CreatedAtGTE))
-	}
-	if i.CreatedAtLT != nil {
-		predicates = append(predicates, customer.CreatedAtLT(*i.CreatedAtLT))
-	}
-	if i.CreatedAtLTE != nil {
-		predicates = append(predicates, customer.CreatedAtLTE(*i.CreatedAtLTE))
-	}
-	if i.ModifiedAt != nil {
-		predicates = append(predicates, customer.ModifiedAtEQ(*i.ModifiedAt))
-	}
-	if i.ModifiedAtNEQ != nil {
-		predicates = append(predicates, customer.ModifiedAtNEQ(*i.ModifiedAtNEQ))
-	}
-	if len(i.ModifiedAtIn) > 0 {
-		predicates = append(predicates, customer.ModifiedAtIn(i.ModifiedAtIn...))
-	}
-	if len(i.ModifiedAtNotIn) > 0 {
-		predicates = append(predicates, customer.ModifiedAtNotIn(i.ModifiedAtNotIn...))
-	}
-	if i.ModifiedAtGT != nil {
-		predicates = append(predicates, customer.ModifiedAtGT(*i.ModifiedAtGT))
-	}
-	if i.ModifiedAtGTE != nil {
-		predicates = append(predicates, customer.ModifiedAtGTE(*i.ModifiedAtGTE))
-	}
-	if i.ModifiedAtLT != nil {
-		predicates = append(predicates, customer.ModifiedAtLT(*i.ModifiedAtLT))
-	}
-	if i.ModifiedAtLTE != nil {
-		predicates = append(predicates, customer.ModifiedAtLTE(*i.ModifiedAtLTE))
-	}
-	if i.ModifiedAtIsNil {
-		predicates = append(predicates, customer.ModifiedAtIsNil())
-	}
-	if i.ModifiedAtNotNil {
-		predicates = append(predicates, customer.ModifiedAtNotNil())
-	}
-	if i.DeletedAt != nil {
-		predicates = append(predicates, customer.DeletedAtEQ(*i.DeletedAt))
-	}
-	if i.DeletedAtNEQ != nil {
-		predicates = append(predicates, customer.DeletedAtNEQ(*i.DeletedAtNEQ))
-	}
-	if len(i.DeletedAtIn) > 0 {
-		predicates = append(predicates, customer.DeletedAtIn(i.DeletedAtIn...))
-	}
-	if len(i.DeletedAtNotIn) > 0 {
-		predicates = append(predicates, customer.DeletedAtNotIn(i.DeletedAtNotIn...))
-	}
-	if i.DeletedAtGT != nil {
-		predicates = append(predicates, customer.DeletedAtGT(*i.DeletedAtGT))
-	}
-	if i.DeletedAtGTE != nil {
-		predicates = append(predicates, customer.DeletedAtGTE(*i.DeletedAtGTE))
-	}
-	if i.DeletedAtLT != nil {
-		predicates = append(predicates, customer.DeletedAtLT(*i.DeletedAtLT))
-	}
-	if i.DeletedAtLTE != nil {
-		predicates = append(predicates, customer.DeletedAtLTE(*i.DeletedAtLTE))
-	}
-	if i.DeletedAtIsNil {
-		predicates = append(predicates, customer.DeletedAtIsNil())
-	}
-	if i.DeletedAtNotNil {
-		predicates = append(predicates, customer.DeletedAtNotNil())
-	}
 
 	if i.HasIdentities != nil {
 		p := customer.HasIdentities()
@@ -1843,29 +1843,6 @@ type IdentityWhereInput struct {
 	IDEqualFold    *string  `json:"idEqualFold,omitempty"`
 	IDContainsFold *string  `json:"idContainsFold,omitempty"`
 
-	// "email" field predicates.
-	Email             *string  `json:"email,omitempty"`
-	EmailNEQ          *string  `json:"emailNEQ,omitempty"`
-	EmailIn           []string `json:"emailIn,omitempty"`
-	EmailNotIn        []string `json:"emailNotIn,omitempty"`
-	EmailGT           *string  `json:"emailGT,omitempty"`
-	EmailGTE          *string  `json:"emailGTE,omitempty"`
-	EmailLT           *string  `json:"emailLT,omitempty"`
-	EmailLTE          *string  `json:"emailLTE,omitempty"`
-	EmailContains     *string  `json:"emailContains,omitempty"`
-	EmailHasPrefix    *string  `json:"emailHasPrefix,omitempty"`
-	EmailHasSuffix    *string  `json:"emailHasSuffix,omitempty"`
-	EmailIsNil        bool     `json:"emailIsNil,omitempty"`
-	EmailNotNil       bool     `json:"emailNotNil,omitempty"`
-	EmailEqualFold    *string  `json:"emailEqualFold,omitempty"`
-	EmailContainsFold *string  `json:"emailContainsFold,omitempty"`
-
-	// "email_verified" field predicates.
-	EmailVerified       *bool `json:"emailVerified,omitempty"`
-	EmailVerifiedNEQ    *bool `json:"emailVerifiedNEQ,omitempty"`
-	EmailVerifiedIsNil  bool  `json:"emailVerifiedIsNil,omitempty"`
-	EmailVerifiedNotNil bool  `json:"emailVerifiedNotNil,omitempty"`
-
 	// "created_at" field predicates.
 	CreatedAt      *time.Time  `json:"createdAt,omitempty"`
 	CreatedAtNEQ   *time.Time  `json:"createdAtNEQ,omitempty"`
@@ -1899,6 +1876,29 @@ type IdentityWhereInput struct {
 	DeletedAtLTE    *time.Time  `json:"deletedAtLTE,omitempty"`
 	DeletedAtIsNil  bool        `json:"deletedAtIsNil,omitempty"`
 	DeletedAtNotNil bool        `json:"deletedAtNotNil,omitempty"`
+
+	// "email" field predicates.
+	Email             *string  `json:"email,omitempty"`
+	EmailNEQ          *string  `json:"emailNEQ,omitempty"`
+	EmailIn           []string `json:"emailIn,omitempty"`
+	EmailNotIn        []string `json:"emailNotIn,omitempty"`
+	EmailGT           *string  `json:"emailGT,omitempty"`
+	EmailGTE          *string  `json:"emailGTE,omitempty"`
+	EmailLT           *string  `json:"emailLT,omitempty"`
+	EmailLTE          *string  `json:"emailLTE,omitempty"`
+	EmailContains     *string  `json:"emailContains,omitempty"`
+	EmailHasPrefix    *string  `json:"emailHasPrefix,omitempty"`
+	EmailHasSuffix    *string  `json:"emailHasSuffix,omitempty"`
+	EmailIsNil        bool     `json:"emailIsNil,omitempty"`
+	EmailNotNil       bool     `json:"emailNotNil,omitempty"`
+	EmailEqualFold    *string  `json:"emailEqualFold,omitempty"`
+	EmailContainsFold *string  `json:"emailContainsFold,omitempty"`
+
+	// "email_verified" field predicates.
+	EmailVerified       *bool `json:"emailVerified,omitempty"`
+	EmailVerifiedNEQ    *bool `json:"emailVerifiedNEQ,omitempty"`
+	EmailVerifiedIsNil  bool  `json:"emailVerifiedIsNil,omitempty"`
+	EmailVerifiedNotNil bool  `json:"emailVerifiedNotNil,omitempty"`
 
 	// "customer" edge predicates.
 	HasCustomer     *bool                 `json:"hasCustomer,omitempty"`
@@ -2006,63 +2006,6 @@ func (i *IdentityWhereInput) P() (predicate.Identity, error) {
 	if i.IDContainsFold != nil {
 		predicates = append(predicates, identity.IDContainsFold(*i.IDContainsFold))
 	}
-	if i.Email != nil {
-		predicates = append(predicates, identity.EmailEQ(*i.Email))
-	}
-	if i.EmailNEQ != nil {
-		predicates = append(predicates, identity.EmailNEQ(*i.EmailNEQ))
-	}
-	if len(i.EmailIn) > 0 {
-		predicates = append(predicates, identity.EmailIn(i.EmailIn...))
-	}
-	if len(i.EmailNotIn) > 0 {
-		predicates = append(predicates, identity.EmailNotIn(i.EmailNotIn...))
-	}
-	if i.EmailGT != nil {
-		predicates = append(predicates, identity.EmailGT(*i.EmailGT))
-	}
-	if i.EmailGTE != nil {
-		predicates = append(predicates, identity.EmailGTE(*i.EmailGTE))
-	}
-	if i.EmailLT != nil {
-		predicates = append(predicates, identity.EmailLT(*i.EmailLT))
-	}
-	if i.EmailLTE != nil {
-		predicates = append(predicates, identity.EmailLTE(*i.EmailLTE))
-	}
-	if i.EmailContains != nil {
-		predicates = append(predicates, identity.EmailContains(*i.EmailContains))
-	}
-	if i.EmailHasPrefix != nil {
-		predicates = append(predicates, identity.EmailHasPrefix(*i.EmailHasPrefix))
-	}
-	if i.EmailHasSuffix != nil {
-		predicates = append(predicates, identity.EmailHasSuffix(*i.EmailHasSuffix))
-	}
-	if i.EmailIsNil {
-		predicates = append(predicates, identity.EmailIsNil())
-	}
-	if i.EmailNotNil {
-		predicates = append(predicates, identity.EmailNotNil())
-	}
-	if i.EmailEqualFold != nil {
-		predicates = append(predicates, identity.EmailEqualFold(*i.EmailEqualFold))
-	}
-	if i.EmailContainsFold != nil {
-		predicates = append(predicates, identity.EmailContainsFold(*i.EmailContainsFold))
-	}
-	if i.EmailVerified != nil {
-		predicates = append(predicates, identity.EmailVerifiedEQ(*i.EmailVerified))
-	}
-	if i.EmailVerifiedNEQ != nil {
-		predicates = append(predicates, identity.EmailVerifiedNEQ(*i.EmailVerifiedNEQ))
-	}
-	if i.EmailVerifiedIsNil {
-		predicates = append(predicates, identity.EmailVerifiedIsNil())
-	}
-	if i.EmailVerifiedNotNil {
-		predicates = append(predicates, identity.EmailVerifiedNotNil())
-	}
 	if i.CreatedAt != nil {
 		predicates = append(predicates, identity.CreatedAtEQ(*i.CreatedAt))
 	}
@@ -2146,6 +2089,63 @@ func (i *IdentityWhereInput) P() (predicate.Identity, error) {
 	}
 	if i.DeletedAtNotNil {
 		predicates = append(predicates, identity.DeletedAtNotNil())
+	}
+	if i.Email != nil {
+		predicates = append(predicates, identity.EmailEQ(*i.Email))
+	}
+	if i.EmailNEQ != nil {
+		predicates = append(predicates, identity.EmailNEQ(*i.EmailNEQ))
+	}
+	if len(i.EmailIn) > 0 {
+		predicates = append(predicates, identity.EmailIn(i.EmailIn...))
+	}
+	if len(i.EmailNotIn) > 0 {
+		predicates = append(predicates, identity.EmailNotIn(i.EmailNotIn...))
+	}
+	if i.EmailGT != nil {
+		predicates = append(predicates, identity.EmailGT(*i.EmailGT))
+	}
+	if i.EmailGTE != nil {
+		predicates = append(predicates, identity.EmailGTE(*i.EmailGTE))
+	}
+	if i.EmailLT != nil {
+		predicates = append(predicates, identity.EmailLT(*i.EmailLT))
+	}
+	if i.EmailLTE != nil {
+		predicates = append(predicates, identity.EmailLTE(*i.EmailLTE))
+	}
+	if i.EmailContains != nil {
+		predicates = append(predicates, identity.EmailContains(*i.EmailContains))
+	}
+	if i.EmailHasPrefix != nil {
+		predicates = append(predicates, identity.EmailHasPrefix(*i.EmailHasPrefix))
+	}
+	if i.EmailHasSuffix != nil {
+		predicates = append(predicates, identity.EmailHasSuffix(*i.EmailHasSuffix))
+	}
+	if i.EmailIsNil {
+		predicates = append(predicates, identity.EmailIsNil())
+	}
+	if i.EmailNotNil {
+		predicates = append(predicates, identity.EmailNotNil())
+	}
+	if i.EmailEqualFold != nil {
+		predicates = append(predicates, identity.EmailEqualFold(*i.EmailEqualFold))
+	}
+	if i.EmailContainsFold != nil {
+		predicates = append(predicates, identity.EmailContainsFold(*i.EmailContainsFold))
+	}
+	if i.EmailVerified != nil {
+		predicates = append(predicates, identity.EmailVerifiedEQ(*i.EmailVerified))
+	}
+	if i.EmailVerifiedNEQ != nil {
+		predicates = append(predicates, identity.EmailVerifiedNEQ(*i.EmailVerifiedNEQ))
+	}
+	if i.EmailVerifiedIsNil {
+		predicates = append(predicates, identity.EmailVerifiedIsNil())
+	}
+	if i.EmailVerifiedNotNil {
+		predicates = append(predicates, identity.EmailVerifiedNotNil())
 	}
 
 	if i.HasCustomer != nil {

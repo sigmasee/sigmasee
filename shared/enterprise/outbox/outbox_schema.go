@@ -5,10 +5,11 @@ import (
 	"entgo.io/ent"
 	"entgo.io/ent/schema/field"
 	"entgo.io/ent/schema/index"
+	"entgo.io/ent/schema/mixin"
 )
 
 type Outbox struct {
-	ent.Schema
+	mixin.Schema
 }
 
 func (Outbox) Fields() []ent.Field {
@@ -28,10 +29,6 @@ func (Outbox) Fields() []ent.Field {
 		field.Time("last_retry").Optional(),
 		field.Strings("processing_errors").Optional(),
 	}
-}
-
-func (Outbox) Edges() []ent.Edge {
-	return []ent.Edge{}
 }
 
 func (Outbox) Indexes() []ent.Index {

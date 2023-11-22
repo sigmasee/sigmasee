@@ -9,14 +9,8 @@ type CustomerOutbox struct {
 	ent.Schema
 }
 
-func (CustomerOutbox) Fields() []ent.Field {
-	return outbox.Outbox{}.Fields()
-}
-
-func (CustomerOutbox) Edges() []ent.Edge {
-	return outbox.Outbox{}.Edges()
-}
-
-func (CustomerOutbox) Indexes() []ent.Index {
-	return outbox.Outbox{}.Indexes()
+func (CustomerOutbox) Mixin() []ent.Mixin {
+	return []ent.Mixin{
+		outbox.Outbox{},
+	}
 }

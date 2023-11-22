@@ -32,46 +32,6 @@ func (iu *IdentityUpdate) Where(ps ...predicate.Identity) *IdentityUpdate {
 	return iu
 }
 
-// SetEmail sets the "email" field.
-func (iu *IdentityUpdate) SetEmail(s string) *IdentityUpdate {
-	iu.mutation.SetEmail(s)
-	return iu
-}
-
-// SetNillableEmail sets the "email" field if the given value is not nil.
-func (iu *IdentityUpdate) SetNillableEmail(s *string) *IdentityUpdate {
-	if s != nil {
-		iu.SetEmail(*s)
-	}
-	return iu
-}
-
-// ClearEmail clears the value of the "email" field.
-func (iu *IdentityUpdate) ClearEmail() *IdentityUpdate {
-	iu.mutation.ClearEmail()
-	return iu
-}
-
-// SetEmailVerified sets the "email_verified" field.
-func (iu *IdentityUpdate) SetEmailVerified(b bool) *IdentityUpdate {
-	iu.mutation.SetEmailVerified(b)
-	return iu
-}
-
-// SetNillableEmailVerified sets the "email_verified" field if the given value is not nil.
-func (iu *IdentityUpdate) SetNillableEmailVerified(b *bool) *IdentityUpdate {
-	if b != nil {
-		iu.SetEmailVerified(*b)
-	}
-	return iu
-}
-
-// ClearEmailVerified clears the value of the "email_verified" field.
-func (iu *IdentityUpdate) ClearEmailVerified() *IdentityUpdate {
-	iu.mutation.ClearEmailVerified()
-	return iu
-}
-
 // SetCreatedAt sets the "created_at" field.
 func (iu *IdentityUpdate) SetCreatedAt(t time.Time) *IdentityUpdate {
 	iu.mutation.SetCreatedAt(t)
@@ -115,6 +75,46 @@ func (iu *IdentityUpdate) SetNillableDeletedAt(t *time.Time) *IdentityUpdate {
 // ClearDeletedAt clears the value of the "deleted_at" field.
 func (iu *IdentityUpdate) ClearDeletedAt() *IdentityUpdate {
 	iu.mutation.ClearDeletedAt()
+	return iu
+}
+
+// SetEmail sets the "email" field.
+func (iu *IdentityUpdate) SetEmail(s string) *IdentityUpdate {
+	iu.mutation.SetEmail(s)
+	return iu
+}
+
+// SetNillableEmail sets the "email" field if the given value is not nil.
+func (iu *IdentityUpdate) SetNillableEmail(s *string) *IdentityUpdate {
+	if s != nil {
+		iu.SetEmail(*s)
+	}
+	return iu
+}
+
+// ClearEmail clears the value of the "email" field.
+func (iu *IdentityUpdate) ClearEmail() *IdentityUpdate {
+	iu.mutation.ClearEmail()
+	return iu
+}
+
+// SetEmailVerified sets the "email_verified" field.
+func (iu *IdentityUpdate) SetEmailVerified(b bool) *IdentityUpdate {
+	iu.mutation.SetEmailVerified(b)
+	return iu
+}
+
+// SetNillableEmailVerified sets the "email_verified" field if the given value is not nil.
+func (iu *IdentityUpdate) SetNillableEmailVerified(b *bool) *IdentityUpdate {
+	if b != nil {
+		iu.SetEmailVerified(*b)
+	}
+	return iu
+}
+
+// ClearEmailVerified clears the value of the "email_verified" field.
+func (iu *IdentityUpdate) ClearEmailVerified() *IdentityUpdate {
+	iu.mutation.ClearEmailVerified()
 	return iu
 }
 
@@ -193,18 +193,6 @@ func (iu *IdentityUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			}
 		}
 	}
-	if value, ok := iu.mutation.Email(); ok {
-		_spec.SetField(identity.FieldEmail, field.TypeString, value)
-	}
-	if iu.mutation.EmailCleared() {
-		_spec.ClearField(identity.FieldEmail, field.TypeString)
-	}
-	if value, ok := iu.mutation.EmailVerified(); ok {
-		_spec.SetField(identity.FieldEmailVerified, field.TypeBool, value)
-	}
-	if iu.mutation.EmailVerifiedCleared() {
-		_spec.ClearField(identity.FieldEmailVerified, field.TypeBool)
-	}
 	if value, ok := iu.mutation.CreatedAt(); ok {
 		_spec.SetField(identity.FieldCreatedAt, field.TypeTime, value)
 	}
@@ -219,6 +207,18 @@ func (iu *IdentityUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	}
 	if iu.mutation.DeletedAtCleared() {
 		_spec.ClearField(identity.FieldDeletedAt, field.TypeTime)
+	}
+	if value, ok := iu.mutation.Email(); ok {
+		_spec.SetField(identity.FieldEmail, field.TypeString, value)
+	}
+	if iu.mutation.EmailCleared() {
+		_spec.ClearField(identity.FieldEmail, field.TypeString)
+	}
+	if value, ok := iu.mutation.EmailVerified(); ok {
+		_spec.SetField(identity.FieldEmailVerified, field.TypeBool, value)
+	}
+	if iu.mutation.EmailVerifiedCleared() {
+		_spec.ClearField(identity.FieldEmailVerified, field.TypeBool)
 	}
 	if iu.mutation.CustomerCleared() {
 		edge := &sqlgraph.EdgeSpec{
@@ -275,46 +275,6 @@ type IdentityUpdateOne struct {
 	modifiers []func(*sql.UpdateBuilder)
 }
 
-// SetEmail sets the "email" field.
-func (iuo *IdentityUpdateOne) SetEmail(s string) *IdentityUpdateOne {
-	iuo.mutation.SetEmail(s)
-	return iuo
-}
-
-// SetNillableEmail sets the "email" field if the given value is not nil.
-func (iuo *IdentityUpdateOne) SetNillableEmail(s *string) *IdentityUpdateOne {
-	if s != nil {
-		iuo.SetEmail(*s)
-	}
-	return iuo
-}
-
-// ClearEmail clears the value of the "email" field.
-func (iuo *IdentityUpdateOne) ClearEmail() *IdentityUpdateOne {
-	iuo.mutation.ClearEmail()
-	return iuo
-}
-
-// SetEmailVerified sets the "email_verified" field.
-func (iuo *IdentityUpdateOne) SetEmailVerified(b bool) *IdentityUpdateOne {
-	iuo.mutation.SetEmailVerified(b)
-	return iuo
-}
-
-// SetNillableEmailVerified sets the "email_verified" field if the given value is not nil.
-func (iuo *IdentityUpdateOne) SetNillableEmailVerified(b *bool) *IdentityUpdateOne {
-	if b != nil {
-		iuo.SetEmailVerified(*b)
-	}
-	return iuo
-}
-
-// ClearEmailVerified clears the value of the "email_verified" field.
-func (iuo *IdentityUpdateOne) ClearEmailVerified() *IdentityUpdateOne {
-	iuo.mutation.ClearEmailVerified()
-	return iuo
-}
-
 // SetCreatedAt sets the "created_at" field.
 func (iuo *IdentityUpdateOne) SetCreatedAt(t time.Time) *IdentityUpdateOne {
 	iuo.mutation.SetCreatedAt(t)
@@ -358,6 +318,46 @@ func (iuo *IdentityUpdateOne) SetNillableDeletedAt(t *time.Time) *IdentityUpdate
 // ClearDeletedAt clears the value of the "deleted_at" field.
 func (iuo *IdentityUpdateOne) ClearDeletedAt() *IdentityUpdateOne {
 	iuo.mutation.ClearDeletedAt()
+	return iuo
+}
+
+// SetEmail sets the "email" field.
+func (iuo *IdentityUpdateOne) SetEmail(s string) *IdentityUpdateOne {
+	iuo.mutation.SetEmail(s)
+	return iuo
+}
+
+// SetNillableEmail sets the "email" field if the given value is not nil.
+func (iuo *IdentityUpdateOne) SetNillableEmail(s *string) *IdentityUpdateOne {
+	if s != nil {
+		iuo.SetEmail(*s)
+	}
+	return iuo
+}
+
+// ClearEmail clears the value of the "email" field.
+func (iuo *IdentityUpdateOne) ClearEmail() *IdentityUpdateOne {
+	iuo.mutation.ClearEmail()
+	return iuo
+}
+
+// SetEmailVerified sets the "email_verified" field.
+func (iuo *IdentityUpdateOne) SetEmailVerified(b bool) *IdentityUpdateOne {
+	iuo.mutation.SetEmailVerified(b)
+	return iuo
+}
+
+// SetNillableEmailVerified sets the "email_verified" field if the given value is not nil.
+func (iuo *IdentityUpdateOne) SetNillableEmailVerified(b *bool) *IdentityUpdateOne {
+	if b != nil {
+		iuo.SetEmailVerified(*b)
+	}
+	return iuo
+}
+
+// ClearEmailVerified clears the value of the "email_verified" field.
+func (iuo *IdentityUpdateOne) ClearEmailVerified() *IdentityUpdateOne {
+	iuo.mutation.ClearEmailVerified()
 	return iuo
 }
 
@@ -466,18 +466,6 @@ func (iuo *IdentityUpdateOne) sqlSave(ctx context.Context) (_node *Identity, err
 			}
 		}
 	}
-	if value, ok := iuo.mutation.Email(); ok {
-		_spec.SetField(identity.FieldEmail, field.TypeString, value)
-	}
-	if iuo.mutation.EmailCleared() {
-		_spec.ClearField(identity.FieldEmail, field.TypeString)
-	}
-	if value, ok := iuo.mutation.EmailVerified(); ok {
-		_spec.SetField(identity.FieldEmailVerified, field.TypeBool, value)
-	}
-	if iuo.mutation.EmailVerifiedCleared() {
-		_spec.ClearField(identity.FieldEmailVerified, field.TypeBool)
-	}
 	if value, ok := iuo.mutation.CreatedAt(); ok {
 		_spec.SetField(identity.FieldCreatedAt, field.TypeTime, value)
 	}
@@ -492,6 +480,18 @@ func (iuo *IdentityUpdateOne) sqlSave(ctx context.Context) (_node *Identity, err
 	}
 	if iuo.mutation.DeletedAtCleared() {
 		_spec.ClearField(identity.FieldDeletedAt, field.TypeTime)
+	}
+	if value, ok := iuo.mutation.Email(); ok {
+		_spec.SetField(identity.FieldEmail, field.TypeString, value)
+	}
+	if iuo.mutation.EmailCleared() {
+		_spec.ClearField(identity.FieldEmail, field.TypeString)
+	}
+	if value, ok := iuo.mutation.EmailVerified(); ok {
+		_spec.SetField(identity.FieldEmailVerified, field.TypeBool, value)
+	}
+	if iuo.mutation.EmailVerifiedCleared() {
+		_spec.ClearField(identity.FieldEmailVerified, field.TypeBool)
 	}
 	if iuo.mutation.CustomerCleared() {
 		edge := &sqlgraph.EdgeSpec{

@@ -139,6 +139,37 @@ input CustomerWhereInput {
   idLTE: ID
   idEqualFold: ID
   idContainsFold: ID
+  """created_at field predicates"""
+  createdAt: Time
+  createdAtNEQ: Time
+  createdAtIn: [Time!]
+  createdAtNotIn: [Time!]
+  createdAtGT: Time
+  createdAtGTE: Time
+  createdAtLT: Time
+  createdAtLTE: Time
+  """modified_at field predicates"""
+  modifiedAt: Time
+  modifiedAtNEQ: Time
+  modifiedAtIn: [Time!]
+  modifiedAtNotIn: [Time!]
+  modifiedAtGT: Time
+  modifiedAtGTE: Time
+  modifiedAtLT: Time
+  modifiedAtLTE: Time
+  modifiedAtIsNil: Boolean
+  modifiedAtNotNil: Boolean
+  """deleted_at field predicates"""
+  deletedAt: Time
+  deletedAtNEQ: Time
+  deletedAtIn: [Time!]
+  deletedAtNotIn: [Time!]
+  deletedAtGT: Time
+  deletedAtGTE: Time
+  deletedAtLT: Time
+  deletedAtLTE: Time
+  deletedAtIsNil: Boolean
+  deletedAtNotNil: Boolean
   """designation field predicates"""
   designation: String
   designationNEQ: String
@@ -379,37 +410,6 @@ input CustomerWhereInput {
   localeNotNil: Boolean
   localeEqualFold: String
   localeContainsFold: String
-  """created_at field predicates"""
-  createdAt: Time
-  createdAtNEQ: Time
-  createdAtIn: [Time!]
-  createdAtNotIn: [Time!]
-  createdAtGT: Time
-  createdAtGTE: Time
-  createdAtLT: Time
-  createdAtLTE: Time
-  """modified_at field predicates"""
-  modifiedAt: Time
-  modifiedAtNEQ: Time
-  modifiedAtIn: [Time!]
-  modifiedAtNotIn: [Time!]
-  modifiedAtGT: Time
-  modifiedAtGTE: Time
-  modifiedAtLT: Time
-  modifiedAtLTE: Time
-  modifiedAtIsNil: Boolean
-  modifiedAtNotNil: Boolean
-  """deleted_at field predicates"""
-  deletedAt: Time
-  deletedAtNEQ: Time
-  deletedAtIn: [Time!]
-  deletedAtNotIn: [Time!]
-  deletedAtGT: Time
-  deletedAtGTE: Time
-  deletedAtLT: Time
-  deletedAtLTE: Time
-  deletedAtIsNil: Boolean
-  deletedAtNotNil: Boolean
   """identities edge predicates"""
   hasIdentities: Boolean
   hasIdentitiesWith: [IdentityWhereInput!]
@@ -436,27 +436,6 @@ input IdentityWhereInput {
   idLTE: ID
   idEqualFold: ID
   idContainsFold: ID
-  """email field predicates"""
-  email: String
-  emailNEQ: String
-  emailIn: [String!]
-  emailNotIn: [String!]
-  emailGT: String
-  emailGTE: String
-  emailLT: String
-  emailLTE: String
-  emailContains: String
-  emailHasPrefix: String
-  emailHasSuffix: String
-  emailIsNil: Boolean
-  emailNotNil: Boolean
-  emailEqualFold: String
-  emailContainsFold: String
-  """email_verified field predicates"""
-  emailVerified: Boolean
-  emailVerifiedNEQ: Boolean
-  emailVerifiedIsNil: Boolean
-  emailVerifiedNotNil: Boolean
   """created_at field predicates"""
   createdAt: Time
   createdAtNEQ: Time
@@ -488,6 +467,27 @@ input IdentityWhereInput {
   deletedAtLTE: Time
   deletedAtIsNil: Boolean
   deletedAtNotNil: Boolean
+  """email field predicates"""
+  email: String
+  emailNEQ: String
+  emailIn: [String!]
+  emailNotIn: [String!]
+  emailGT: String
+  emailGTE: String
+  emailLT: String
+  emailLTE: String
+  emailContains: String
+  emailHasPrefix: String
+  emailHasSuffix: String
+  emailIsNil: Boolean
+  emailNotNil: Boolean
+  emailEqualFold: String
+  emailContainsFold: String
+  """email_verified field predicates"""
+  emailVerified: Boolean
+  emailVerifiedNEQ: Boolean
+  emailVerifiedIsNil: Boolean
+  emailVerifiedNotNil: Boolean
   """customer edge predicates"""
   hasCustomer: Boolean
   hasCustomerWith: [CustomerWhereInput!]

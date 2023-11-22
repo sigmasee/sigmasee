@@ -29,6 +29,9 @@ var schemaGraph = func() *sqlgraph.Schema {
 		},
 		Type: "Customer",
 		Fields: map[string]*sqlgraph.FieldSpec{
+			customer.FieldCreatedAt:   {Type: field.TypeTime, Column: customer.FieldCreatedAt},
+			customer.FieldModifiedAt:  {Type: field.TypeTime, Column: customer.FieldModifiedAt},
+			customer.FieldDeletedAt:   {Type: field.TypeTime, Column: customer.FieldDeletedAt},
 			customer.FieldDesignation: {Type: field.TypeString, Column: customer.FieldDesignation},
 			customer.FieldTitle:       {Type: field.TypeString, Column: customer.FieldTitle},
 			customer.FieldName:        {Type: field.TypeString, Column: customer.FieldName},
@@ -44,9 +47,6 @@ var schemaGraph = func() *sqlgraph.Schema {
 			customer.FieldPhotoURL512: {Type: field.TypeString, Column: customer.FieldPhotoURL512},
 			customer.FieldTimezone:    {Type: field.TypeString, Column: customer.FieldTimezone},
 			customer.FieldLocale:      {Type: field.TypeString, Column: customer.FieldLocale},
-			customer.FieldCreatedAt:   {Type: field.TypeTime, Column: customer.FieldCreatedAt},
-			customer.FieldModifiedAt:  {Type: field.TypeTime, Column: customer.FieldModifiedAt},
-			customer.FieldDeletedAt:   {Type: field.TypeTime, Column: customer.FieldDeletedAt},
 		},
 	}
 	graph.Nodes[1] = &sqlgraph.Node{
@@ -98,11 +98,11 @@ var schemaGraph = func() *sqlgraph.Schema {
 		},
 		Type: "Identity",
 		Fields: map[string]*sqlgraph.FieldSpec{
-			identity.FieldEmail:         {Type: field.TypeString, Column: identity.FieldEmail},
-			identity.FieldEmailVerified: {Type: field.TypeBool, Column: identity.FieldEmailVerified},
 			identity.FieldCreatedAt:     {Type: field.TypeTime, Column: identity.FieldCreatedAt},
 			identity.FieldModifiedAt:    {Type: field.TypeTime, Column: identity.FieldModifiedAt},
 			identity.FieldDeletedAt:     {Type: field.TypeTime, Column: identity.FieldDeletedAt},
+			identity.FieldEmail:         {Type: field.TypeString, Column: identity.FieldEmail},
+			identity.FieldEmailVerified: {Type: field.TypeBool, Column: identity.FieldEmailVerified},
 		},
 	}
 	graph.MustAddE(
@@ -202,6 +202,21 @@ func (f *CustomerFilter) WhereID(p entql.StringP) {
 	f.Where(p.Field(customer.FieldID))
 }
 
+// WhereCreatedAt applies the entql time.Time predicate on the created_at field.
+func (f *CustomerFilter) WhereCreatedAt(p entql.TimeP) {
+	f.Where(p.Field(customer.FieldCreatedAt))
+}
+
+// WhereModifiedAt applies the entql time.Time predicate on the modified_at field.
+func (f *CustomerFilter) WhereModifiedAt(p entql.TimeP) {
+	f.Where(p.Field(customer.FieldModifiedAt))
+}
+
+// WhereDeletedAt applies the entql time.Time predicate on the deleted_at field.
+func (f *CustomerFilter) WhereDeletedAt(p entql.TimeP) {
+	f.Where(p.Field(customer.FieldDeletedAt))
+}
+
 // WhereDesignation applies the entql string predicate on the designation field.
 func (f *CustomerFilter) WhereDesignation(p entql.StringP) {
 	f.Where(p.Field(customer.FieldDesignation))
@@ -275,21 +290,6 @@ func (f *CustomerFilter) WhereTimezone(p entql.StringP) {
 // WhereLocale applies the entql string predicate on the locale field.
 func (f *CustomerFilter) WhereLocale(p entql.StringP) {
 	f.Where(p.Field(customer.FieldLocale))
-}
-
-// WhereCreatedAt applies the entql time.Time predicate on the created_at field.
-func (f *CustomerFilter) WhereCreatedAt(p entql.TimeP) {
-	f.Where(p.Field(customer.FieldCreatedAt))
-}
-
-// WhereModifiedAt applies the entql time.Time predicate on the modified_at field.
-func (f *CustomerFilter) WhereModifiedAt(p entql.TimeP) {
-	f.Where(p.Field(customer.FieldModifiedAt))
-}
-
-// WhereDeletedAt applies the entql time.Time predicate on the deleted_at field.
-func (f *CustomerFilter) WhereDeletedAt(p entql.TimeP) {
-	f.Where(p.Field(customer.FieldDeletedAt))
 }
 
 // WhereHasIdentities applies a predicate to check if query has an edge identities.
@@ -514,16 +514,6 @@ func (f *IdentityFilter) WhereID(p entql.StringP) {
 	f.Where(p.Field(identity.FieldID))
 }
 
-// WhereEmail applies the entql string predicate on the email field.
-func (f *IdentityFilter) WhereEmail(p entql.StringP) {
-	f.Where(p.Field(identity.FieldEmail))
-}
-
-// WhereEmailVerified applies the entql bool predicate on the email_verified field.
-func (f *IdentityFilter) WhereEmailVerified(p entql.BoolP) {
-	f.Where(p.Field(identity.FieldEmailVerified))
-}
-
 // WhereCreatedAt applies the entql time.Time predicate on the created_at field.
 func (f *IdentityFilter) WhereCreatedAt(p entql.TimeP) {
 	f.Where(p.Field(identity.FieldCreatedAt))
@@ -537,6 +527,16 @@ func (f *IdentityFilter) WhereModifiedAt(p entql.TimeP) {
 // WhereDeletedAt applies the entql time.Time predicate on the deleted_at field.
 func (f *IdentityFilter) WhereDeletedAt(p entql.TimeP) {
 	f.Where(p.Field(identity.FieldDeletedAt))
+}
+
+// WhereEmail applies the entql string predicate on the email field.
+func (f *IdentityFilter) WhereEmail(p entql.StringP) {
+	f.Where(p.Field(identity.FieldEmail))
+}
+
+// WhereEmailVerified applies the entql bool predicate on the email_verified field.
+func (f *IdentityFilter) WhereEmailVerified(p entql.BoolP) {
+	f.Where(p.Field(identity.FieldEmailVerified))
 }
 
 // WhereHasCustomer applies a predicate to check if query has an edge customer.

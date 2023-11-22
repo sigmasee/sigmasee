@@ -32,6 +32,52 @@ func (acu *ApexCustomerUpdate) Where(ps ...predicate.ApexCustomer) *ApexCustomer
 	return acu
 }
 
+// SetCreatedAt sets the "created_at" field.
+func (acu *ApexCustomerUpdate) SetCreatedAt(t time.Time) *ApexCustomerUpdate {
+	acu.mutation.SetCreatedAt(t)
+	return acu
+}
+
+// SetModifiedAt sets the "modified_at" field.
+func (acu *ApexCustomerUpdate) SetModifiedAt(t time.Time) *ApexCustomerUpdate {
+	acu.mutation.SetModifiedAt(t)
+	return acu
+}
+
+// SetNillableModifiedAt sets the "modified_at" field if the given value is not nil.
+func (acu *ApexCustomerUpdate) SetNillableModifiedAt(t *time.Time) *ApexCustomerUpdate {
+	if t != nil {
+		acu.SetModifiedAt(*t)
+	}
+	return acu
+}
+
+// ClearModifiedAt clears the value of the "modified_at" field.
+func (acu *ApexCustomerUpdate) ClearModifiedAt() *ApexCustomerUpdate {
+	acu.mutation.ClearModifiedAt()
+	return acu
+}
+
+// SetDeletedAt sets the "deleted_at" field.
+func (acu *ApexCustomerUpdate) SetDeletedAt(t time.Time) *ApexCustomerUpdate {
+	acu.mutation.SetDeletedAt(t)
+	return acu
+}
+
+// SetNillableDeletedAt sets the "deleted_at" field if the given value is not nil.
+func (acu *ApexCustomerUpdate) SetNillableDeletedAt(t *time.Time) *ApexCustomerUpdate {
+	if t != nil {
+		acu.SetDeletedAt(*t)
+	}
+	return acu
+}
+
+// ClearDeletedAt clears the value of the "deleted_at" field.
+func (acu *ApexCustomerUpdate) ClearDeletedAt() *ApexCustomerUpdate {
+	acu.mutation.ClearDeletedAt()
+	return acu
+}
+
 // SetEventRaisedAt sets the "event_raised_at" field.
 func (acu *ApexCustomerUpdate) SetEventRaisedAt(t time.Time) *ApexCustomerUpdate {
 	acu.mutation.SetEventRaisedAt(t)
@@ -258,52 +304,6 @@ func (acu *ApexCustomerUpdate) ClearPhotoURL512() *ApexCustomerUpdate {
 	return acu
 }
 
-// SetCreatedAt sets the "created_at" field.
-func (acu *ApexCustomerUpdate) SetCreatedAt(t time.Time) *ApexCustomerUpdate {
-	acu.mutation.SetCreatedAt(t)
-	return acu
-}
-
-// SetModifiedAt sets the "modified_at" field.
-func (acu *ApexCustomerUpdate) SetModifiedAt(t time.Time) *ApexCustomerUpdate {
-	acu.mutation.SetModifiedAt(t)
-	return acu
-}
-
-// SetNillableModifiedAt sets the "modified_at" field if the given value is not nil.
-func (acu *ApexCustomerUpdate) SetNillableModifiedAt(t *time.Time) *ApexCustomerUpdate {
-	if t != nil {
-		acu.SetModifiedAt(*t)
-	}
-	return acu
-}
-
-// ClearModifiedAt clears the value of the "modified_at" field.
-func (acu *ApexCustomerUpdate) ClearModifiedAt() *ApexCustomerUpdate {
-	acu.mutation.ClearModifiedAt()
-	return acu
-}
-
-// SetDeletedAt sets the "deleted_at" field.
-func (acu *ApexCustomerUpdate) SetDeletedAt(t time.Time) *ApexCustomerUpdate {
-	acu.mutation.SetDeletedAt(t)
-	return acu
-}
-
-// SetNillableDeletedAt sets the "deleted_at" field if the given value is not nil.
-func (acu *ApexCustomerUpdate) SetNillableDeletedAt(t *time.Time) *ApexCustomerUpdate {
-	if t != nil {
-		acu.SetDeletedAt(*t)
-	}
-	return acu
-}
-
-// ClearDeletedAt clears the value of the "deleted_at" field.
-func (acu *ApexCustomerUpdate) ClearDeletedAt() *ApexCustomerUpdate {
-	acu.mutation.ClearDeletedAt()
-	return acu
-}
-
 // AddIdentityIDs adds the "identities" edge to the ApexCustomerIdentity entity by IDs.
 func (acu *ApexCustomerUpdate) AddIdentityIDs(ids ...string) *ApexCustomerUpdate {
 	acu.mutation.AddIdentityIDs(ids...)
@@ -387,6 +387,21 @@ func (acu *ApexCustomerUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			}
 		}
 	}
+	if value, ok := acu.mutation.CreatedAt(); ok {
+		_spec.SetField(apexcustomer.FieldCreatedAt, field.TypeTime, value)
+	}
+	if value, ok := acu.mutation.ModifiedAt(); ok {
+		_spec.SetField(apexcustomer.FieldModifiedAt, field.TypeTime, value)
+	}
+	if acu.mutation.ModifiedAtCleared() {
+		_spec.ClearField(apexcustomer.FieldModifiedAt, field.TypeTime)
+	}
+	if value, ok := acu.mutation.DeletedAt(); ok {
+		_spec.SetField(apexcustomer.FieldDeletedAt, field.TypeTime, value)
+	}
+	if acu.mutation.DeletedAtCleared() {
+		_spec.ClearField(apexcustomer.FieldDeletedAt, field.TypeTime)
+	}
 	if value, ok := acu.mutation.EventRaisedAt(); ok {
 		_spec.SetField(apexcustomer.FieldEventRaisedAt, field.TypeTime, value)
 	}
@@ -455,21 +470,6 @@ func (acu *ApexCustomerUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	}
 	if acu.mutation.PhotoURL512Cleared() {
 		_spec.ClearField(apexcustomer.FieldPhotoURL512, field.TypeString)
-	}
-	if value, ok := acu.mutation.CreatedAt(); ok {
-		_spec.SetField(apexcustomer.FieldCreatedAt, field.TypeTime, value)
-	}
-	if value, ok := acu.mutation.ModifiedAt(); ok {
-		_spec.SetField(apexcustomer.FieldModifiedAt, field.TypeTime, value)
-	}
-	if acu.mutation.ModifiedAtCleared() {
-		_spec.ClearField(apexcustomer.FieldModifiedAt, field.TypeTime)
-	}
-	if value, ok := acu.mutation.DeletedAt(); ok {
-		_spec.SetField(apexcustomer.FieldDeletedAt, field.TypeTime, value)
-	}
-	if acu.mutation.DeletedAtCleared() {
-		_spec.ClearField(apexcustomer.FieldDeletedAt, field.TypeTime)
 	}
 	if acu.mutation.IdentitiesCleared() {
 		edge := &sqlgraph.EdgeSpec{
@@ -541,6 +541,52 @@ type ApexCustomerUpdateOne struct {
 	hooks     []Hook
 	mutation  *ApexCustomerMutation
 	modifiers []func(*sql.UpdateBuilder)
+}
+
+// SetCreatedAt sets the "created_at" field.
+func (acuo *ApexCustomerUpdateOne) SetCreatedAt(t time.Time) *ApexCustomerUpdateOne {
+	acuo.mutation.SetCreatedAt(t)
+	return acuo
+}
+
+// SetModifiedAt sets the "modified_at" field.
+func (acuo *ApexCustomerUpdateOne) SetModifiedAt(t time.Time) *ApexCustomerUpdateOne {
+	acuo.mutation.SetModifiedAt(t)
+	return acuo
+}
+
+// SetNillableModifiedAt sets the "modified_at" field if the given value is not nil.
+func (acuo *ApexCustomerUpdateOne) SetNillableModifiedAt(t *time.Time) *ApexCustomerUpdateOne {
+	if t != nil {
+		acuo.SetModifiedAt(*t)
+	}
+	return acuo
+}
+
+// ClearModifiedAt clears the value of the "modified_at" field.
+func (acuo *ApexCustomerUpdateOne) ClearModifiedAt() *ApexCustomerUpdateOne {
+	acuo.mutation.ClearModifiedAt()
+	return acuo
+}
+
+// SetDeletedAt sets the "deleted_at" field.
+func (acuo *ApexCustomerUpdateOne) SetDeletedAt(t time.Time) *ApexCustomerUpdateOne {
+	acuo.mutation.SetDeletedAt(t)
+	return acuo
+}
+
+// SetNillableDeletedAt sets the "deleted_at" field if the given value is not nil.
+func (acuo *ApexCustomerUpdateOne) SetNillableDeletedAt(t *time.Time) *ApexCustomerUpdateOne {
+	if t != nil {
+		acuo.SetDeletedAt(*t)
+	}
+	return acuo
+}
+
+// ClearDeletedAt clears the value of the "deleted_at" field.
+func (acuo *ApexCustomerUpdateOne) ClearDeletedAt() *ApexCustomerUpdateOne {
+	acuo.mutation.ClearDeletedAt()
+	return acuo
 }
 
 // SetEventRaisedAt sets the "event_raised_at" field.
@@ -769,52 +815,6 @@ func (acuo *ApexCustomerUpdateOne) ClearPhotoURL512() *ApexCustomerUpdateOne {
 	return acuo
 }
 
-// SetCreatedAt sets the "created_at" field.
-func (acuo *ApexCustomerUpdateOne) SetCreatedAt(t time.Time) *ApexCustomerUpdateOne {
-	acuo.mutation.SetCreatedAt(t)
-	return acuo
-}
-
-// SetModifiedAt sets the "modified_at" field.
-func (acuo *ApexCustomerUpdateOne) SetModifiedAt(t time.Time) *ApexCustomerUpdateOne {
-	acuo.mutation.SetModifiedAt(t)
-	return acuo
-}
-
-// SetNillableModifiedAt sets the "modified_at" field if the given value is not nil.
-func (acuo *ApexCustomerUpdateOne) SetNillableModifiedAt(t *time.Time) *ApexCustomerUpdateOne {
-	if t != nil {
-		acuo.SetModifiedAt(*t)
-	}
-	return acuo
-}
-
-// ClearModifiedAt clears the value of the "modified_at" field.
-func (acuo *ApexCustomerUpdateOne) ClearModifiedAt() *ApexCustomerUpdateOne {
-	acuo.mutation.ClearModifiedAt()
-	return acuo
-}
-
-// SetDeletedAt sets the "deleted_at" field.
-func (acuo *ApexCustomerUpdateOne) SetDeletedAt(t time.Time) *ApexCustomerUpdateOne {
-	acuo.mutation.SetDeletedAt(t)
-	return acuo
-}
-
-// SetNillableDeletedAt sets the "deleted_at" field if the given value is not nil.
-func (acuo *ApexCustomerUpdateOne) SetNillableDeletedAt(t *time.Time) *ApexCustomerUpdateOne {
-	if t != nil {
-		acuo.SetDeletedAt(*t)
-	}
-	return acuo
-}
-
-// ClearDeletedAt clears the value of the "deleted_at" field.
-func (acuo *ApexCustomerUpdateOne) ClearDeletedAt() *ApexCustomerUpdateOne {
-	acuo.mutation.ClearDeletedAt()
-	return acuo
-}
-
 // AddIdentityIDs adds the "identities" edge to the ApexCustomerIdentity entity by IDs.
 func (acuo *ApexCustomerUpdateOne) AddIdentityIDs(ids ...string) *ApexCustomerUpdateOne {
 	acuo.mutation.AddIdentityIDs(ids...)
@@ -928,6 +928,21 @@ func (acuo *ApexCustomerUpdateOne) sqlSave(ctx context.Context) (_node *ApexCust
 			}
 		}
 	}
+	if value, ok := acuo.mutation.CreatedAt(); ok {
+		_spec.SetField(apexcustomer.FieldCreatedAt, field.TypeTime, value)
+	}
+	if value, ok := acuo.mutation.ModifiedAt(); ok {
+		_spec.SetField(apexcustomer.FieldModifiedAt, field.TypeTime, value)
+	}
+	if acuo.mutation.ModifiedAtCleared() {
+		_spec.ClearField(apexcustomer.FieldModifiedAt, field.TypeTime)
+	}
+	if value, ok := acuo.mutation.DeletedAt(); ok {
+		_spec.SetField(apexcustomer.FieldDeletedAt, field.TypeTime, value)
+	}
+	if acuo.mutation.DeletedAtCleared() {
+		_spec.ClearField(apexcustomer.FieldDeletedAt, field.TypeTime)
+	}
 	if value, ok := acuo.mutation.EventRaisedAt(); ok {
 		_spec.SetField(apexcustomer.FieldEventRaisedAt, field.TypeTime, value)
 	}
@@ -996,21 +1011,6 @@ func (acuo *ApexCustomerUpdateOne) sqlSave(ctx context.Context) (_node *ApexCust
 	}
 	if acuo.mutation.PhotoURL512Cleared() {
 		_spec.ClearField(apexcustomer.FieldPhotoURL512, field.TypeString)
-	}
-	if value, ok := acuo.mutation.CreatedAt(); ok {
-		_spec.SetField(apexcustomer.FieldCreatedAt, field.TypeTime, value)
-	}
-	if value, ok := acuo.mutation.ModifiedAt(); ok {
-		_spec.SetField(apexcustomer.FieldModifiedAt, field.TypeTime, value)
-	}
-	if acuo.mutation.ModifiedAtCleared() {
-		_spec.ClearField(apexcustomer.FieldModifiedAt, field.TypeTime)
-	}
-	if value, ok := acuo.mutation.DeletedAt(); ok {
-		_spec.SetField(apexcustomer.FieldDeletedAt, field.TypeTime, value)
-	}
-	if acuo.mutation.DeletedAtCleared() {
-		_spec.ClearField(apexcustomer.FieldDeletedAt, field.TypeTime)
 	}
 	if acuo.mutation.IdentitiesCleared() {
 		edge := &sqlgraph.EdgeSpec{
