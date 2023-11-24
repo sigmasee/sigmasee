@@ -9,7 +9,7 @@ require (
 	github.com/99designs/gqlgen v0.17.40
 	github.com/IBM/sarama v1.42.1
 	github.com/aws/aws-lambda-go v1.41.0
-	github.com/aws/aws-sdk-go v1.47.9
+	github.com/aws/aws-sdk-go v1.48.3
 	github.com/awslabs/aws-lambda-go-api-proxy v0.16.0
 	github.com/getkin/kin-openapi v0.120.0
 	github.com/go-chi/chi/v5 v5.0.10
@@ -24,19 +24,19 @@ require (
 	github.com/hashicorp/golang-lru v1.0.2
 	github.com/jackc/pgx/v5 v5.5.0
 	github.com/jensneuse/abstractlogger v0.0.4
-	github.com/life4/genesis v1.10.0
+	github.com/life4/genesis v1.10.2
 	github.com/matoous/go-nanoid/v2 v2.0.0
-	github.com/oapi-codegen/runtime v1.0.0
+	github.com/oapi-codegen/runtime v1.1.0
 	github.com/pkg/errors v0.9.1
 	github.com/rs/cors v1.10.1
-	github.com/segmentio/kafka-go v0.4.44
+	github.com/segmentio/kafka-go v0.4.45
 	github.com/spf13/cobra v1.8.0
 	github.com/vektah/gqlparser/v2 v2.5.10
 	github.com/wundergraph/graphql-go-tools v1.67.0
-	github.com/wundergraph/graphql-go-tools/examples/federation v0.0.0-20231110114615-aaa3d9a98722
+	github.com/wundergraph/graphql-go-tools/examples/federation v0.0.0-20231123174804-a0217f4585a7
 	github.com/xdg-go/scram v1.1.2
 	go.uber.org/zap v1.26.0
-	google.golang.org/api v0.150.0
+	google.golang.org/api v0.151.0
 	google.golang.org/protobuf v1.31.0
 	gopkg.in/yaml.v3 v3.0.1
 )

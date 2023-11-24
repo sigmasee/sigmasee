@@ -5,6 +5,7 @@ package v1
 import (
 	"context"
 	"fmt"
+	"time"
 
 	"github.com/sigmasee/sigmasee/shared/enterprise/configuration"
 	enterprisecontext "github.com/sigmasee/sigmasee/shared/enterprise/context"
@@ -104,6 +105,11 @@ func (s *consumer) startAsync(ctx context.Context, topicName string, retryTopic 
 }
 
 func (s *consumer) handle(ctx context.Context, topicName string, retryTopic bool, retryTopicIndex int, message messaging.Message, event *Event) (err error) {
+	start := time.Now()
+	defer func(start time.Time) {
+		s.logger.Infof("Handle event from Topic: %s - Event Type: %d, Execution time: %s. Error: %v", topicName, event.Metadata.Type, time.Since(start), err)
+	}(start)
+
 	defer func() {
 		if r := recover(); r != nil {
 			err = s.logAndMoveToDeadLetterTopic(

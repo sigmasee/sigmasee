@@ -6,6 +6,7 @@ import (
 	"context"
 	"encoding/base64"
 	"fmt"
+	"time"
 
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/sigmasee/sigmasee/shared/enterprise/configuration"
@@ -105,6 +106,11 @@ func (s *awsLambdaConsumer) handleRecord(ctx context.Context, record events.Kafk
 	}
 
 	ctx = s.contextHelper.WithCorrelationId(ctx, event.Metadata.CorrelationId)
+
+	start := time.Now()
+	defer func(start time.Time) {
+		s.logger.Infof("Handle event from Topic: %s - Event Type: %d, Execution time: %s. Error: %v", record.Topic, event.Metadata.Type, time.Since(start), err)
+	}(start)
 
 	defer func() {
 		if r := recover(); r != nil {
