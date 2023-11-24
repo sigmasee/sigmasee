@@ -40,6 +40,11 @@ type CustomerRepository interface {
 		tx *entities.Tx,
 		useCache bool,
 		email string) (*models.Customer, error)
+
+	Delete(
+		ctx context.Context,
+		tx *entities.Tx,
+		id string) error
 }
 
 type customerRepository struct {
@@ -343,6 +348,20 @@ func (s *customerRepository) GetByEmail(
 	}
 
 	return s.mapper.CustomerEntityToCustomer(customer), nil
+}
+
+func (s *customerRepository) Delete(
+	ctx context.Context,
+	tx *entities.Tx,
+	id string) error {
+	now := time.Now().UTC()
+
+	return s.entgoClient.
+		GetCustomerClient(tx).
+		UpdateOneID(id).
+		SetModifiedAt(now).
+		SetDeletedAt(now).
+		Exec(ctx)
 }
 
 func (s *customerRepository) getByIdBatchLoader(

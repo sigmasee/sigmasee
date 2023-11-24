@@ -65,21 +65,34 @@ func (s *customerSubscriber) Handle(
 		return nil
 	}
 
-	if err = s.customerRepository.Upsert(ctx, nil, customer, true); err != nil {
-		return err
+	switch event.Metadata.Type {
+	case customerv1.Type_CustomerUpserted:
+		if err = s.customerRepository.Upsert(ctx, nil, customer, true); err != nil {
+			return err
+		}
+
+		id, err := s.randomHelper.Generate()
+		if err != nil {
+			return err
+		}
+
+		return s.customerSettingsRepository.Upsert(
+			ctx,
+			nil,
+			customer.ID,
+			&models.CustomerSettings{
+				ID: id,
+			},
+			false)
+
+	case customerv1.Type_CustomerDeleted:
+		if existingCustomer != nil {
+			return s.customerRepository.Delete(ctx, nil, customer.ID)
+		}
+
+	default:
 	}
 
-	id, err := s.randomHelper.Generate()
-	if err != nil {
-		return err
-	}
+	return nil
 
-	return s.customerSettingsRepository.Upsert(
-		ctx,
-		nil,
-		customer.ID,
-		&models.CustomerSettings{
-			ID: id,
-		},
-		false)
 }
